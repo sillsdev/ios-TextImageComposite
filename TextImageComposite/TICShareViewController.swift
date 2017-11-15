@@ -50,9 +50,13 @@ class TICShareViewController : UIViewController
     
     @IBAction func handleShareButtonTap(_ sender : UIBarButtonItem)
     {
-        let activityItems = [self.compositeImage] as [Any] //, "Lorem Ipsum Dolor Sit"
-        let vc = UIActivityViewController(activityItems: [ImageProvider(), TextProvider()], applicationActivities: nil)
+        if let img = self.compositeImage
+        {
+            let activityItems : [Any] = [img] //[ImageProvider(), TextProvider()]
+            let vc = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+            
+            self.present(vc, animated: true, completion: nil)
+        }
         
-        self.present(vc, animated: true, completion: nil)
     }
 }
