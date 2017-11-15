@@ -8,7 +8,7 @@ TextImageComposite is a tool to create a single, sharable image composite of Tex
 
   s.platform 		 = :ios, '9.0'
 
-  s.homepage         = 'https://github.com/sillsdev/ios-TextImageComposite'
+  s.homepage         = 'https://github.com/sillsdev/ios-TextImageComposite.git'
   s.license          = { :type => 'MIT', :file => 'LICENSE.md' }
   s.author           = { 'Jacob Bullock' => 'jacob.bullock@gmail.com' }
   s.source           = { :git => 'https://github.com/sillsdev/ios-TextImageComposite', :tag => s.version.to_s }
