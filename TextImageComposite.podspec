@@ -13,6 +13,7 @@ TextImageComposite is a tool to create a single, sharable image composite of Tex
   s.author           = { 'Jacob Bullock' => 'jacob.bullock@gmail.com' }
   s.source           = { :git => 'https://github.com/sillsdev/ios-TextImageComposite.git', :tag => s.version.to_s }
  
-  s.source_files 	= 'TICExample/TextImageComposite/*.swift', 'TICExample/TextImageComposite/Lib/ElevenK/*.swift'
-  s.resources 		= 'TICExample/TextImageComposite/Resources/Images/**/*.*', 'TICExample/TextImageComposite/*.storyboard'
+  s.source_files 	= 'TICExample/TextImageComposite/UIColor+Hex.swift'
+  #s.source_files 	= 'TICExample/TextImageComposite/*.swift', 'TICExample/TextImageComposite/Lib/ElevenK/*.swift'
+  #s.resources 		= 'TICExample/TextImageComposite/Resources/Images/**/*.*', 'TICExample/TextImageComposite/*.storyboard'
 end

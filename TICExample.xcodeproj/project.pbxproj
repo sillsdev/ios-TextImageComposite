@@ -134,6 +134,7 @@
 		16C7E9D11FA7B56900B89105 = {
 			isa = PBXGroup;
 			children = (
+				16C7E9EF1FA7B5AD00B89105 /* TextImageComposite */,
 				16C7E9DC1FA7B56900B89105 /* TICExample */,
 				16C7E9DB1FA7B56900B89105 /* Products */,
 			);
@@ -150,7 +151,6 @@
 		16C7E9DC1FA7B56900B89105 /* TICExample */ = {
 			isa = PBXGroup;
 			children = (
-				16C7E9EF1FA7B5AD00B89105 /* TextImageComposite */,
 				16C7E9DD1FA7B56900B89105 /* AppDelegate.swift */,
 				16C7E9DF1FA7B56900B89105 /* ViewController.swift */,
 				16C7E9E11FA7B56900B89105 /* Main.storyboard */,
