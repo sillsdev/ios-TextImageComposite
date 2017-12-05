@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TICAlignmentPanelView" customModule="TICExample" customModuleProvider="target">
+            <connections>
+                <outletCollection property="actionButtons" destination="PvM-x4-L9C" collectionClass="NSMutableArray" id="mch-4a-2Dm"/>
+                <outletCollection property="selectableButtons" destination="zdS-gy-giW" collectionClass="NSMutableArray" id="hIu-yf-K8I"/>
+                <outletCollection property="selectableButtons" destination="Wpu-fg-JxV" collectionClass="NSMutableArray" id="QHm-b7-ROM"/>
+                <outletCollection property="selectableButtons" destination="iYo-b2-kbw" collectionClass="NSMutableArray" id="ziw-fY-7xc"/>
+                <outletCollection property="selectableButtons" destination="phF-oh-y5n" collectionClass="NSMutableArray" id="nun-dx-bXt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="140"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zdS-gy-giW">
+                    <rect key="frame" x="40" y="40" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="7Kj-yO-0ZN"/>
+                        <constraint firstAttribute="height" constant="30" id="jBf-je-80v"/>
+                    </constraints>
+                    <state key="normal" image="align_left.png"/>
+                    <connections>
+                        <action selector="handleJustificationButtonTap:" destination="-1" eventType="touchUpInside" id="HCf-B0-bRJ"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wpu-fg-JxV">
+                    <rect key="frame" x="110" y="40" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="407-u9-unR"/>
+                        <constraint firstAttribute="height" constant="30" id="Qaf-Yq-Aqv"/>
+                    </constraints>
+                    <state key="normal" image="align_center.png"/>
+                    <connections>
+                        <action selector="handleJustificationButtonTap:" destination="-1" eventType="touchUpInside" id="tgh-ow-VKP"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iYo-b2-kbw">
+                    <rect key="frame" x="250" y="40" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="Ehe-wW-JZZ"/>
+                        <constraint firstAttribute="width" constant="30" id="xBg-kQ-1e1"/>
+                    </constraints>
+                    <state key="normal" image="align_right.png"/>
+                    <connections>
+                        <action selector="handleJustificationButtonTap:" destination="-1" eventType="touchUpInside" id="ur3-wy-l5G"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="phF-oh-y5n">
+                    <rect key="frame" x="180" y="40" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="DKw-Vj-A93"/>
+                        <constraint firstAttribute="width" constant="30" id="cTe-EB-hC9"/>
+                    </constraints>
+                    <state key="normal" image="align_justify.png"/>
+                    <connections>
+                        <action selector="handleJustificationButtonTap:" destination="-1" eventType="touchUpInside" id="NLY-Pk-Xpd"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PvM-x4-L9C">
+                    <rect key="frame" x="140" y="100" width="40" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="LxH-3I-zk2"/>
+                        <constraint firstAttribute="width" constant="40" id="fci-pZ-tXj"/>
+                    </constraints>
+                    <state key="normal" image="ellipsis.png"/>
+                    <connections>
+                        <action selector="handleMarginsButtonTap:" destination="-1" eventType="touchUpInside" id="4C6-mm-UwN"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="iYo-b2-kbw" firstAttribute="leading" secondItem="phF-oh-y5n" secondAttribute="trailing" constant="40" id="0sD-DT-zCG"/>
+                <constraint firstItem="Wpu-fg-JxV" firstAttribute="leading" secondItem="zdS-gy-giW" secondAttribute="trailing" constant="40" id="737-rn-xuf"/>
+                <constraint firstItem="Wpu-fg-JxV" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-15" id="8Wr-jX-1Cs"/>
+                <constraint firstItem="phF-oh-y5n" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" constant="35" id="FgK-kZ-FJB"/>
+                <constraint firstItem="iYo-b2-kbw" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-15" id="HFa-0K-dus"/>
+                <constraint firstItem="phF-oh-y5n" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-15" id="QuP-B6-vch"/>
+                <constraint firstAttribute="bottom" secondItem="PvM-x4-L9C" secondAttribute="bottom" constant="10" id="buO-If-JXx"/>
+                <constraint firstItem="zdS-gy-giW" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-15" id="o6P-Db-F6X"/>
+                <constraint firstItem="PvM-x4-L9C" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="yQu-vH-GkZ"/>
+                <constraint firstItem="Wpu-fg-JxV" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" constant="-35" id="zuI-mW-iZf"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-14" y="-32"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="align_center.png" width="30" height="30"/>
+        <image name="align_justify.png" width="30" height="30"/>
+        <image name="align_left.png" width="30" height="30"/>
+        <image name="align_right.png" width="30" height="30"/>
+        <image name="ellipsis.png" width="30" height="30"/>
+    </resources>
+</document>
