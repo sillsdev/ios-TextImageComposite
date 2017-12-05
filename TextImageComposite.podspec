@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'TextImageComposite'
-  s.version          = '0.1.0'
+  s.version          = '0.1.4'
   s.summary          = 'Text formatter that saves a composite image'
   s.description      = <<-DESC
 TextImageComposite is a tool to create a single, sharable image composite of Text on top of an image. Initially designed for sharing scripture verses on images for apps created with Scripture App Builder.  Inspired by the YouVersion iOS implementation of a similar feature.
