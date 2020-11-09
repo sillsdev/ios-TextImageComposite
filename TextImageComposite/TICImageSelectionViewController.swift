@@ -160,9 +160,9 @@ extension UIImage {
 
 extension TICImageSelectionViewController: UIImagePickerControllerDelegate {
     
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+        if let image = info[.editedImage] as? UIImage {
             openPreviewImage(image)
         }
         

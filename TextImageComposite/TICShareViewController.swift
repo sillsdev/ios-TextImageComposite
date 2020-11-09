@@ -17,7 +17,7 @@ public class TextProvider: NSObject, UIActivityItemSource {
     }
     
     public func activityViewController(_ activityViewController: UIActivityViewController,
-                                       itemForActivityType activityType: UIActivityType) -> Any? {
+                                       itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
         
         if activityType == .postToTwitter || activityType == .postToFacebook {
             return ""
@@ -32,7 +32,7 @@ public class ImageProvider: NSObject, UIActivityItemSource {
         return UIImage(named: "check_black")!
     }
     
-    public func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivityType) -> Any? {
+    public func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
         return UIImage(named:"check_black")
     }
 }

@@ -112,7 +112,7 @@ public class TICFormatPanelView : UIView
         }
     }
     
-    func handleSelectableButtonTap(_ sender: UIButton) {
+    @objc func handleSelectableButtonTap(_ sender: UIButton) {
         
         if let btn = self.selectedButton {
             btn.isSelected = false

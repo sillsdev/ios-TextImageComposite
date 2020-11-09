@@ -181,7 +181,7 @@ public class TICCustomizeViewController : UIViewController
         }
     }
     
-    func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         
         if error == nil {
             /*

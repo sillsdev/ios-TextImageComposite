@@ -63,7 +63,7 @@ public class TICFontPanelView : TICFormatPanelView
             button.setTitleColor(TICConfig.instance.theme.tintColor, for: .selected)
             button.titleLabel?.font = font
             button.addTarget(self, action: #selector(handleFontButtonTap(_:)), for: .touchUpInside)
-            let stringSize = str.size(attributes: [NSFontAttributeName: font!])
+            let stringSize = str.size(withAttributes: [NSAttributedString.Key.font: font!])
             let buttonSize = Int(stringSize.width) + 20
             button.frame = CGRect(x: x, y: 0, width: buttonSize, height: Int(fontScrollView.frame.size.height))
             x = x + buttonSize + 10
@@ -74,7 +74,7 @@ public class TICFontPanelView : TICFormatPanelView
         fontScrollView.contentSize = CGSize(width: x, height: Int(fontScrollView.frame.size.height))
     }
     
-    func handleFontButtonTap(_ sender: UIButton) {
+    @objc func handleFontButtonTap(_ sender: UIButton) {
         
         if let btn = selectedFontButton {
             btn.isSelected = false
