@@ -21,7 +21,7 @@ public extension UIColor {
      - returns: A UIColor from the given String.
      */
     
-    public func toHex(alpha: Bool = false) -> String? {
+    func toHex(alpha: Bool = false) -> String? {
         guard let components = cgColor.components, components.count >= 3 else {
             return nil
         }
@@ -44,14 +44,14 @@ public extension UIColor {
 
     
     @objc(cwh_colorWithHex:)
-    public class func colorWithHex(_ hex: String) -> UIColor? {
+    class func colorWithHex(_ hex: String) -> UIColor? {
         
         var color:UIColor? = nil
         
         let noHash = hex.replacingOccurrences(of: "#", with: "")
         
-        let start = noHash.startIndex
-        let hexColor = noHash.substring(from: start)
+        let start = noHash.index(noHash.startIndex, offsetBy: 0)
+        let hexColor = String(noHash[start...])
         
         if (hexColor.count == 8) {
             
@@ -127,14 +127,14 @@ public extension UIColor {
      */
     fileprivate class func colorWithHexThreeCharacters(_ hexColor: String) -> UIColor? {
         
-        let redRange: Range = (hexColor.index(hexColor.startIndex, offsetBy: 0) ..< hexColor.index(hexColor.startIndex, offsetBy: 1))
-        let redString: String = String(format: "%@%@", hexColor.substring(with: redRange), hexColor.substring(with: redRange))
+        let redRange = (hexColor.index(hexColor.startIndex, offsetBy: 0) ..< hexColor.index(hexColor.startIndex, offsetBy: 1))
+        let redString: String = String(format: "%@%@", String(hexColor[redRange]), String(hexColor[redRange]))
         
         let greenRange: Range = (hexColor.index(hexColor.startIndex, offsetBy: 1) ..< hexColor.index(hexColor.startIndex, offsetBy: 2))
-        let greenString: String = String(format: "%@%@", hexColor.substring(with: greenRange), hexColor.substring(with: greenRange))
+        let greenString: String = String(format: "%@%@", String(hexColor[greenRange]), String(hexColor[greenRange]))
         
         let blueRange: Range = (hexColor.index(hexColor.startIndex, offsetBy: 2) ..< hexColor.index(hexColor.startIndex, offsetBy: 3))
-        let blueString: String = String(format: "%@%@", hexColor.substring(with: blueRange), hexColor.substring(with: blueRange))
+        let blueString: String = String(format: "%@%@", String(hexColor[blueRange]), String(hexColor[blueRange]))
         
         let hex: String = String(format: "%@%@%@", redString, greenString, blueString)
         
