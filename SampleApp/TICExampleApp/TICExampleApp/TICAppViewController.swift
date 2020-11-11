@@ -1,20 +1,15 @@
 //
 //  ViewController.swift
-//  TICExample
+//  TICExampleApp
 //
-//  Created by Jacob Bullock on 10/30/17.
-//  Copyright © 2017 SIL. All rights reserved.
+//  Created by David Moore on 11/10/20.
+//  Derived from original authored by Jacob Bullock
 //
 
 import UIKit
+import TextImageComposite
 
-class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        
-        super.viewDidLoad()
-    }
-    
+class TICAppViewController: UIViewController {
     func fonts() -> [TICFont] {
         
         var list : [TICFont] = []
@@ -32,9 +27,7 @@ class ViewController: UIViewController {
         
         return list
     }
-    
     func images() -> [TICImage] {
-        
         let textureImageUrls : [TICImage] = [TICImage.init(imageName: "texture_1.jpg", thumbName: "thumb_texture_1.jpg"),
                                                            TICImage.init(imageName: "texture_2.jpg", thumbName: "thumb_texture_2.jpg"),
                                                            TICImage.init(imageName: "texture_3.jpg", thumbName: "thumb_texture_3.jpg"),
@@ -54,21 +47,24 @@ class ViewController: UIViewController {
         
         return textureImageUrls + natureImageUrls
     }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+    }
 
-    
-    @IBAction func handlePromptEditorButtonTap(_ sender: Any) {
-        
+    @IBAction func promptPressed(_ sender: Any) {
         TICConfig.instance.text = "In the beginning, God created the heavens and the earth."
         TICConfig.instance.reference = "Genesis 1:1"
         TICConfig.instance.images = images()
         TICConfig.instance.fonts = fonts()
         TICConfig.instance.locale = TICLocalization.us_en()
         TICConfig.instance.theme = TICTheme.defaultTheme()
-        
+        let bundle = Bundle(identifier: "org.sil.TextImageComposite")
         let storyboard = UIStoryboard(name: "TIC", bundle: TICConfig.instance.bundle)
         let nvc = storyboard.instantiateViewController(withIdentifier: "TICNavController") as! UINavigationController
         
         present(nvc, animated: true, completion: nil)
     }
+    
 }
 

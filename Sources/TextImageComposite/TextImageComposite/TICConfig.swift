@@ -28,15 +28,8 @@ public class TICConfig
     public var selectedImage : UIImage?
     
     public var bundle: Bundle {
-        let b = Bundle(for: TextImageComposite.self)
-        if let path = b.path(forResource: "TextImageComposite", ofType: "bundle")
-        {
-            if let bundle = Bundle(path: path)
-            {
-                return bundle
-            }
-        }
-        return Bundle.main
+        let bundle = Bundle(identifier: "org.sil.TextImageComposite")
+        return bundle!
     }
 }
 
@@ -172,12 +165,12 @@ public struct TICImage
     var imageURL : URL
     var thumbURL : URL
     
-    init(imageURL : URL, thumbURL : URL) {
+    public init(imageURL : URL, thumbURL : URL) {
         self.imageURL = imageURL
         self.thumbURL = thumbURL
     }
     
-    init(imageName : String, thumbName : String) {
+    public init(imageName : String, thumbName : String) {
         self.imageURL = Bundle.main.url(forResource: imageName, withExtension: "")!
         self.thumbURL = Bundle.main.url(forResource: thumbName, withExtension: "")!
     }
