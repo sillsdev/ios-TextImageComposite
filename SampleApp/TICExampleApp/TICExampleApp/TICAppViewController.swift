@@ -59,9 +59,8 @@ class TICAppViewController: UIViewController {
         TICConfig.instance.fonts = fonts()
         TICConfig.instance.locale = TICLocalization.us_en()
         TICConfig.instance.theme = TICTheme.defaultTheme()
-        let bundle = Bundle(identifier: "org.sil.TextImageComposite")
-        let storyboard = UIStoryboard(name: "TIC", bundle: TICConfig.instance.bundle)
-        let nvc = storyboard.instantiateViewController(withIdentifier: "TICNavController") as! UINavigationController
+        let storyboard = UIStoryboard(name: TICConfig.instance.storyboardName, bundle: TICConfig.instance.bundle)
+        let nvc = storyboard.instantiateViewController(withIdentifier: TICConfig.instance.viewControllerName) as! UINavigationController
         
         present(nvc, animated: true, completion: nil)
     }

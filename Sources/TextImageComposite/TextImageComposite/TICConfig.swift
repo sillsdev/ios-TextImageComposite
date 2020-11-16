@@ -31,6 +31,13 @@ public class TICConfig
         let bundle = Bundle(identifier: "org.sil.TextImageComposite")
         return bundle!
     }
+    
+    public var viewControllerName : String {
+        return "TICNavController"
+    }
+    public var storyboardName: String {
+        return "TIC"
+    }
 }
 
 public struct TICTheme {
