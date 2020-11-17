@@ -44,7 +44,6 @@
 		63DB4ADB255AF4BE0051185C /* AndikaNewBasic-BI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63DB4AB9255AF4BE0051185C /* AndikaNewBasic-BI.ttf */; };
 		63DB4AE8255AF70D0051185C /* TextImageComposite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63DB4AE7255AF70D0051185C /* TextImageComposite.framework */; };
 		63F15A54255AF01800ED404A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F15A53255AF01800ED404A /* AppDelegate.swift */; };
-		63F15A56255AF01800ED404A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F15A55255AF01800ED404A /* SceneDelegate.swift */; };
 		63F15A58255AF01800ED404A /* TICAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F15A57255AF01800ED404A /* TICAppViewController.swift */; };
 		63F15A5B255AF01800ED404A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63F15A59255AF01800ED404A /* Main.storyboard */; };
 		63F15A5D255AF01900ED404A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63F15A5C255AF01900ED404A /* Assets.xcassets */; };
@@ -122,7 +121,6 @@
 		63DB4AE7255AF70D0051185C /* TextImageComposite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TextImageComposite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63F15A50255AF01800ED404A /* TICExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TICExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63F15A53255AF01800ED404A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		63F15A55255AF01800ED404A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		63F15A57255AF01800ED404A /* TICAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TICAppViewController.swift; sourceTree = "<group>"; };
 		63F15A5A255AF01800ED404A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		63F15A5C255AF01900ED404A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -261,7 +259,6 @@
 			children = (
 				63DB4A93255AF4BE0051185C /* Resources */,
 				63F15A53255AF01800ED404A /* AppDelegate.swift */,
-				63F15A55255AF01800ED404A /* SceneDelegate.swift */,
 				63F15A57255AF01800ED404A /* TICAppViewController.swift */,
 				63F15A59255AF01800ED404A /* Main.storyboard */,
 				63F15A5C255AF01900ED404A /* Assets.xcassets */,
@@ -464,7 +461,6 @@
 			files = (
 				63F15A58255AF01800ED404A /* TICAppViewController.swift in Sources */,
 				63F15A54255AF01800ED404A /* AppDelegate.swift in Sources */,
-				63F15A56255AF01800ED404A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,7 +566,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -625,7 +621,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

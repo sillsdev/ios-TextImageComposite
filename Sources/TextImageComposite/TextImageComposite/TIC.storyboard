@@ -50,7 +50,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bhy-Xl-dgD" userLabel="Panel Container View" customClass="TICFontPanelView" customModule="TextImageComposite" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="320" width="320" height="160"/>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y6a-Om-7JW">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y6a-Om-7JW">
                                 <rect key="frame" x="0.0" y="480" width="320" height="44"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="134-tY-mey" userLabel="Toolbar View">
@@ -88,8 +88,8 @@
                                                     <action selector="handleAlignmentButtonTap:" destination="IDA-r8-eeI" eventType="touchUpInside" id="z3B-cL-w6g"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WEr-eh-1dQ" userLabel="Button 6">
-                                                <rect key="frame" x="505" y="8" width="100" height="29"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WEr-eh-1dQ" userLabel="Button 6">
+                                                <rect key="frame" x="505" y="0.0" width="100" height="44"/>
                                                 <state key="normal" image="ic_text_shadow"/>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rFZ-hj-W3E" userLabel="Button 7">
@@ -191,6 +191,7 @@
                                             <constraint firstAttribute="bottom" secondItem="0Fj-vn-5MY" secondAttribute="bottom" id="FR9-YQ-RNA"/>
                                             <constraint firstAttribute="bottom" secondItem="Dvc-7J-SpY" secondAttribute="bottom" id="FgZ-C0-ILD"/>
                                             <constraint firstAttribute="bottom" secondItem="rFZ-hj-W3E" secondAttribute="bottom" id="Gwz-Id-lnT"/>
+                                            <constraint firstItem="WEr-eh-1dQ" firstAttribute="top" secondItem="134-tY-mey" secondAttribute="top" id="J1S-2l-Uax"/>
                                             <constraint firstAttribute="bottom" secondItem="4uY-kz-Wgg" secondAttribute="bottom" id="JDQ-J8-mja"/>
                                             <constraint firstItem="T0e-Ms-rBz" firstAttribute="leading" secondItem="4uY-kz-Wgg" secondAttribute="trailing" id="Kct-HF-6f7"/>
                                             <constraint firstItem="VAC-am-8mQ" firstAttribute="width" secondItem="Dvc-7J-SpY" secondAttribute="width" id="NWM-2u-GQM"/>
@@ -216,6 +217,7 @@
                                             <constraint firstItem="83b-JB-Sep" firstAttribute="leading" secondItem="AvL-7g-Kxg" secondAttribute="trailing" id="nUm-Me-yFI"/>
                                             <constraint firstItem="4uY-kz-Wgg" firstAttribute="width" secondItem="0Fj-vn-5MY" secondAttribute="width" id="ncp-bX-GRG"/>
                                             <constraint firstAttribute="bottom" secondItem="83b-JB-Sep" secondAttribute="bottom" id="nsp-Ox-ky5"/>
+                                            <constraint firstAttribute="bottom" secondItem="WEr-eh-1dQ" secondAttribute="bottom" id="pIe-Xm-xbB"/>
                                             <constraint firstItem="0Fj-vn-5MY" firstAttribute="width" secondItem="VAC-am-8mQ" secondAttribute="width" id="s69-Hg-AQP"/>
                                             <constraint firstItem="Dvc-7J-SpY" firstAttribute="leading" secondItem="134-tY-mey" secondAttribute="leading" id="xRF-kn-G6j"/>
                                             <constraint firstItem="rFZ-hj-W3E" firstAttribute="width" secondItem="WEr-eh-1dQ" secondAttribute="width" id="y0c-7m-2Kb"/>
