@@ -55,6 +55,8 @@
 		63AA595D2568004A00A8D5BB /* TICReferenceFontPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AA595C2568004A00A8D5BB /* TICReferenceFontPanelView.swift */; };
 		63AA596A2568204600A8D5BB /* TICFontPanelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AA59682568204600A8D5BB /* TICFontPanelTableViewCell.swift */; };
 		63AA596B2568204600A8D5BB /* TICFontPanelTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63AA59692568204600A8D5BB /* TICFontPanelTableViewCell.xib */; };
+		63AA597F2568727000A8D5BB /* TICTextShadowPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AA597E2568727000A8D5BB /* TICTextShadowPanelView.swift */; };
+		63AA59832568729200A8D5BB /* TICTextShadowPanelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63AA59822568729200A8D5BB /* TICTextShadowPanelView.xib */; };
 		63F1595A255AECA200ED404A /* TextImageComposite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63F15950255AECA200ED404A /* TextImageComposite.framework */; };
 /* End PBXBuildFile section */
 
@@ -118,6 +120,8 @@
 		63AA595C2568004A00A8D5BB /* TICReferenceFontPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TICReferenceFontPanelView.swift; sourceTree = "<group>"; };
 		63AA59682568204600A8D5BB /* TICFontPanelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TICFontPanelTableViewCell.swift; sourceTree = "<group>"; };
 		63AA59692568204600A8D5BB /* TICFontPanelTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TICFontPanelTableViewCell.xib; sourceTree = "<group>"; };
+		63AA597E2568727000A8D5BB /* TICTextShadowPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TICTextShadowPanelView.swift; sourceTree = "<group>"; };
+		63AA59822568729200A8D5BB /* TICTextShadowPanelView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TICTextShadowPanelView.xib; sourceTree = "<group>"; };
 		63F15950255AECA200ED404A /* TextImageComposite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TextImageComposite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63F15959255AECA200ED404A /* TextImageCompositeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TextImageCompositeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -157,6 +161,7 @@
 				6343C6D8255C3CB700177A45 /* TICExtrasPanelView.swift */,
 				6386EDCF2565A124003E4506 /* TICFontAttributesPanelView.swift */,
 				63AA595C2568004A00A8D5BB /* TICReferenceFontPanelView.swift */,
+				63AA597E2568727000A8D5BB /* TICTextShadowPanelView.swift */,
 				6343C6B9255C3CB700177A45 /* Resources */,
 				6343C6D0255C3CB700177A45 /* Lib */,
 				6343C6D9255C3CB700177A45 /* TIC.storyboard */,
@@ -181,6 +186,7 @@
 				6343C6AE255C3CB700177A45 /* TICAlignmentPanelView.xib */,
 				6343C6AD255C3CB700177A45 /* TICColorPickerPanelView.xib */,
 				63AA59582567FF9300A8D5BB /* TICReferenceFontPanelView.xib */,
+				63AA59822568729200A8D5BB /* TICTextShadowPanelView.xib */,
 			);
 			path = XIB;
 			sourceTree = "<group>";
@@ -373,6 +379,7 @@
 				6343C6F7255C3CB700177A45 /* jquery-3.2.1.min.js in Resources */,
 				6343C6E1255C3CB700177A45 /* TICFontDetailsPanelView.xib in Resources */,
 				6343C6EC255C3CB700177A45 /* iconmoon@2x.png in Resources */,
+				63AA59832568729200A8D5BB /* TICTextShadowPanelView.xib in Resources */,
 				6343C6DE255C3CB700177A45 /* TICAlignmentPanelView.xib in Resources */,
 				63AA59592567FF9300A8D5BB /* TICReferenceFontPanelView.xib in Resources */,
 				6343C6F8255C3CB700177A45 /* composite.html in Resources */,
@@ -413,6 +420,7 @@
 				6343C6E5255C3CB700177A45 /* TICImageCell.swift in Sources */,
 				6343C700255C3CB700177A45 /* ColorPicker.swift in Sources */,
 				6343C6FE255C3CB700177A45 /* CachedImageView.swift in Sources */,
+				63AA597F2568727000A8D5BB /* TICTextShadowPanelView.swift in Sources */,
 				6343C6E6255C3CB700177A45 /* TICImageSelectionViewController.swift in Sources */,
 				63AA595D2568004A00A8D5BB /* TICReferenceFontPanelView.swift in Sources */,
 				6343C6FA255C3CB700177A45 /* TICColorPanelView.swift in Sources */,

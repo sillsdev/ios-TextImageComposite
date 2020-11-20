@@ -94,6 +94,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WEr-eh-1dQ" userLabel="Button 6">
                                                 <rect key="frame" x="505" y="0.0" width="100" height="44"/>
                                                 <state key="normal" image="ic_text_shadow"/>
+                                                <connections>
+                                                    <action selector="handleTextShadowTap:" destination="IDA-r8-eeI" eventType="touchUpInside" id="s6a-gM-7v5"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rFZ-hj-W3E" userLabel="Button 7">
                                                 <rect key="frame" x="606" y="0.0" width="100" height="44"/>

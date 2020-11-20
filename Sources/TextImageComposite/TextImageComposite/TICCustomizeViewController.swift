@@ -99,6 +99,7 @@ public class TICCustomizeViewController : UIViewController
     var marginsView: TICMarginsPanelView!
     var alignmentView: TICAlignmentPanelView!
     var fontView: TICFontPanelView!
+    var shadowView: TICTextShadowPanelView!
     
     @IBOutlet weak var panelContainerView: UIView!
     
@@ -147,6 +148,7 @@ public class TICCustomizeViewController : UIViewController
         self.fontSizeView = TICFontAttributesPanelView(frame: f)
         self.referenceSizeView = TICReferenceFontPanelView(frame: f)
         self.fontDetailsView = TICFontDetailsPanelView(frame: f)
+        self.shadowView = TICTextShadowPanelView(frame: f)
 
         panels.append(self.alignmentView)
         panels.append(self.marginsView)
@@ -156,6 +158,7 @@ public class TICCustomizeViewController : UIViewController
         panels.append(self.fontDetailsView)
         panels.append(self.fontSizeView)
         panels.append(self.referenceSizeView)
+        panels.append(self.shadowView)
         panels.append(self.fontView) // Last appended is view displayed on startup
    
         panels.forEach {
@@ -254,6 +257,10 @@ public class TICCustomizeViewController : UIViewController
     
     @IBAction func handleReferenceFontButtonTap(_ sender: Any) {
         self.panelContainerView.addSubview(self.referenceSizeView)
+    }
+    
+    @IBAction func handleTextShadowTap(_ sender: Any) {
+        self.panelContainerView.addSubview(self.shadowView)
     }
     override public func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
