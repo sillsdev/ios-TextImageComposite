@@ -33,7 +33,7 @@ public class TICFontPanelView : TICFormatPanelView
     @IBAction func handleTextSizeSliderValueChanged(_ sender: UISlider) {
         
         let pointSize = String(Int(sender.value)) + "pt"
-        self.delegate.setStyle(.fontSize, pointSize)
+        self.delegate.setStyle(.fontSize, pointSize, .both)
         self.fontDelegate?.setLineHeightFromFontSize(Int(sender.value))
         fontSizeLabel.text = pointSize
     }
@@ -84,7 +84,7 @@ public class TICFontPanelView : TICFormatPanelView
         selectedFontButton?.isSelected = true
         
         let f = self.availableFonts[sender.tag]
-        self.delegate.setStyle(.fontFamily, f.fontFamily)
+        self.delegate.setStyle(.fontFamily, f.fontFamily, .both)
     }
 }
 
@@ -115,21 +115,21 @@ public class TICFontDetailsPanelView : TICFormatPanelView, SBFontFormatDelegate
         
         letterSpacing = Int(sender.value)
         let ls = String(letterSpacing) + "px"
-        self.delegate.setStyle(.letterSpacing, ls)
+        self.delegate.setStyle(.letterSpacing, ls, .both)
     }
     
     @IBAction func handleLineHeightValueChanged(_ sender: UIStepper) {
         
         lineHeight = Int(sender.value)
         let lh = String(lineHeight) + "px"
-        self.delegate.setStyle(.lineHeight, lh)
+        self.delegate.setStyle(.lineHeight, lh, .both)
     }
     
     public func setLineHeightFromFontSize(_ size : Int) {
         
         lineHeight = size + 10
         let lh = String(lineHeight) + "px"
-        self.delegate.setStyle(.lineHeight, lh)
+        self.delegate.setStyle(.lineHeight, lh, .both)
         
         lineHeightStepper.value = Double(lineHeight)
     }

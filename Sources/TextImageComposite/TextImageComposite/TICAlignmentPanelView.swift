@@ -21,7 +21,7 @@ public class TICAlignmentPanelView : TICFormatPanelView
     
     @IBAction func handleJustificationButtonTap(_ sender: UIButton) {
         
-        self.delegate.setStyle(.textAlign, (Alignment(rawValue: sender.tag)?.stringValue())! )
+        self.delegate.setStyle(.textAlign, (Alignment(rawValue: sender.tag)?.stringValue())!, .both )
     }
     
     @IBAction func handleMarginsButtonTap(_ sender: UIButton) {

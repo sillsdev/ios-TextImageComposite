@@ -54,7 +54,7 @@
                                 <rect key="frame" x="0.0" y="480" width="320" height="44"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="134-tY-mey" userLabel="Toolbar View">
-                                        <rect key="frame" x="0.0" y="0.0" width="810" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="900" height="44"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dvc-7J-SpY" userLabel="Button 1">
                                                 <rect key="frame" x="0.0" y="0.0" width="100" height="44"/>
@@ -66,12 +66,15 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83b-JB-Sep" userLabel="Button 2">
                                                 <rect key="frame" x="101" y="0.0" width="100" height="44"/>
                                                 <state key="normal" image="ic_font_choice"/>
+                                                <connections>
+                                                    <action selector="handleFontButtonTap:" destination="IDA-r8-eeI" eventType="touchUpInside" id="6yY-YS-qz4"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VAC-am-8mQ" userLabel="Button 3">
                                                 <rect key="frame" x="202" y="0.0" width="100" height="44"/>
                                                 <state key="normal" image="ic_font_bigger"/>
                                                 <connections>
-                                                    <action selector="handleFontButtonTap:" destination="IDA-r8-eeI" eventType="touchUpInside" id="h7D-Zi-Duf"/>
+                                                    <action selector="handleFontSizeButtonTap:" destination="IDA-r8-eeI" eventType="touchUpInside" id="v7R-xS-kWM"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Fj-vn-5MY" userLabel="Button 4">
@@ -103,8 +106,15 @@
                                                     <action selector="handleExtrasButtonTap:" destination="IDA-r8-eeI" eventType="touchUpInside" id="5kV-HD-0Xu"/>
                                                 </connections>
                                             </button>
-                                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wv9-oc-lqv" userLabel="Divider View">
-                                                <rect key="frame" x="0.0" y="0.0" width="810" height="44"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CtI-E6-0K1" userLabel="Button 9">
+                                                <rect key="frame" x="808" y="0.0" width="100" height="44"/>
+                                                <state key="normal" image="ic_reference"/>
+                                                <connections>
+                                                    <action selector="handleReferenceFontButtonTap:" destination="IDA-r8-eeI" eventType="touchUpInside" id="SUM-I7-Pkg"/>
+                                                </connections>
+                                            </button>
+                                            <view userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wv9-oc-lqv" userLabel="Divider View">
+                                                <rect key="frame" x="24" y="0.0" width="810" height="44"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AvL-7g-Kxg" userLabel="View 1">
                                                         <rect key="frame" x="100" y="0.0" width="1" height="44"/>
@@ -143,16 +153,23 @@
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pmw-kK-6Qz" userLabel="View 6">
                                                         <rect key="frame" x="605" y="0.0" width="1" height="44"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <color key="backgroundColor" systemColor="systemRedColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="1" id="7hF-ai-ywf"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uKd-aZ-ttO" userLabel="View 7">
                                                         <rect key="frame" x="706" y="0.0" width="1" height="44"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <color key="backgroundColor" systemColor="systemRedColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="1" id="MwU-3Z-BTE"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZWv-f7-UNj" userLabel="View 8">
+                                                        <rect key="frame" x="807" y="0.0" width="1" height="44"/>
+                                                        <color key="backgroundColor" systemColor="systemRedColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="1" id="aOY-rj-fN2"/>
                                                         </constraints>
                                                     </view>
                                                 </subviews>
@@ -166,11 +183,13 @@
                                                     <constraint firstAttribute="bottom" secondItem="AvL-7g-Kxg" secondAttribute="bottom" id="Qms-py-V04"/>
                                                     <constraint firstAttribute="bottom" secondItem="uKd-aZ-ttO" secondAttribute="bottom" id="S5U-Be-5MV"/>
                                                     <constraint firstItem="033-AX-Gbo" firstAttribute="top" secondItem="wv9-oc-lqv" secondAttribute="top" id="Scz-0d-hcI"/>
+                                                    <constraint firstItem="ZWv-f7-UNj" firstAttribute="top" secondItem="wv9-oc-lqv" secondAttribute="top" id="Uh4-B7-C8I"/>
                                                     <constraint firstItem="Pmw-kK-6Qz" firstAttribute="top" secondItem="wv9-oc-lqv" secondAttribute="top" id="b6G-rT-KaW"/>
                                                     <constraint firstItem="pYI-Dr-XHd" firstAttribute="top" secondItem="wv9-oc-lqv" secondAttribute="top" id="hgM-gG-dOg"/>
                                                     <constraint firstAttribute="bottom" secondItem="Pmw-kK-6Qz" secondAttribute="bottom" id="iG3-Hh-wb3"/>
                                                     <constraint firstItem="T0e-Ms-rBz" firstAttribute="top" secondItem="wv9-oc-lqv" secondAttribute="top" id="jqr-Iy-2Eh"/>
                                                     <constraint firstItem="uNq-YM-KLD" firstAttribute="top" secondItem="wv9-oc-lqv" secondAttribute="top" id="lbx-xz-lBL"/>
+                                                    <constraint firstAttribute="bottom" secondItem="ZWv-f7-UNj" secondAttribute="bottom" id="o29-OQ-5MQ"/>
                                                     <constraint firstItem="uKd-aZ-ttO" firstAttribute="top" secondItem="wv9-oc-lqv" secondAttribute="top" id="xjJ-Ee-Sor"/>
                                                     <constraint firstAttribute="bottom" secondItem="uNq-YM-KLD" secondAttribute="bottom" id="zGR-6u-iqT"/>
                                                 </constraints>
@@ -186,7 +205,7 @@
                                             <constraint firstItem="rFZ-hj-W3E" firstAttribute="top" secondItem="134-tY-mey" secondAttribute="top" id="Akc-kP-WAB"/>
                                             <constraint firstItem="Pmw-kK-6Qz" firstAttribute="trailing" secondItem="rFZ-hj-W3E" secondAttribute="leading" id="C4H-6e-siB"/>
                                             <constraint firstItem="83b-JB-Sep" firstAttribute="width" secondItem="Dvc-7J-SpY" secondAttribute="width" id="DTX-F4-ZZQ"/>
-                                            <constraint firstAttribute="width" constant="810" id="ECu-XL-ZZ4"/>
+                                            <constraint firstAttribute="width" constant="900" id="ECu-XL-ZZ4"/>
                                             <constraint firstAttribute="bottom" secondItem="VAC-am-8mQ" secondAttribute="bottom" id="Emx-1i-khZ"/>
                                             <constraint firstAttribute="bottom" secondItem="0Fj-vn-5MY" secondAttribute="bottom" id="FR9-YQ-RNA"/>
                                             <constraint firstAttribute="bottom" secondItem="Dvc-7J-SpY" secondAttribute="bottom" id="FgZ-C0-ILD"/>
@@ -195,16 +214,19 @@
                                             <constraint firstAttribute="bottom" secondItem="4uY-kz-Wgg" secondAttribute="bottom" id="JDQ-J8-mja"/>
                                             <constraint firstItem="T0e-Ms-rBz" firstAttribute="leading" secondItem="4uY-kz-Wgg" secondAttribute="trailing" id="Kct-HF-6f7"/>
                                             <constraint firstItem="VAC-am-8mQ" firstAttribute="width" secondItem="Dvc-7J-SpY" secondAttribute="width" id="NWM-2u-GQM"/>
+                                            <constraint firstAttribute="bottom" secondItem="CtI-E6-0K1" secondAttribute="bottom" id="Pea-lM-6Il"/>
                                             <constraint firstItem="VAC-am-8mQ" firstAttribute="top" secondItem="134-tY-mey" secondAttribute="top" id="Q8E-UQ-Kjp"/>
                                             <constraint firstItem="WEr-eh-1dQ" firstAttribute="width" secondItem="4uY-kz-Wgg" secondAttribute="width" id="QSx-cY-LVO"/>
                                             <constraint firstItem="0Fj-vn-5MY" firstAttribute="top" secondItem="134-tY-mey" secondAttribute="top" id="Qiv-D5-CLS"/>
                                             <constraint firstItem="83b-JB-Sep" firstAttribute="top" secondItem="134-tY-mey" secondAttribute="top" id="RVy-rb-Hhq"/>
+                                            <constraint firstItem="ZWv-f7-UNj" firstAttribute="trailing" secondItem="CtI-E6-0K1" secondAttribute="leading" id="RXZ-zp-IBg"/>
                                             <constraint firstItem="T0e-Ms-rBz" firstAttribute="trailing" secondItem="0Fj-vn-5MY" secondAttribute="leading" id="T9L-aa-obq"/>
                                             <constraint firstItem="wv9-oc-lqv" firstAttribute="top" secondItem="134-tY-mey" secondAttribute="top" id="TJL-yH-Jaw"/>
                                             <constraint firstItem="AvL-7g-Kxg" firstAttribute="leading" secondItem="Dvc-7J-SpY" secondAttribute="trailing" id="V6N-Pa-iiw"/>
                                             <constraint firstItem="UwX-2S-yGO" firstAttribute="width" secondItem="4uY-kz-Wgg" secondAttribute="width" id="VR8-TW-oRL"/>
                                             <constraint firstItem="0Fj-vn-5MY" firstAttribute="trailing" secondItem="uNq-YM-KLD" secondAttribute="leading" id="YXK-Zj-Uze"/>
                                             <constraint firstItem="wv9-oc-lqv" firstAttribute="trailing" secondItem="134-tY-mey" secondAttribute="trailing" id="ZjL-01-pTo"/>
+                                            <constraint firstItem="UwX-2S-yGO" firstAttribute="trailing" secondItem="ZWv-f7-UNj" secondAttribute="leading" id="aR0-1K-WlJ"/>
                                             <constraint firstItem="033-AX-Gbo" firstAttribute="leading" secondItem="83b-JB-Sep" secondAttribute="trailing" id="dwX-gO-Exk"/>
                                             <constraint firstItem="VAC-am-8mQ" firstAttribute="leading" secondItem="033-AX-Gbo" secondAttribute="trailing" id="dxu-bT-PA8"/>
                                             <constraint firstItem="WEr-eh-1dQ" firstAttribute="trailing" secondItem="Pmw-kK-6Qz" secondAttribute="leading" id="eg3-mO-neR"/>
@@ -212,6 +234,7 @@
                                             <constraint firstAttribute="bottom" secondItem="UwX-2S-yGO" secondAttribute="bottom" id="ko5-rE-iS0"/>
                                             <constraint firstItem="uKd-aZ-ttO" firstAttribute="trailing" secondItem="UwX-2S-yGO" secondAttribute="leading" id="lF6-ld-6be"/>
                                             <constraint firstItem="wv9-oc-lqv" firstAttribute="leading" secondItem="134-tY-mey" secondAttribute="leading" id="lbg-Bc-kwa"/>
+                                            <constraint firstItem="CtI-E6-0K1" firstAttribute="width" secondItem="UwX-2S-yGO" secondAttribute="width" id="loq-gL-B3r"/>
                                             <constraint firstItem="rFZ-hj-W3E" firstAttribute="trailing" secondItem="uKd-aZ-ttO" secondAttribute="leading" id="mhq-TY-hE9"/>
                                             <constraint firstItem="wv9-oc-lqv" firstAttribute="bottom" secondItem="134-tY-mey" secondAttribute="bottom" id="nLC-eU-xHG"/>
                                             <constraint firstItem="83b-JB-Sep" firstAttribute="leading" secondItem="AvL-7g-Kxg" secondAttribute="trailing" id="nUm-Me-yFI"/>
@@ -221,6 +244,7 @@
                                             <constraint firstItem="0Fj-vn-5MY" firstAttribute="width" secondItem="VAC-am-8mQ" secondAttribute="width" id="s69-Hg-AQP"/>
                                             <constraint firstItem="Dvc-7J-SpY" firstAttribute="leading" secondItem="134-tY-mey" secondAttribute="leading" id="xRF-kn-G6j"/>
                                             <constraint firstItem="rFZ-hj-W3E" firstAttribute="width" secondItem="WEr-eh-1dQ" secondAttribute="width" id="y0c-7m-2Kb"/>
+                                            <constraint firstItem="CtI-E6-0K1" firstAttribute="top" secondItem="134-tY-mey" secondAttribute="top" id="yXU-F2-kTf"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -258,6 +282,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="compositeView" destination="HZz-uK-rkW" id="2Ef-eu-XzY"/>
+                        <outlet property="fontButton" destination="83b-JB-Sep" id="sDx-Cn-HYd"/>
                         <outlet property="imageView" destination="voH-g1-nBx" id="sjb-3e-ZSB"/>
                         <outlet property="panelContainerView" destination="Bhy-Xl-dgD" id="tyq-9M-q1J"/>
                         <outlet property="saveButton" destination="mu1-t8-Xoi" id="5Jv-Dz-Pwp"/>
@@ -271,6 +296,7 @@
                         <outletCollection property="toolbarButtons" destination="83b-JB-Sep" collectionClass="NSMutableArray" id="Sbr-Ze-gni"/>
                         <outletCollection property="toolbarButtons" destination="WEr-eh-1dQ" collectionClass="NSMutableArray" id="70S-rS-man"/>
                         <outletCollection property="toolbarButtons" destination="rFZ-hj-W3E" collectionClass="NSMutableArray" id="aau-IN-aXN"/>
+                        <outletCollection property="toolbarButtons" destination="CtI-E6-0K1" collectionClass="NSMutableArray" id="gpx-Yo-yf6"/>
                         <segue destination="Z2J-7X-HK0" kind="show" identifier="ShowComposite" id="pZ9-vR-q1v"/>
                     </connections>
                 </viewController>
@@ -493,6 +519,7 @@
         <image name="ic_font_bigger" width="29" height="29"/>
         <image name="ic_font_choice" width="29" height="29"/>
         <image name="ic_image" width="29" height="29"/>
+        <image name="ic_reference" width="29" height="29"/>
         <image name="ic_text_shadow" width="29" height="29"/>
         <image name="nature_2.jpg" width="2048" height="2048"/>
         <systemColor name="systemBackgroundColor">

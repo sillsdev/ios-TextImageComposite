@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TICFontAttributesPanelView" customModule="TextImageComposite" customModuleProvider="target">
+            <connections>
+                <outlet property="boldButton" destination="xCM-eq-o5G" id="Okk-ae-y1B"/>
+                <outlet property="fontSizeSlider" destination="TYZ-c2-oWw" id="6DF-mq-jFW"/>
+                <outlet property="italicsButton" destination="sQ3-l8-1vK" id="E6d-IJ-smj"/>
+                <outlet property="letterSpacingSlider" destination="VfJ-zH-EXw" id="BSf-w0-0jb"/>
+                <outlet property="sizeIcon" destination="5at-fI-iTM" id="mep-bP-qWc"/>
+                <outlet property="spacingIcon" destination="nWg-fh-dnp" id="z9y-8B-kW6"/>
+                <outletCollection property="actionButtons" destination="xCM-eq-o5G" collectionClass="NSMutableArray" id="XHH-fc-BNP"/>
+                <outletCollection property="actionButtons" destination="sQ3-l8-1vK" collectionClass="NSMutableArray" id="yw6-tL-1wB"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="140"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xCM-eq-o5G" userLabel="boldButton">
+                    <rect key="frame" x="120" y="21" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="14h-8U-gP2"/>
+                        <constraint firstAttribute="height" constant="30" id="Q2f-aW-gJw"/>
+                    </constraints>
+                    <state key="normal" image="ic_format_bold"/>
+                    <connections>
+                        <action selector="boldButtonPressed:" destination="-1" eventType="touchUpInside" id="oej-AZ-DoQ"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sQ3-l8-1vK" userLabel="italicsButton">
+                    <rect key="frame" x="170" y="21" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="3bJ-wx-TO4"/>
+                        <constraint firstAttribute="width" constant="30" id="xu4-wl-YB3"/>
+                    </constraints>
+                    <state key="normal" image="ic_format_italic"/>
+                    <connections>
+                        <action selector="italicsButtonPressed:" destination="-1" eventType="touchUpInside" id="q62-kk-TyV"/>
+                    </connections>
+                </button>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_font_bigger" translatesAutoresizingMaskIntoConstraints="NO" id="5at-fI-iTM" userLabel="textSizeIcon">
+                    <rect key="frame" x="16" y="58.5" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="53J-dH-3LI"/>
+                        <constraint firstAttribute="height" constant="30" id="uef-lP-4Sy"/>
+                    </constraints>
+                </imageView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_letter_spacing" translatesAutoresizingMaskIntoConstraints="NO" id="nWg-fh-dnp" userLabel="letterSpacingIcon">
+                    <rect key="frame" x="16" y="96.5" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="NDj-th-I0Z"/>
+                        <constraint firstAttribute="width" constant="30" id="wZc-LI-P2N"/>
+                    </constraints>
+                </imageView>
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="15" minValue="10" maxValue="40" translatesAutoresizingMaskIntoConstraints="NO" id="TYZ-c2-oWw" userLabel="textSizeSlider">
+                    <rect key="frame" x="52" y="58.5" width="250" height="31"/>
+                    <connections>
+                        <action selector="fontSizeValueChanged:" destination="-1" eventType="valueChanged" id="eeO-Kb-b0H"/>
+                    </connections>
+                </slider>
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="25" translatesAutoresizingMaskIntoConstraints="NO" id="VfJ-zH-EXw" userLabel="letterSpacingSlider">
+                    <rect key="frame" x="52" y="96.5" width="250" height="31"/>
+                    <connections>
+                        <action selector="letterSpacingValueChanged:" destination="-1" eventType="valueChanged" id="VV2-Ja-gNb"/>
+                    </connections>
+                </slider>
+            </subviews>
+            <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="TYZ-c2-oWw" secondAttribute="trailing" constant="20" symbolic="YES" id="0vI-Dx-a6g"/>
+                <constraint firstItem="TYZ-c2-oWw" firstAttribute="centerY" secondItem="5at-fI-iTM" secondAttribute="centerY" id="1Hv-f5-txc"/>
+                <constraint firstItem="xCM-eq-o5G" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" constant="-25" id="3Za-9b-nHQ"/>
+                <constraint firstItem="sQ3-l8-1vK" firstAttribute="centerY" secondItem="xCM-eq-o5G" secondAttribute="centerY" id="FaG-Tn-vHW"/>
+                <constraint firstItem="5at-fI-iTM" firstAttribute="firstBaseline" secondItem="xCM-eq-o5G" secondAttribute="baseline" constant="8" symbolType="layoutAnchor" id="IAB-n1-5V8"/>
+                <constraint firstItem="5at-fI-iTM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="Keh-Qk-Rt6"/>
+                <constraint firstAttribute="trailing" secondItem="VfJ-zH-EXw" secondAttribute="trailing" constant="20" symbolic="YES" id="RZo-0y-xWh"/>
+                <constraint firstItem="nWg-fh-dnp" firstAttribute="centerX" secondItem="5at-fI-iTM" secondAttribute="centerX" id="XS7-hk-aiJ"/>
+                <constraint firstItem="VfJ-zH-EXw" firstAttribute="centerY" secondItem="nWg-fh-dnp" secondAttribute="centerY" id="XlD-vL-ady"/>
+                <constraint firstItem="TYZ-c2-oWw" firstAttribute="leading" secondItem="5at-fI-iTM" secondAttribute="trailing" constant="8" symbolic="YES" id="aPz-ER-klO"/>
+                <constraint firstItem="VfJ-zH-EXw" firstAttribute="leading" secondItem="nWg-fh-dnp" secondAttribute="trailing" constant="8" symbolic="YES" id="apc-bP-nSa"/>
+                <constraint firstItem="nWg-fh-dnp" firstAttribute="firstBaseline" secondItem="5at-fI-iTM" secondAttribute="baseline" constant="8" symbolType="layoutAnchor" id="fgF-VZ-5YM"/>
+                <constraint firstItem="xCM-eq-o5G" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="21" id="n1o-I1-K2o"/>
+                <constraint firstItem="sQ3-l8-1vK" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" constant="25" id="nDx-Xp-Nb0"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="139" y="153"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ic_font_bigger" width="29" height="29"/>
+        <image name="ic_format_bold" width="29" height="29"/>
+        <image name="ic_format_italic" width="29" height="29"/>
+        <image name="ic_letter_spacing" width="29" height="29"/>
+    </resources>
+</document>

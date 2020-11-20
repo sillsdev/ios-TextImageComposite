@@ -40,7 +40,7 @@ public class TICColorPanelView : TICFormatPanelView, SBColorFormatDelegate
     
     @IBAction func handleBlackButtonTap(_ sender: UIButton) {
         
-        self.delegate.setStyle(.color, "black")
+        self.delegate.setStyle(.color, "black", .both)
         sender.isSelected = true
         whiteButton.isSelected = false
         customColorButton.isSelected = false
@@ -48,7 +48,7 @@ public class TICColorPanelView : TICFormatPanelView, SBColorFormatDelegate
     
     @IBAction func handleWhiteButtonTap(_ sender: UIButton) {
         
-        self.delegate.setStyle(.color, "white")
+        self.delegate.setStyle(.color, "white", .both)
         sender.isSelected = true
         blackButton.isSelected = false
         customColorButton.isSelected = false
@@ -61,7 +61,7 @@ public class TICColorPanelView : TICFormatPanelView, SBColorFormatDelegate
     
     @IBAction func handleOpacitySliderValueChanged(_ sender: UISlider) {
         
-        self.delegate.setStyle(.opacity, String(sender.value) )
+        self.delegate.setStyle(.opacity, String(sender.value), .both )
     }
     
     public func customColorWasSelected() {
@@ -87,7 +87,7 @@ public class TICColorPickerPanelView : TICFormatPanelView, ColorPickerDelegate {
     
     func pickedColor(_ color: UIColor) {
         
-        self.delegate.setStyle(.color, color.toHex()!)
+        self.delegate.setStyle(.color, color.toHex()!, .both)
         self.colorDelegate?.customColorWasSelected()
     }
 }

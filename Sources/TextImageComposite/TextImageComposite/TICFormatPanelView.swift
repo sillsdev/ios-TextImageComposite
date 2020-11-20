@@ -9,8 +9,13 @@
 import Foundation
 import UIKit
 
+public enum TextSection {
+    case text
+    case reference
+    case both
+}
 public protocol TICFormatDelegate {
-    func setStyle(_ property : CSSProperty, _ value : String)
+    func setStyle(_ property : CSSProperty, _ value : String, _ section : TextSection)
     func setBodyStyle(_ property : CSSProperty, _ value : String)
     
     func setImageBlur(_ alpha: CGFloat)
@@ -96,6 +101,7 @@ public class TICFormatPanelView : UIView
             for btn : UIButton in actionButtons {
                 btn.setImage(btn.imageView?.image?.withRenderingMode(.alwaysTemplate), for: .normal)
                 btn.tintColor = TICConfig.instance.theme.accentColor
+                btn.backgroundColor = TICConfig.instance.theme.buttonBackgroundColor
             }
         }
     }
@@ -127,5 +133,17 @@ public class TICFormatPanelView : UIView
     @IBAction func handleCloseButtonTap(_ sender: UIButton) {
         
         self.superview?.insertSubview(self, at: 0)
+    }
+    
+    func flipButtonSelected(button: UIButton, attribute: CSSProperty, selectedValue: String, unselectedValue: String, section: TextSection) {
+        if button.isSelected {
+            button.isSelected = false
+            button.tintColor = TICConfig.instance.theme.accentColor
+            self.delegate.setStyle(attribute, unselectedValue, section)
+        } else {
+            button.isSelected = true
+            button.tintColor = TICConfig.instance.theme.tintColor
+            self.delegate.setStyle(attribute, selectedValue, section)
+        }
     }
 }

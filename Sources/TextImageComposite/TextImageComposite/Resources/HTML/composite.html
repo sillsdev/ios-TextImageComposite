@@ -2,7 +2,7 @@
 <head>
     
     <style>
-        .editor {
+        .editorr {
             font-family:"Andika New Basic";
             font-size: 15pt;
             color: #FFFFFF;
@@ -12,6 +12,16 @@
             
         }
     
+        .editort {
+            font-family:"Andika New Basic";
+            font-size: 15pt;
+            color: #FFFFFF;
+            line-height: 25px;
+            text-align: justify;
+            text-shadow: 1px 1px 1px #333333;
+            
+        }
+
         #scripture {
             margin-bottom: 20px;
         }
@@ -26,11 +36,15 @@
             $("#reference").html(r);
         }
 
-        function setStyle(property, value)
+        function setStyleText(property, value)
         {
-            $('.editor').css(property, value);
+            $('.editort').css(property, value);
         }
     
+        function setStyleReference(property, value)
+        {
+            $('.editorr').css(property, value);
+        }
         function setBodyStyle(property, value)
         {
             $('body').css(property, value);
@@ -44,7 +58,7 @@
 </head>
 <body style="background-color: transparent;">
 
-<div id="text" class="editor" ></div>
-<div id="reference" class="editor" ></div>
+<div id="text" class="editort" ></div>
+<div id="reference" class="editorr" ></div>
 
 </body>

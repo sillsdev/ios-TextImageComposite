@@ -34,6 +34,8 @@ public enum CSSProperty: String {
     case fontSize = "font-size"
     case color = "color"
     case fontFamily = "font-family"
+    case fontStyle = "font-style"
+    case fontWeight = "font-weight"
     case lineHeight = "line-height"
     case letterSpacing = "letter-spacing"
     case opacity = "opacity"
@@ -44,10 +46,20 @@ public enum CSSProperty: String {
 
 extension TICCustomizeViewController : TICFormatDelegate {
     
-    public func setStyle(_ property : CSSProperty, _ value : String) {
-        //print("\(property) - \(value)")
-        let js = "setStyle('\(property.rawValue)', '\(value)');"
-        self.webView.stringByEvaluatingJavaScript(from: js)
+    public func setStyle(_ property : CSSProperty, _ value : String, _ section : TextSection) {
+        switch section {
+        case .text:
+            let js = "setStyleText('\(property.rawValue)', '\(value)');"
+            self.webView.stringByEvaluatingJavaScript(from: js)
+        case .reference:
+            let js = "setStyleReference('\(property.rawValue)', '\(value)');"
+            self.webView.stringByEvaluatingJavaScript(from: js)
+        case .both:
+            let js = "setStyleText('\(property.rawValue)', '\(value)');"
+            self.webView.stringByEvaluatingJavaScript(from: js)
+            let js2 = "setStyleReference('\(property.rawValue)', '\(value)');"
+            self.webView.stringByEvaluatingJavaScript(from: js2)
+        }
     }
     
     public func setBodyStyle(_ property : CSSProperty, _ value : String) {
@@ -79,14 +91,17 @@ public class TICCustomizeViewController : UIViewController
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var compositeView: UIView!
     @IBOutlet weak var toolbarDividersView: UIView!
+    @IBOutlet weak var fontButton: UIButton!
     
-    var fontSizeView: TICFontPanelView!
+    var fontSizeView: TICFontAttributesPanelView!
+    var referenceSizeView: TICReferenceFontPanelView!
     var fontDetailsView: TICFontDetailsPanelView!
     var colorView: TICColorPanelView!
     var colorDetailsView: TICColorPickerPanelView!
     var extrasView: TICExtrasPanelView!
     var marginsView: TICMarginsPanelView!
     var alignmentView: TICAlignmentPanelView!
+    var fontView: TICFontPanelView!
     
     @IBOutlet weak var panelContainerView: UIView!
     
@@ -131,7 +146,9 @@ public class TICCustomizeViewController : UIViewController
         self.extrasView = TICExtrasPanelView(frame: f)
         self.colorView = TICColorPanelView(frame: f)
         self.colorDetailsView = TICColorPickerPanelView(frame: f)
-        self.fontSizeView = TICFontPanelView(frame: f)
+        self.fontView = TICFontPanelView(frame: f)
+        self.fontSizeView = TICFontAttributesPanelView(frame: f)
+        self.referenceSizeView = TICReferenceFontPanelView(frame: f)
         self.fontDetailsView = TICFontDetailsPanelView(frame: f)
 
         panels.append(self.alignmentView)
@@ -141,6 +158,8 @@ public class TICCustomizeViewController : UIViewController
         panels.append(self.colorDetailsView)
         panels.append(self.fontDetailsView)
         panels.append(self.fontSizeView)
+        panels.append(self.fontView)
+        panels.append(self.referenceSizeView)
    
         panels.forEach {
             self.panelContainerView.addSubview($0)
@@ -148,7 +167,8 @@ public class TICCustomizeViewController : UIViewController
             $0.delegate = self
         }
         
-        fontSizeView.setAvailableFonts(fonts: TICConfig.instance.fonts)
+        fontView.setAvailableFonts(fonts: TICConfig.instance.fonts)
+        fontView.fontDelegate = fontDetailsView
         fontSizeView.fontDelegate = fontDetailsView
         colorDetailsView.colorDelegate = colorView
         
@@ -158,7 +178,7 @@ public class TICCustomizeViewController : UIViewController
     func setupToolbarButtons() {
         var i = 0
         for btn : UIButton in self.toolbarButtons {
-            if(i == 0) {
+             if (btn == fontButton) {
                 self.selectedToolbarButton = btn
                 btn.isSelected = true
             }
@@ -213,9 +233,13 @@ public class TICCustomizeViewController : UIViewController
     
     @IBAction func handleFontButtonTap(_ sender: Any) {
         
-        self.panelContainerView.addSubview(self.fontSizeView)
+        self.panelContainerView.addSubview(self.fontView)
     }
     
+    @IBAction func handleFontSizeButtonTap(_ sender: Any) {
+        
+        self.panelContainerView.addSubview(self.fontSizeView)
+    }
     @IBAction func handleColorButtonTap(_ sender: Any) {
         
         self.panelContainerView.addSubview(self.colorView)
@@ -231,6 +255,9 @@ public class TICCustomizeViewController : UIViewController
         self.panelContainerView.addSubview(self.extrasView)
     }
     
+    @IBAction func handleReferenceFontButtonTap(_ sender: Any) {
+        self.panelContainerView.addSubview(self.referenceSizeView)
+    }
     override public func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "ShowComposite" {

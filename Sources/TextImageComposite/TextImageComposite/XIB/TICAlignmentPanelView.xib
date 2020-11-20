@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TICAlignmentPanelView" customModule="TICExample" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TICAlignmentPanelView" customModule="TextImageComposite" customModuleProvider="target">
             <connections>
                 <outletCollection property="actionButtons" destination="PvM-x4-L9C" collectionClass="NSMutableArray" id="mch-4a-2Dm"/>
                 <outletCollection property="selectableButtons" destination="zdS-gy-giW" collectionClass="NSMutableArray" id="hIu-yf-K8I"/>
@@ -22,7 +21,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="140"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zdS-gy-giW">
+                <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zdS-gy-giW" userLabel="Button1">
                     <rect key="frame" x="40" y="40" width="30" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="7Kj-yO-0ZN"/>
@@ -33,7 +32,7 @@
                         <action selector="handleJustificationButtonTap:" destination="-1" eventType="touchUpInside" id="HCf-B0-bRJ"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wpu-fg-JxV">
+                <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wpu-fg-JxV" userLabel="Button2">
                     <rect key="frame" x="110" y="40" width="30" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="407-u9-unR"/>
@@ -44,7 +43,7 @@
                         <action selector="handleJustificationButtonTap:" destination="-1" eventType="touchUpInside" id="tgh-ow-VKP"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iYo-b2-kbw">
+                <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iYo-b2-kbw" userLabel="Button3">
                     <rect key="frame" x="250" y="40" width="30" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="Ehe-wW-JZZ"/>
@@ -55,7 +54,7 @@
                         <action selector="handleJustificationButtonTap:" destination="-1" eventType="touchUpInside" id="ur3-wy-l5G"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="phF-oh-y5n">
+                <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="phF-oh-y5n" userLabel="Button4">
                     <rect key="frame" x="180" y="40" width="30" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="DKw-Vj-A93"/>
@@ -66,7 +65,7 @@
                         <action selector="handleJustificationButtonTap:" destination="-1" eventType="touchUpInside" id="NLY-Pk-Xpd"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PvM-x4-L9C">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PvM-x4-L9C" userLabel="Button5">
                     <rect key="frame" x="140" y="100" width="40" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="LxH-3I-zk2"/>
