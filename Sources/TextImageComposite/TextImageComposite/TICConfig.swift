@@ -47,6 +47,7 @@ public struct TICTheme {
     var tintColor: UIColor!
     var highlightColor: UIColor!
     var buttonBackgroundColor: UIColor!
+    var viewBackgroundColor: UIColor!
     
     func formatControl(_ control : UIControl) {
         control.tintColor = self.tintColor
@@ -95,6 +96,7 @@ public struct TICTheme {
         theme.contrastColor = UIColor.colorWithHex("FFFFFF")
         theme.highlightColor = UIColor.colorWithHex("d1d2d1")
         theme.buttonBackgroundColor = UIColor.init(red: 0.820, green: 0.820, blue: 0.839, alpha: 1) // systemGray4
+        theme.viewBackgroundColor = UIColor.init(red: 0.933, green: 0.933, blue: 0.933, alpha: 1)
         
         return theme
     }
@@ -108,6 +110,7 @@ public struct TICTheme {
         theme.contrastColor = .yellow
         theme.highlightColor = .brown
         theme.buttonBackgroundColor = .cyan
+        theme.viewBackgroundColor = .white
 
         return theme
     }

@@ -53,6 +53,8 @@
 		6386EDDA2565A1DF003E4506 /* TICFontAttributesPanelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6386EDD92565A1DF003E4506 /* TICFontAttributesPanelView.xib */; };
 		63AA59592567FF9300A8D5BB /* TICReferenceFontPanelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63AA59582567FF9300A8D5BB /* TICReferenceFontPanelView.xib */; };
 		63AA595D2568004A00A8D5BB /* TICReferenceFontPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AA595C2568004A00A8D5BB /* TICReferenceFontPanelView.swift */; };
+		63AA596A2568204600A8D5BB /* TICFontPanelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AA59682568204600A8D5BB /* TICFontPanelTableViewCell.swift */; };
+		63AA596B2568204600A8D5BB /* TICFontPanelTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63AA59692568204600A8D5BB /* TICFontPanelTableViewCell.xib */; };
 		63F1595A255AECA200ED404A /* TextImageComposite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63F15950255AECA200ED404A /* TextImageComposite.framework */; };
 /* End PBXBuildFile section */
 
@@ -114,6 +116,8 @@
 		6386EDD92565A1DF003E4506 /* TICFontAttributesPanelView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TICFontAttributesPanelView.xib; sourceTree = "<group>"; };
 		63AA59582567FF9300A8D5BB /* TICReferenceFontPanelView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TICReferenceFontPanelView.xib; sourceTree = "<group>"; };
 		63AA595C2568004A00A8D5BB /* TICReferenceFontPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TICReferenceFontPanelView.swift; sourceTree = "<group>"; };
+		63AA59682568204600A8D5BB /* TICFontPanelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TICFontPanelTableViewCell.swift; sourceTree = "<group>"; };
+		63AA59692568204600A8D5BB /* TICFontPanelTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TICFontPanelTableViewCell.xib; sourceTree = "<group>"; };
 		63F15950255AECA200ED404A /* TextImageComposite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TextImageComposite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63F15959255AECA200ED404A /* TextImageCompositeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TextImageCompositeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -147,6 +151,7 @@
 				6343C6B5255C3CB700177A45 /* TICImageCell.swift */,
 				6343C6CF255C3CB700177A45 /* TICFormatPanelView.swift */,
 				6343C6B4255C3CB700177A45 /* TICFontPanelView.swift */,
+				63AA59682568204600A8D5BB /* TICFontPanelTableViewCell.swift */,
 				6343C6CD255C3CB700177A45 /* TICAlignmentPanelView.swift */,
 				6343C6CE255C3CB700177A45 /* TICColorPanelView.swift */,
 				6343C6D8255C3CB700177A45 /* TICExtrasPanelView.swift */,
@@ -169,6 +174,7 @@
 				6343C6B3255C3CB700177A45 /* TICExtrasPanelView.xib */,
 				6386EDD92565A1DF003E4506 /* TICFontAttributesPanelView.xib */,
 				6343C6B2255C3CB700177A45 /* TICFontPanelView.xib */,
+				63AA59692568204600A8D5BB /* TICFontPanelTableViewCell.xib */,
 				6343C6B1255C3CB700177A45 /* TICFontDetailsPanelView.xib */,
 				6343C6B0255C3CB700177A45 /* TICColorPanelView.xib */,
 				6343C6AF255C3CB700177A45 /* TICMarginsPanelView.xib */,
@@ -377,6 +383,7 @@
 				6343C6EE255C3CB700177A45 /* align_center@2x.png in Resources */,
 				6343C6F4255C3CB700177A45 /* font@2x.png in Resources */,
 				6343C6DF255C3CB700177A45 /* TICMarginsPanelView.xib in Resources */,
+				63AA596B2568204600A8D5BB /* TICFontPanelTableViewCell.xib in Resources */,
 				6343C6DD255C3CB700177A45 /* TICColorPickerPanelView.xib in Resources */,
 				6343C6F6255C3CB700177A45 /* close@2x.png in Resources */,
 				6343C6F3255C3CB700177A45 /* alignment@2x.png in Resources */,
@@ -402,6 +409,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6343C706255C3CB800177A45 /* TICConfig.swift in Sources */,
+				63AA596A2568204600A8D5BB /* TICFontPanelTableViewCell.swift in Sources */,
 				6343C6E5255C3CB700177A45 /* TICImageCell.swift in Sources */,
 				6343C700255C3CB700177A45 /* ColorPicker.swift in Sources */,
 				6343C6FE255C3CB700177A45 /* CachedImageView.swift in Sources */,

@@ -68,6 +68,7 @@ public class TICFormatPanelView : UIView
         view = loadNib()
         addSubview(view)
         view.constrainToFillSuperview()
+        view.backgroundColor = TICConfig.instance.theme.viewBackgroundColor
         
         setupActionButtons()
         setupSelectableButtons()

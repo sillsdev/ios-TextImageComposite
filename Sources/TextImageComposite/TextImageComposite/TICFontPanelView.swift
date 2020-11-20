@@ -9,83 +9,72 @@
 import Foundation
 import UIKit
 
-public class TICFontPanelView : TICFormatPanelView
+public class TICFontPanelView : TICFormatPanelView, UITableViewDataSource, UITableViewDelegate
 {
-    @IBOutlet weak var sizeLabel: UILabel!
-    @IBOutlet weak var fontSizeLabel: UILabel!
-    @IBOutlet weak var fontScrollView: UIScrollView!
-    @IBOutlet weak var fontSizeSlider: UISlider!
     
-    var selectedFontButton: UIButton? = nil
+    @IBOutlet weak var fontTableView: UITableView!
     var availableFonts: [TICFont] = []
+    var uiFonts: [UIFont] = []
+    override init(frame: CGRect) {
+        
+        super.init(frame: frame)
+        fontTableView.delegate = self
+        fontTableView.dataSource = self
+        fontTableView.register(UINib(nibName: "TICFontPanelTableViewCell", bundle: TICConfig.instance.bundle), forCellReuseIdentifier: "FontTableCell")
+        fontTableView.backgroundColor = TICConfig.instance.theme.viewBackgroundColor
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        
+        super.init(coder: aDecoder)
+    }
     
     override public func layoutSubviews() {
         
         super.layoutSubviews()
-        
-        TICConfig.instance.theme.formatControl(fontSizeSlider)
-        TICConfig.instance.theme.formatLabel(sizeLabel)
-        TICConfig.instance.theme.formatLabel(fontSizeLabel)
-        
-        sizeLabel.text = TICConfig.instance.locale.size
-    }
-    
-    @IBAction func handleTextSizeSliderValueChanged(_ sender: UISlider) {
-        
-        let pointSize = String(Int(sender.value)) + "pt"
-        self.delegate.setStyle(.fontSize, pointSize, .both)
-        self.fontDelegate?.setLineHeightFromFontSize(Int(sender.value))
-        fontSizeLabel.text = pointSize
-    }
-    
-    @IBAction func handleFontDetailsButtonTap(_ sender: Any) {
-        
-        self.delegate.showFontDetails()
+ 
     }
     
     func setAvailableFonts(fonts : [TICFont]) {
-        
-        availableFonts = fonts
-        
-        var x : Int = 20
-        var i : Int = 0
         for f : TICFont in fonts {
-            let button = UIButton(type: .custom)
-            let str : NSString = f.title as NSString
-            let font = UIFont(name: f.fontFamily, size: 17) //should add if let
-            if(i == 0) {
-                button.isSelected = true
-                selectedFontButton = button
+            if let font = UIFont(name: f.fontFamily, size: 17) {
+                availableFonts.append(f)
+                uiFonts.append(font)
             }
-            button.tag = i
-            button .setTitle(f.title, for: .normal)
-            button.setTitleColor(TICConfig.instance.theme.accentColor, for: .normal)
-            button.setTitleColor(TICConfig.instance.theme.tintColor, for: .selected)
-            button.titleLabel?.font = font
-            button.addTarget(self, action: #selector(handleFontButtonTap(_:)), for: .touchUpInside)
-            let stringSize = str.size(withAttributes: [NSAttributedString.Key.font: font!])
-            let buttonSize = Int(stringSize.width) + 20
-            button.frame = CGRect(x: x, y: 0, width: buttonSize, height: Int(fontScrollView.frame.size.height))
-            x = x + buttonSize + 10
-            i = i + 1
-            fontScrollView.addSubview(button)
         }
-        
-        fontScrollView.contentSize = CGSize(width: x, height: Int(fontScrollView.frame.size.height))
+    }
+
+    // MARK: - TableViewDataSource
+
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return availableFonts.count
+    }
+
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FontTableCell", for: indexPath) as! TICFontPanelTableViewCell
+        let ticFont = availableFonts[indexPath.row]
+        cell.cellFont = ticFont
+        cell.contentView.backgroundColor = TICConfig.instance.theme.viewBackgroundColor
+        cell.tintColor = TICConfig.instance.theme.tintColor
+        return cell
     }
     
-    @objc func handleFontButtonTap(_ sender: UIButton) {
-        
-        if let btn = selectedFontButton {
-            btn.isSelected = false
-        }
-        
-        selectedFontButton = sender
-        selectedFontButton?.isSelected = true
-        
-        let f = self.availableFonts[sender.tag]
-        self.delegate.setStyle(.fontFamily, f.fontFamily, .both)
+    // MARK: - UITableViewDelegate
+
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! TICFontPanelTableViewCell
+        cell.accessoryView?.backgroundColor = TICConfig.instance.theme.viewBackgroundColor
+        self.delegate.setStyle(.fontFamily, cell.cellFont!.fontFamily, .both)
     }
+
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+
 }
 
 public class TICFontDetailsPanelView : TICFormatPanelView, SBFontFormatDelegate

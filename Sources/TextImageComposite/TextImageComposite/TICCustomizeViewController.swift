@@ -158,8 +158,8 @@ public class TICCustomizeViewController : UIViewController
         panels.append(self.colorDetailsView)
         panels.append(self.fontDetailsView)
         panels.append(self.fontSizeView)
-        panels.append(self.fontView)
         panels.append(self.referenceSizeView)
+        panels.append(self.fontView) // Last appended is view displayed on startup
    
         panels.forEach {
             self.panelContainerView.addSubview($0)
