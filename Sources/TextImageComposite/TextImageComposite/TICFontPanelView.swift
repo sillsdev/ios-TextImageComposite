@@ -14,7 +14,6 @@ public class TICFontPanelView : TICFormatPanelView, UITableViewDataSource, UITab
     
     @IBOutlet weak var fontTableView: UITableView!
     var availableFonts: [TICFont] = []
-    var uiFonts: [UIFont] = []
     override init(frame: CGRect) {
         
         super.init(frame: frame)
@@ -36,10 +35,11 @@ public class TICFontPanelView : TICFormatPanelView, UITableViewDataSource, UITab
     }
     
     func setAvailableFonts(fonts : [TICFont]) {
+        // Check how many valid fonts are defined
+        availableFonts = []
         for f : TICFont in fonts {
-            if let font = UIFont(name: f.fontFamily, size: 17) {
+            if UIFont(name: f.fontFamily, size: 17) != nil {
                 availableFonts.append(f)
-                uiFonts.append(font)
             }
         }
     }

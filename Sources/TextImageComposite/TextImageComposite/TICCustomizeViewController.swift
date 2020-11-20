@@ -13,7 +13,6 @@ public enum Alignment: Int {
     case left = 100
     case center = 101
     case right = 102
-    case justify = 103
     
     func stringValue() -> String {
         switch self {
@@ -21,8 +20,6 @@ public enum Alignment: Int {
             return "center"
         case .right:
             return "right"
-        case .justify:
-            return "justify"
         default:
             return "left"
         }
@@ -274,5 +271,6 @@ extension TICCustomizeViewController : UIWebViewDelegate {
         
         let js = "reset('\(TICConfig.instance.text)', '\(TICConfig.instance.reference)')"
         self.webView.stringByEvaluatingJavaScript(from: js)
+        self.setStyle(.textAlign, Alignment.center.stringValue(), .both )
     }
 }

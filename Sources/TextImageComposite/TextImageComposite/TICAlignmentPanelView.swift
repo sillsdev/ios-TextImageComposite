@@ -14,7 +14,7 @@ public class TICAlignmentPanelView : TICFormatPanelView
     override public func layoutSubviews() {
         super.layoutSubviews()
         
-        if let btn = viewWithTag(103) as? UIButton {
+        if let btn = viewWithTag(101) as? UIButton {
             self.handleSelectableButtonTap(btn)
         }
     }
