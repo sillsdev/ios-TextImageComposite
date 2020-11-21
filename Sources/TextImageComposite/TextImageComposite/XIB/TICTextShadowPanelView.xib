@@ -9,7 +9,15 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TICTextShadowPanelView" customModule="TextImageComposite" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TICTextShadowPanelView" customModule="TextImageComposite" customModuleProvider="target">
+            <connections>
+                <outlet property="resizeIcon" destination="bhu-QV-82e" id="E6y-fK-UUx"/>
+                <outlet property="resizeSlider" destination="fSR-a5-fUX" id="Zfk-tQ-WzI"/>
+                <outletCollection property="selectableButtons" destination="5ZI-bQ-BQi" collectionClass="NSMutableArray" id="3oX-Xb-8j7"/>
+                <outletCollection property="selectableButtons" destination="2jH-aF-gFN" collectionClass="NSMutableArray" id="ADp-kh-e5m"/>
+                <outletCollection property="selectableButtons" destination="cLa-Cx-OAx" collectionClass="NSMutableArray" id="9u0-Nw-sRT"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="320" height="140"/>
@@ -22,6 +30,9 @@
                         <constraint firstAttribute="width" constant="30" id="tIp-zE-gbt"/>
                     </constraints>
                     <state key="normal" image="ic_text_shadow"/>
+                    <connections>
+                        <action selector="shadowButtonPressed:" destination="-1" eventType="touchUpInside" id="YGK-V0-h5v"/>
+                    </connections>
                 </button>
                 <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ZI-bQ-BQi">
                     <rect key="frame" x="75" y="23" width="30" height="30"/>
@@ -30,6 +41,9 @@
                         <constraint firstAttribute="width" constant="30" id="7Xw-id-PgF"/>
                     </constraints>
                     <state key="normal" image="ic_text_none"/>
+                    <connections>
+                        <action selector="noShadowButtonPressed:" destination="-1" eventType="touchUpInside" id="Syw-dT-dqI"/>
+                    </connections>
                 </button>
                 <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cLa-Cx-OAx">
                     <rect key="frame" x="215" y="23" width="30" height="30"/>
@@ -38,6 +52,9 @@
                         <constraint firstAttribute="width" constant="30" id="Xgv-Ee-z9q"/>
                     </constraints>
                     <state key="normal" image="ic_text_glow"/>
+                    <connections>
+                        <action selector="glowButtonPressed:" destination="-1" eventType="touchUpInside" id="NJ0-8j-adR"/>
+                    </connections>
                 </button>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_resize" translatesAutoresizingMaskIntoConstraints="NO" id="bhu-QV-82e">
                     <rect key="frame" x="16" y="61" width="30" height="30"/>
@@ -46,8 +63,11 @@
                         <constraint firstAttribute="height" constant="30" id="ToM-gw-8i6"/>
                     </constraints>
                 </imageView>
-                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="fSR-a5-fUX">
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="1" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="fSR-a5-fUX">
                     <rect key="frame" x="52" y="61" width="254" height="31"/>
+                    <connections>
+                        <action selector="resizeSliderValueChanged:" destination="-1" eventType="valueChanged" id="ppO-zE-MGD"/>
+                    </connections>
                 </slider>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

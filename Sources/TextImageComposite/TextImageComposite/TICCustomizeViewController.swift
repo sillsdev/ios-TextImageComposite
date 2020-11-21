@@ -39,6 +39,7 @@ public enum CSSProperty: String {
     case marginTop = "margin-top"
     case marginLeft = "margin-left"
     case marginRight = "margin-right"
+    case textShadow = "text-shadow"
 }
 
 extension TICCustomizeViewController : TICFormatDelegate {
