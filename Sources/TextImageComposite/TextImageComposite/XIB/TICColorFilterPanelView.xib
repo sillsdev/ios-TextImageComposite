@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TICColorFilterPanelView" customModule="TextImageComposite" customModuleProvider="target">
+            <connections>
+                <outlet property="brightnessSlider" destination="f3l-Rj-ETX" id="dkU-Gc-hu5"/>
+                <outlet property="contrastSlider" destination="KOI-me-DsH" id="ejQ-O4-x8g"/>
+                <outlet property="saturationSlider" destination="v4r-3h-bW1" id="Me1-4b-Cqb"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="140"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" minimumValueImage="ic_brightness" translatesAutoresizingMaskIntoConstraints="NO" id="f3l-Rj-ETX">
+                    <rect key="frame" x="18" y="20" width="284" height="31"/>
+                </slider>
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" minimumValueImage="ic_contrast" translatesAutoresizingMaskIntoConstraints="NO" id="KOI-me-DsH">
+                    <rect key="frame" x="18" y="58" width="284" height="31"/>
+                </slider>
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" minimumValueImage="ic_saturation" translatesAutoresizingMaskIntoConstraints="NO" id="v4r-3h-bW1">
+                    <rect key="frame" x="18" y="96" width="284" height="31"/>
+                </slider>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="f3l-Rj-ETX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" symbolic="YES" id="1IU-aJ-Onq"/>
+                <constraint firstItem="v4r-3h-bW1" firstAttribute="centerX" secondItem="KOI-me-DsH" secondAttribute="centerX" id="2GW-kl-2oa"/>
+                <constraint firstItem="KOI-me-DsH" firstAttribute="firstBaseline" secondItem="f3l-Rj-ETX" secondAttribute="baseline" constant="8" symbolType="layoutAnchor" id="CVJ-fl-Ms6"/>
+                <constraint firstItem="KOI-me-DsH" firstAttribute="centerX" secondItem="f3l-Rj-ETX" secondAttribute="centerX" id="MFc-Rd-2Px"/>
+                <constraint firstItem="v4r-3h-bW1" firstAttribute="firstBaseline" secondItem="KOI-me-DsH" secondAttribute="baseline" constant="8" symbolType="layoutAnchor" id="Mrv-44-gpO"/>
+                <constraint firstItem="v4r-3h-bW1" firstAttribute="width" secondItem="KOI-me-DsH" secondAttribute="width" id="g8V-ND-eu9"/>
+                <constraint firstItem="f3l-Rj-ETX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="nGn-X9-Sgg"/>
+                <constraint firstItem="KOI-me-DsH" firstAttribute="width" secondItem="f3l-Rj-ETX" secondAttribute="width" id="ntd-re-5Gp"/>
+                <constraint firstAttribute="trailing" secondItem="f3l-Rj-ETX" secondAttribute="trailing" constant="20" symbolic="YES" id="vLv-Pd-87F"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="139" y="137"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ic_brightness" width="29" height="29"/>
+        <image name="ic_contrast" width="29" height="29"/>
+        <image name="ic_saturation" width="29" height="29"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -9,13 +9,11 @@ import UIKit
 
 class TICTextShadowPanelView : TICFormatPanelView {
 
-    @IBOutlet weak var resizeIcon: UIImageView!
     @IBOutlet weak var resizeSlider: UISlider!
     override public func layoutSubviews() {
         super.layoutSubviews()
         resizeSlider.value = 1
         TICConfig.instance.theme.formatControl(resizeSlider)
-        TICConfig.instance.theme.formatImage(resizeIcon)
         if let btn = viewWithTag(100) as? UIButton {
             // Set No Shadow as default
             self.handleSelectableButtonTap(btn)

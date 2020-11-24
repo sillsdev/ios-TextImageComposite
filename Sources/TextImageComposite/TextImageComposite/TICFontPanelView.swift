@@ -77,7 +77,7 @@ public class TICFontPanelView : TICFormatPanelView, UITableViewDataSource, UITab
 
 }
 
-public class TICFontDetailsPanelView : TICFormatPanelView, SBFontFormatDelegate
+public class TICFontDetailsPanelView : TICFormatPanelView
 {
     @IBOutlet weak var lineHeightStepper: UIStepper!
     @IBOutlet weak var letterSpacingStepper: UIStepper!

@@ -14,16 +14,13 @@ public class TICColorPanelView : TICFormatPanelView, SBColorFormatDelegate
     @IBOutlet weak var whiteButton : UIButton!
     @IBOutlet weak var blackButton : UIButton!
     @IBOutlet weak var customColorButton : UIButton!
-    @IBOutlet weak var opacityLabel : UILabel!
     @IBOutlet weak var opacitySlider : UISlider!
     
     override public func layoutSubviews() {
         
         super.layoutSubviews()
         self.whiteButton.isSelected = true
-        TICConfig.instance.theme.formatLabel(opacityLabel)
         TICConfig.instance.theme.formatControl(opacitySlider)
-        opacityLabel.text = TICConfig.instance.locale.opacity
         whiteButton.layer.borderColor = UIColor.darkGray.cgColor
         whiteButton.layer.borderWidth = 1
         

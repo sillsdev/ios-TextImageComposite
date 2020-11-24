@@ -26,23 +26,20 @@
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nature_2.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="voH-g1-nBx" userLabel="Image View" customClass="BlurredImageView" customModule="TextImageComposite" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                                     </imageView>
-                                    <webView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ijn-Pb-vFH">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BQs-Sd-x6w">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="IDA-r8-eeI" id="5ph-eH-Aib"/>
-                                        </connections>
-                                    </webView>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="leading" secondItem="voH-g1-nBx" secondAttribute="leading" id="0jf-le-RBe"/>
                                     <constraint firstAttribute="width" secondItem="HZz-uK-rkW" secondAttribute="height" multiplier="1:1" id="3sL-uD-kaX"/>
-                                    <constraint firstItem="Ijn-Pb-vFH" firstAttribute="leading" secondItem="HZz-uK-rkW" secondAttribute="leading" id="5gL-8N-3KH"/>
                                     <constraint firstAttribute="trailing" secondItem="voH-g1-nBx" secondAttribute="trailing" id="9lL-Rf-flb"/>
-                                    <constraint firstAttribute="trailing" secondItem="Ijn-Pb-vFH" secondAttribute="trailing" id="CZk-1U-GoA"/>
-                                    <constraint firstItem="Ijn-Pb-vFH" firstAttribute="top" secondItem="HZz-uK-rkW" secondAttribute="top" id="Ptw-gv-Xql"/>
-                                    <constraint firstAttribute="bottom" secondItem="Ijn-Pb-vFH" secondAttribute="bottom" id="hJm-yN-UXE"/>
+                                    <constraint firstAttribute="trailing" secondItem="BQs-Sd-x6w" secondAttribute="trailing" id="I3s-DA-76G"/>
+                                    <constraint firstItem="BQs-Sd-x6w" firstAttribute="top" secondItem="HZz-uK-rkW" secondAttribute="top" id="MY0-H6-NX3"/>
+                                    <constraint firstItem="BQs-Sd-x6w" firstAttribute="leading" secondItem="HZz-uK-rkW" secondAttribute="leading" id="Uk1-uc-noy"/>
+                                    <constraint firstAttribute="bottom" secondItem="BQs-Sd-x6w" secondAttribute="bottom" id="o5g-aI-uct"/>
                                     <constraint firstItem="voH-g1-nBx" firstAttribute="top" secondItem="HZz-uK-rkW" secondAttribute="top" id="oyG-Da-g4P"/>
                                     <constraint firstAttribute="bottom" secondItem="voH-g1-nBx" secondAttribute="bottom" id="rsJ-Zp-hZz"/>
                                 </constraints>
@@ -101,6 +98,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rFZ-hj-W3E" userLabel="Button 7">
                                                 <rect key="frame" x="606" y="0.0" width="100" height="44"/>
                                                 <state key="normal" image="ic_brightness"/>
+                                                <connections>
+                                                    <action selector="colorFilterButtonTap:" destination="IDA-r8-eeI" eventType="touchUpInside" id="TlA-iQ-ztG"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UwX-2S-yGO" userLabel="Button 8">
                                                 <rect key="frame" x="707" y="0.0" width="100" height="44"/>
@@ -290,7 +290,7 @@
                         <outlet property="panelContainerView" destination="Bhy-Xl-dgD" id="tyq-9M-q1J"/>
                         <outlet property="saveButton" destination="mu1-t8-Xoi" id="5Jv-Dz-Pwp"/>
                         <outlet property="toolbarDividersView" destination="wv9-oc-lqv" id="BF0-78-ayE"/>
-                        <outlet property="webView" destination="Ijn-Pb-vFH" id="Bme-Si-LeA"/>
+                        <outlet property="webContainerView" destination="BQs-Sd-x6w" id="EqR-ru-OpI"/>
                         <outletCollection property="toolbarButtons" destination="VAC-am-8mQ" collectionClass="NSMutableArray" id="YfA-nQ-rKU"/>
                         <outletCollection property="toolbarButtons" destination="0Fj-vn-5MY" collectionClass="NSMutableArray" id="xCu-2j-jWD"/>
                         <outletCollection property="toolbarButtons" destination="4uY-kz-Wgg" collectionClass="NSMutableArray" id="YFi-ua-d2J"/>

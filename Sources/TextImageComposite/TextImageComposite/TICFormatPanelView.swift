@@ -13,6 +13,7 @@ public enum TextSection {
     case text
     case reference
     case both
+    case div
 }
 public protocol TICFormatDelegate {
     func setStyle(_ property : CSSProperty, _ value : String, _ section : TextSection)
@@ -27,6 +28,10 @@ public protocol TICFormatDelegate {
 public protocol SBFontFormatDelegate
 {
     func setLineHeightFromFontSize(_ size : Int)
+    func getDivLeftMargin() -> Int
+    func setDivLeftMargin(newMargin: Int)
+    func getDivWidth() -> Int
+    func setDivWidth(newWidth: Int)
 }
 
 public protocol SBColorFormatDelegate

@@ -12,7 +12,6 @@ class TICReferenceFontPanelView : TICFormatPanelView {
     @IBOutlet weak var boldButton: UIButton!
     @IBOutlet weak var italicsButton: UIButton!
     @IBOutlet weak var fontSizeSlider: UISlider!
-    @IBOutlet weak var sizeIcon: UIImageView!
 
     override public func layoutSubviews() {
         
@@ -20,7 +19,6 @@ class TICReferenceFontPanelView : TICFormatPanelView {
         
         TICConfig.instance.theme.formatControl(fontSizeSlider)
         fontSizeSlider.value = 15
-        TICConfig.instance.theme.formatImage(sizeIcon)
     }
     
     @IBAction func boldButtonPressed(_ sender: Any) {

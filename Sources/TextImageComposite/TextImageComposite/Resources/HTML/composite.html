@@ -21,11 +21,12 @@
             text-shadow: 0px 0px 0px #333333;
             
         }
-
+        .editor {
+            margin-top: 0px;
+        }
         #scripture {
             margin-bottom: 20px;
         }
-    
     </style>
     
     <script src="jquery-3.2.1.min.js"></script>
@@ -45,6 +46,11 @@
         {
             $('.editorr').css(property, value);
         }
+    
+        function setStyleDiv(property, value)
+        {
+            $('.editor').css(property, value)
+        }
         function setBodyStyle(property, value)
         {
             $('body').css(property, value);
@@ -57,8 +63,10 @@
     </script>
 </head>
 <body style="background-color: transparent;">
-
+    <header><meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no'></header>
+<div id="all" class="editor">
 <div id="text" class="editort" ></div>
 <div id="reference" class="editorr" ></div>
+</div>
 
 </body>

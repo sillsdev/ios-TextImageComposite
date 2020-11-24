@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import WebKit
+import os.log
 
 public enum Alignment: Int {
     case left = 100
@@ -40,6 +42,7 @@ public enum CSSProperty: String {
     case marginLeft = "margin-left"
     case marginRight = "margin-right"
     case textShadow = "text-shadow"
+    case maxWidth = "max-width"
 }
 
 extension TICCustomizeViewController : TICFormatDelegate {
@@ -48,22 +51,25 @@ extension TICCustomizeViewController : TICFormatDelegate {
         switch section {
         case .text:
             let js = "setStyleText('\(property.rawValue)', '\(value)');"
-            self.webView.stringByEvaluatingJavaScript(from: js)
+            self.webView.evaluateJavaScript(js, completionHandler: nil)
         case .reference:
             let js = "setStyleReference('\(property.rawValue)', '\(value)');"
-            self.webView.stringByEvaluatingJavaScript(from: js)
+            self.webView.evaluateJavaScript(js, completionHandler: nil)
         case .both:
             let js = "setStyleText('\(property.rawValue)', '\(value)');"
-            self.webView.stringByEvaluatingJavaScript(from: js)
+            self.webView.evaluateJavaScript(js, completionHandler: nil)
             let js2 = "setStyleReference('\(property.rawValue)', '\(value)');"
-            self.webView.stringByEvaluatingJavaScript(from: js2)
+            self.webView.evaluateJavaScript(js2, completionHandler: nil)
+        case .div:
+            let js = "setStyleDiv('\(property.rawValue)', '\(value)');"
+            self.webView.evaluateJavaScript(js, completionHandler: nil)
         }
     }
     
     public func setBodyStyle(_ property : CSSProperty, _ value : String) {
         //print("\(property) - \(value)")
         let js = "setBodyStyle('\(property.rawValue)', '\(value)');"
-        self.webView.stringByEvaluatingJavaScript(from: js)
+        self.webView.evaluateJavaScript(js, completionHandler: nil)
     }
     
     public func setImageBlur(_ alpha: CGFloat) {
@@ -86,10 +92,11 @@ extension TICCustomizeViewController : TICFormatDelegate {
 public class TICCustomizeViewController : UIViewController
 {
     @IBOutlet weak var imageView: BlurredImageView!
-    @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var compositeView: UIView!
     @IBOutlet weak var toolbarDividersView: UIView!
     @IBOutlet weak var fontButton: UIButton!
+    @IBOutlet weak var webContainerView: UIView!
+    var webView: WKWebView!
     
     var fontSizeView: TICFontAttributesPanelView!
     var referenceSizeView: TICReferenceFontPanelView!
@@ -101,6 +108,8 @@ public class TICCustomizeViewController : UIViewController
     var alignmentView: TICAlignmentPanelView!
     var fontView: TICFontPanelView!
     var shadowView: TICTextShadowPanelView!
+    var colorFilterView: TICColorFilterPanelView!
+    var widthInPixels: CGFloat = 320
     
     @IBOutlet weak var panelContainerView: UIView!
     
@@ -115,6 +124,19 @@ public class TICCustomizeViewController : UIViewController
     override public func viewDidLoad()
     {
         super.viewDidLoad()
+        let contentController = createContentController()
+        let webConfiguration = WKWebViewConfiguration()
+        webConfiguration.userContentController = contentController
+        // Fix Fullscreen mode for video and autoplay
+        webConfiguration.preferences.javaScriptEnabled = true
+        webConfiguration.allowsInlineMediaPlayback = true
+        webView = WKWebView(frame: self.webContainerView.bounds, configuration: webConfiguration)
+        webView.navigationDelegate = self
+        webView.contentMode = .scaleAspectFill
+        webView.backgroundColor = .clear
+        webView.scrollView.backgroundColor = .clear
+        webView.isOpaque = false
+        webContainerView.addSubview(webView)
         
         self.saveButton.title = TICConfig.instance.locale.save
         
@@ -123,10 +145,12 @@ public class TICCustomizeViewController : UIViewController
         
         let request = URLRequest(url: TICConfig.instance.bundle.url(forResource: "composite", withExtension: "html")!)
         
-        self.webView.loadRequest(request)
+        self.webView.load(request)
+//        self.webView.loadRequest(request)
         
         self.imageView.image = TICConfig.instance.selectedImage
         
+        //widthInPixels = imageView.frame.width * UIScreen.main.scale
         self.setupEditorPanels()
         self.setupToolbarButtons()
         
@@ -134,7 +158,10 @@ public class TICCustomizeViewController : UIViewController
             $0.backgroundColor = TICConfig.instance.theme.highlightColor
         }
     }
-    
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        webView.frame = self.webContainerView.bounds
+    }
     func setupEditorPanels()
     {
         var panels: [TICFormatPanelView] = []
@@ -150,7 +177,10 @@ public class TICCustomizeViewController : UIViewController
         self.referenceSizeView = TICReferenceFontPanelView(frame: f)
         self.fontDetailsView = TICFontDetailsPanelView(frame: f)
         self.shadowView = TICTextShadowPanelView(frame: f)
+        self.colorFilterView = TICColorFilterPanelView(frame: f)
 
+        alignmentView.imageWidth = widthInPixels
+        
         panels.append(self.alignmentView)
         panels.append(self.marginsView)
         panels.append(self.extrasView)
@@ -160,6 +190,7 @@ public class TICCustomizeViewController : UIViewController
         panels.append(self.fontSizeView)
         panels.append(self.referenceSizeView)
         panels.append(self.shadowView)
+        panels.append(self.colorFilterView)
         panels.append(self.fontView) // Last appended is view displayed on startup
    
         panels.forEach {
@@ -169,8 +200,9 @@ public class TICCustomizeViewController : UIViewController
         }
         
         fontView.setAvailableFonts(fonts: TICConfig.instance.fonts)
-        fontView.fontDelegate = fontDetailsView
-        fontSizeView.fontDelegate = fontDetailsView
+        fontView.fontDelegate = alignmentView
+        fontSizeView.fontDelegate = alignmentView
+        marginsView.fontDelegate = alignmentView
         colorDetailsView.colorDelegate = colorView
         
         self.view.addSubview(self.panelContainerView)
@@ -260,6 +292,9 @@ public class TICCustomizeViewController : UIViewController
         self.panelContainerView.addSubview(self.referenceSizeView)
     }
     
+    @IBAction func colorFilterButtonTap(_ sender: Any) {
+        self.panelContainerView.addSubview(self.colorFilterView)
+    }
     @IBAction func handleTextShadowTap(_ sender: Any) {
         self.panelContainerView.addSubview(self.shadowView)
     }
@@ -271,14 +306,55 @@ public class TICCustomizeViewController : UIViewController
             }
         }
     }
+    
+    func createContentController() -> WKUserContentController {
+        let contentController = WKUserContentController()
+//        contentController.add(self, name: "addVersePosition")
+        return contentController
+    }
+    func getBodyWidth() -> CGFloat {
+        let anyWidth = TICCustomizeViewController.evaluateJavaScript("document.body.clientWidth", webView: webView)
+        let floatWidth = ((anyWidth as? CGFloat) != nil) ? anyWidth as! CGFloat : 320
+
+      return floatWidth
+    }
+    static func evaluateJavaScript(_ script: String, webView: WKWebView?) -> AnyObject {
+        var finished = false
+        var retVal: AnyObject = 0 as AnyObject
+        let failureDate = Date(timeIntervalSinceNow: 3.0)
+        webView!.evaluateJavaScript(script) {(result, error) in
+            if error == nil {
+                retVal = result as AnyObject
+            }
+            finished = true
+        }
+        while !finished {
+            RunLoop.current.run(mode: .default, before: Date(timeIntervalSinceNow: 3.0))
+            let now = Date()
+            if (now > failureDate) {
+                finished = true
+                if #available(iOS 10.0, *) {
+                    os_log("TIC: evaluateJavaScript Didn't complete prior to failure time")
+                } else {
+                    NSLog("TIC: evaluateJavaScript Didn't complete prior to failure time")
+                }
+            }
+        }
+        return retVal
+    }
+    
 }
 
-extension TICCustomizeViewController : UIWebViewDelegate {
-    
-    public func webViewDidFinishLoad(_ webView: UIWebView) {
-        
+extension TICCustomizeViewController : WKNavigationDelegate {
+    // MARK: - WKNavigationDelegate
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         let js = "reset('\(TICConfig.instance.text)', '\(TICConfig.instance.reference)')"
-        self.webView.stringByEvaluatingJavaScript(from: js)
+        self.webView.evaluateJavaScript(js, completionHandler: nil)
         self.setStyle(.textAlign, Alignment.center.stringValue(), .both )
+        self.widthInPixels = self.getBodyWidth()
+        if alignmentView != nil {
+            alignmentView.imageWidth = widthInPixels
+        }
     }
+
 }

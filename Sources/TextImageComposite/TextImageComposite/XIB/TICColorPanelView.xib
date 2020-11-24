@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TICColorPanelView" customModule="TICExample" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TICColorPanelView" customModule="TextImageComposite" customModuleProvider="target">
             <connections>
                 <outlet property="blackButton" destination="c4V-vV-Ny3" id="9Cr-G2-Bez"/>
                 <outlet property="customColorButton" destination="4bc-DP-yXb" id="7PT-mh-Rsq"/>
-                <outlet property="opacityLabel" destination="K4x-0S-tEK" id="5jH-hh-CJa"/>
                 <outlet property="opacitySlider" destination="17S-xx-E8l" id="y0E-Tj-Cel"/>
                 <outlet property="whiteButton" destination="0rT-Ch-X6Z" id="5ib-fn-XED"/>
             </connections>
@@ -22,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="140"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.20000000298023224" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="17S-xx-E8l">
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.20000000298023224" maxValue="1" minimumValueImage="ic_opacity" translatesAutoresizingMaskIntoConstraints="NO" id="17S-xx-E8l">
                     <rect key="frame" x="33" y="92" width="254" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="29" id="SSa-ty-FNA"/>
@@ -45,7 +43,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c4V-vV-Ny3">
                     <rect key="frame" x="137" y="30" width="46" height="30"/>
-                    <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="backgroundColor" systemColor="darkTextColor"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="EIa-6S-rVb"/>
                         <constraint firstAttribute="width" constant="46" id="UPp-yk-wq7"/>
@@ -67,20 +65,12 @@
                         <action selector="handleWhiteButtonTap:" destination="-1" eventType="touchUpInside" id="NQk-ox-BNZ"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Opacity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K4x-0S-tEK">
-                    <rect key="frame" x="35" y="71" width="59.5" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="4bc-DP-yXb" firstAttribute="top" secondItem="c4V-vV-Ny3" secondAttribute="top" id="2K4-bv-aE0"/>
                 <constraint firstItem="17S-xx-E8l" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="35" id="3B2-25-vOW"/>
                 <constraint firstItem="c4V-vV-Ny3" firstAttribute="leading" secondItem="0rT-Ch-X6Z" secondAttribute="trailing" id="9qX-cg-92f"/>
-                <constraint firstItem="K4x-0S-tEK" firstAttribute="leading" secondItem="17S-xx-E8l" secondAttribute="leading" id="AHk-7v-Vz6"/>
-                <constraint firstItem="17S-xx-E8l" firstAttribute="top" secondItem="K4x-0S-tEK" secondAttribute="bottom" id="GOH-aa-a6o"/>
                 <constraint firstItem="4bc-DP-yXb" firstAttribute="leading" secondItem="c4V-vV-Ny3" secondAttribute="trailing" id="NOm-13-VOa"/>
                 <constraint firstAttribute="bottom" secondItem="17S-xx-E8l" secondAttribute="bottom" constant="19" id="bIg-W7-xWP"/>
                 <constraint firstItem="c4V-vV-Ny3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="cta-cM-Fvj"/>
@@ -97,5 +87,9 @@
     <resources>
         <image name="check_black" width="16" height="16"/>
         <image name="check_white" width="16" height="16"/>
+        <image name="ic_opacity" width="29" height="29"/>
+        <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

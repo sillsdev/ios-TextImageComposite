@@ -13,8 +13,6 @@ class TICFontAttributesPanelView : TICFormatPanelView {
     @IBOutlet weak var italicsButton: UIButton!
     @IBOutlet weak var fontSizeSlider: UISlider!
     @IBOutlet weak var letterSpacingSlider: UISlider!
-    @IBOutlet weak var sizeIcon: UIImageView!
-    @IBOutlet weak var spacingIcon: UIImageView!
     
     override public func layoutSubviews() {
         
@@ -23,8 +21,6 @@ class TICFontAttributesPanelView : TICFormatPanelView {
         TICConfig.instance.theme.formatControl(fontSizeSlider)
         fontSizeSlider.value = 15
         TICConfig.instance.theme.formatControl(letterSpacingSlider)
-        TICConfig.instance.theme.formatImage(sizeIcon)
-        TICConfig.instance.theme.formatImage(spacingIcon)
     }
     @IBAction func italicsButtonPressed(_ sender: Any) {
         flipButtonSelected(button: italicsButton, attribute: .fontStyle, selectedValue: "italic", unselectedValue: "normal", section: .text)
