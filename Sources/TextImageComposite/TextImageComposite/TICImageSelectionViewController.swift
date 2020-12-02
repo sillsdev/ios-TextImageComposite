@@ -67,6 +67,7 @@ public class TICImageSelectionViewController : UIViewController {
     override public func viewDidLoad() {
         
         super.viewDidLoad()
+        TICConfig.instance.active = true
         
         self.cancelButton.title = TICConfig.instance.locale.cancel
         
@@ -84,6 +85,7 @@ public class TICImageSelectionViewController : UIViewController {
         self.previewImageBottomConstraint.constant = -previewImageHeightConstraint.constant
         
         self.setupBlackout()
+
     }
     
     func setupBlackout() {
@@ -129,7 +131,7 @@ public class TICImageSelectionViewController : UIViewController {
     }
     
     @IBAction func handleCancelButtonTap(_ sender: Any) {
-        
+        TICConfig.instance.active = false
         self.dismiss(animated: true, completion: nil)
     }
     

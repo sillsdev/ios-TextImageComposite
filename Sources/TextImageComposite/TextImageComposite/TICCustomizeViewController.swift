@@ -71,21 +71,70 @@ extension TICCustomizeViewController : TICFormatDelegate {
         let js = "setBodyStyle('\(property.rawValue)', '\(value)');"
         self.webView.evaluateJavaScript(js, completionHandler: nil)
     }
-    
-    public func setImageBlur(_ alpha: CGFloat) {
-        self.imageView.addBlur(alpha)
+    public func getDivHeight() -> CGFloat {
+        let allHeight = TICCustomizeViewController.evaluateJavaScript("document.getElementById('all').clientHeight", webView: webView)
+        let floatHeight = ((allHeight as? CGFloat) != nil ? allHeight as! CGFloat : 320)
+        return floatHeight
     }
-    
-    public func showFontDetails() {
-        self.panelContainerView.addSubview(self.fontDetailsView)
-    }
-    
     public func showColorDetails() {
         self.panelContainerView.addSubview(self.colorDetailsView)
     }
-    
-    public func showMargins() {
-        self.panelContainerView.addSubview(self.marginsView)
+    public func setImageBrightness(_ value: Float) {
+        brightnessValue = value
+        //filter.setValue(value, forKey: kCIInputBrightnessKey)
+        getFinalImageView()
+    }
+    public func setImageContrast(_ value: Float) {
+        contrastValue = value
+        //filter.setValue(value, forKey: kCIInputContrastKey)
+        getFinalImageView()
+    }
+    public func setImageSaturation(_ value: Float) {
+        saturationValue = value
+        //filter.setValue(value, forKey: kCIInputSaturationKey)
+        getFinalImageView()
+    }
+    public func setImageBlur(_ value: Float) {
+        blurValue = value
+        getFinalImageView()
+    }
+    func getFinalImageView() {
+        if #available(iOS 10.0, *) {
+            let outputImage = beginImage.applyingFilter("CIColorControls",
+                                                    parameters: [
+                                                        kCIInputBrightnessKey: brightnessValue,
+                                                        kCIInputSaturationKey: saturationValue,
+                                                        kCIInputContrastKey: contrastValue
+                                                    ])
+                .applyingGaussianBlur(sigma: Double(blurValue))
+                .cropped(to: beginImage.extent)
+            imageView.image = UIImage(ciImage: outputImage)
+        } else {
+            let outputImage = beginImage.applyingFilter("CIColorControls",
+                                                    parameters: [
+                                                        kCIInputBrightnessKey: brightnessValue,
+                                                        kCIInputSaturationKey: saturationValue,
+                                                        kCIInputContrastKey: contrastValue
+                                                    ])
+            imageView.image = UIImage(ciImage: outputImage)
+            self.imageView.addBlur(CGFloat(blurValue/10))
+        }
+        
+        
+   /*
+        
+        if let ciImage = filter.value(forKey: "outputImage") as? CIImage {
+            if #available(iOS 10.0, *) {
+                let blurredCIImage = ciImage.applyingGaussianBlur(sigma: Double(blurValue))
+                let croppedImage = blurredCIImage.cropped(to: ciImage.extent)
+                imageView.image = UIImage(ciImage: croppedImage)
+            } else {
+                imageView.image = UIImage(ciImage: ciImage)
+                self.imageView.addBlur(CGFloat(blurValue/10))
+            }
+            
+        }
+ */
     }
 }
 
@@ -100,16 +149,23 @@ public class TICCustomizeViewController : UIViewController
     
     var fontSizeView: TICFontAttributesPanelView!
     var referenceSizeView: TICReferenceFontPanelView!
-    var fontDetailsView: TICFontDetailsPanelView!
     var colorView: TICColorPanelView!
     var colorDetailsView: TICColorPickerPanelView!
     var extrasView: TICExtrasPanelView!
-    var marginsView: TICMarginsPanelView!
     var alignmentView: TICAlignmentPanelView!
-    var fontView: TICFontPanelView!
     var shadowView: TICTextShadowPanelView!
     var colorFilterView: TICColorFilterPanelView!
     var widthInPixels: CGFloat = 320
+    var filter: CIFilter!;
+    var blurValue: Float = 0
+    var contrastValue: Float = 1
+    var brightnessValue: Float = 0
+    var saturationValue: Float = 1
+    var beginImage: CIImage!
+    
+    var fontViewController: TICFontPanelViewController!
+    var lastX: Int = 0
+    var lastY: Int = 0
     
     @IBOutlet weak var panelContainerView: UIView!
     
@@ -120,10 +176,12 @@ public class TICCustomizeViewController : UIViewController
     var compositeImage: UIImage?
     var fontSize: Int = 15
     var selectedToolbarButton: UIButton? = nil
+    var fontFormatDelegate: SBFontFormatDelegate!
 
     override public func viewDidLoad()
     {
         super.viewDidLoad()
+        view.backgroundColor = TICConfig.instance.theme.viewBackgroundColor
         let contentController = createContentController()
         let webConfiguration = WKWebViewConfiguration()
         webConfiguration.userContentController = contentController
@@ -137,6 +195,9 @@ public class TICCustomizeViewController : UIViewController
         webView.scrollView.backgroundColor = .clear
         webView.isOpaque = false
         webContainerView.addSubview(webView)
+        filter = CIFilter(name: "CIColorControls")
+        beginImage = CIImage(image: TICConfig.instance.selectedImage!)
+        filter.setValue(beginImage, forKey: kCIInputImageKey)
         
         self.saveButton.title = TICConfig.instance.locale.save
         
@@ -157,53 +218,54 @@ public class TICCustomizeViewController : UIViewController
         toolbarDividersView.subviews.forEach {
             $0.backgroundColor = TICConfig.instance.theme.highlightColor
         }
-    }
+     }
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         webView.frame = self.webContainerView.bounds
     }
+
     func setupEditorPanels()
     {
         var panels: [TICFormatPanelView] = []
 
         let f = self.panelContainerView.bounds
         self.alignmentView = TICAlignmentPanelView(frame: f)
-        self.marginsView = TICMarginsPanelView(frame: f)
         self.extrasView = TICExtrasPanelView(frame: f)
         self.colorView = TICColorPanelView(frame: f)
         self.colorDetailsView = TICColorPickerPanelView(frame: f)
-        self.fontView = TICFontPanelView(frame: f)
         self.fontSizeView = TICFontAttributesPanelView(frame: f)
         self.referenceSizeView = TICReferenceFontPanelView(frame: f)
-        self.fontDetailsView = TICFontDetailsPanelView(frame: f)
         self.shadowView = TICTextShadowPanelView(frame: f)
         self.colorFilterView = TICColorFilterPanelView(frame: f)
+        
+        let fontPanelStoryboard =  UIStoryboard(name: "TICFontPanel", bundle: TICConfig.instance.bundle)
+        fontViewController = fontPanelStoryboard.instantiateViewController(withIdentifier: "FontPanelViewController") as? TICFontPanelViewController
+        
 
         alignmentView.imageWidth = widthInPixels
         
         panels.append(self.alignmentView)
-        panels.append(self.marginsView)
         panels.append(self.extrasView)
         panels.append(self.colorView)
         panels.append(self.colorDetailsView)
-        panels.append(self.fontDetailsView)
         panels.append(self.fontSizeView)
         panels.append(self.referenceSizeView)
         panels.append(self.shadowView)
         panels.append(self.colorFilterView)
-        panels.append(self.fontView) // Last appended is view displayed on startup
-   
+        
         panels.forEach {
             self.panelContainerView.addSubview($0)
             $0.constrainToFillSuperview()
             $0.delegate = self
         }
+        self.panelContainerView.addSubview(fontViewController.view)
+        fontViewController.view.constrainToFillSuperview()
         
-        fontView.setAvailableFonts(fonts: TICConfig.instance.fonts)
-        fontView.fontDelegate = alignmentView
+        fontViewController.delegate = self
+        fontViewController.setAvailableFonts(fonts: TICConfig.instance.fonts)
         fontSizeView.fontDelegate = alignmentView
-        marginsView.fontDelegate = alignmentView
         colorDetailsView.colorDelegate = colorView
+        fontFormatDelegate = alignmentView
         
         self.view.addSubview(self.panelContainerView)
     }
@@ -242,6 +304,7 @@ public class TICCustomizeViewController : UIViewController
             ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             present(ac, animated: true, completion: nil)
              */
+            TICConfig.instance.active = false
             self.performSegue(withIdentifier: "ShowComposite", sender: self)
         } else {
             let ac = UIAlertController(title: "Save error", message: error?.localizedDescription, preferredStyle: .alert)
@@ -266,7 +329,8 @@ public class TICCustomizeViewController : UIViewController
     
     @IBAction func handleFontButtonTap(_ sender: Any) {
         
-        self.panelContainerView.addSubview(self.fontView)
+        //self.panelContainerView.addSubview(self.fontView)
+        self.panelContainerView.addSubview(self.fontViewController.view)
     }
     
     @IBAction func handleFontSizeButtonTap(_ sender: Any) {
@@ -298,6 +362,28 @@ public class TICCustomizeViewController : UIViewController
     @IBAction func handleTextShadowTap(_ sender: Any) {
         self.panelContainerView.addSubview(self.shadowView)
     }
+    @IBAction func handlePan(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: view)
+        if gesture.state == UIGestureRecognizer.State.began {
+            lastX = 0
+            lastY = 0
+        } else {
+            let newX = Int(translation.x)
+            if newX != lastX {
+                let adjustment = newX - lastX
+                lastX = newX
+                let leftMargin = fontFormatDelegate.getDivLeftMargin()
+                fontFormatDelegate.setDivLeftMargin(newMargin: leftMargin + adjustment)
+            }
+            let newY = Int(translation.y)
+            if newY != lastY {
+                let yAdjustment = newY - lastY
+                 lastY = newY
+                let topMargin = fontFormatDelegate.getDivTopMargin()
+                fontFormatDelegate.setDivTopMargin(newMargin: topMargin + yAdjustment)
+            }
+        }
+    }
     override public func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "ShowComposite" {
@@ -318,6 +404,7 @@ public class TICCustomizeViewController : UIViewController
 
       return floatWidth
     }
+
     static func evaluateJavaScript(_ script: String, webView: WKWebView?) -> AnyObject {
         var finished = false
         var retVal: AnyObject = 0 as AnyObject

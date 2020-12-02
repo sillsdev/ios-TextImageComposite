@@ -15,8 +15,6 @@ public class TICAlignmentPanelView : TICFormatPanelView, SBFontFormatDelegate
     @IBOutlet weak var lineSpacingSlider: UISlider!
     @IBOutlet weak var textWidthSlider: UISlider!
     
-    @IBOutlet weak var leftMarginSlider: UISlider!
-    
     var lineHeight : Int = 25
     var imageWidth : CGFloat = 320 {
         didSet {
@@ -25,15 +23,11 @@ public class TICAlignmentPanelView : TICFormatPanelView, SBFontFormatDelegate
                 textWidthSlider.maximumValue = Float(imageWidth)
                 textWidthSlider.value = Float(imageWidth)
             }
-            if leftMarginSlider != nil {
-                leftMarginSlider.maximumValue = Float(imageWidth / 2) - 20
-                leftMarginSlider.minimumValue = Float(-imageWidth / 2) - 20
-                leftMarginSlider.value = 0
-            }
         }
     }
     var divWidth : Int = 320
     var divLeftMargin : Int = 0
+    var divTopMargin : Int = 0
     
     override public func layoutSubviews() {
         super.layoutSubviews()
@@ -48,6 +42,7 @@ public class TICAlignmentPanelView : TICFormatPanelView, SBFontFormatDelegate
         textWidthSlider.minimumValue = 100
         textWidthSlider.value = Float(imageWidth)
         divLeftMargin = 0
+        divTopMargin = 0
         divWidth = Int(imageWidth)
     }
     
@@ -61,17 +56,11 @@ public class TICAlignmentPanelView : TICFormatPanelView, SBFontFormatDelegate
     @IBAction func textWidthValueChanged(_ sender: UISlider) {
         let newDivWidth = Int(sender.value)
         setDivWidth(newWidth: newDivWidth)
-        leftMarginSlider.value = Float(divLeftMargin)
     }
     @IBAction func handleJustificationButtonTap(_ sender: UIButton) {
         
         self.delegate.setStyle(.textAlign, (Alignment(rawValue: sender.tag)?.stringValue())!, .both )
     }
-    
-    @IBAction func leftMarginSliderValueChanged(_ sender: UISlider) {
-        setDivLeftMargin(newMargin: Int(sender.value))
-    }
-    
     
     // MARK: SBFontFormatDelegate
     public func setLineHeightFromFontSize(_ size : Int) {
@@ -97,6 +86,23 @@ public class TICAlignmentPanelView : TICFormatPanelView, SBFontFormatDelegate
         }
         setAdjustedLeftMargin()
     }
+    public func getDivTopMargin() -> Int {
+        return divTopMargin
+    }
+    public func setDivTopMargin(newMargin: Int) {
+        var divHeight = Int(delegate.getDivHeight())
+        let maxIntHeight = Int(Float(imageWidth)) // ImageHeight = ImageWidth
+        if (divHeight > maxIntHeight) {
+            divHeight = maxIntHeight
+        }
+        let maxAdjustment =  maxIntHeight - divHeight
+        var adjustment = newMargin > maxAdjustment ? maxAdjustment : newMargin
+        adjustment = newMargin < 0 ? 0 : adjustment
+        divTopMargin = adjustment
+        if (divTopMargin > 0) {
+            self.delegate.setBodyStyle(.marginTop, String(divTopMargin) + "px")
+        }
+    }
     public func getDivWidth() -> Int {
         return divWidth
     }
@@ -114,48 +120,5 @@ public class TICAlignmentPanelView : TICFormatPanelView, SBFontFormatDelegate
         let adjustment = (Int(imageWidth) - divWidth) / 2
         let newLeftMargin = divLeftMargin + adjustment
         self.delegate.setBodyStyle(.marginLeft, String(newLeftMargin)+"px" )
-    }
-}
-
-public class TICMarginsPanelView : TICFormatPanelView {
-    
-    @IBOutlet weak var topLabel: UILabel!
-    @IBOutlet weak var leftLabel: UILabel!
-    @IBOutlet weak var rightLabel: UILabel!
-    
-    @IBOutlet var sliders : [UISlider]!
-    @IBOutlet weak var leftMarginSlider: UISlider!
-    
-    override public func layoutSubviews() {
-        
-        super.layoutSubviews()
-        
-        for slider : UISlider in sliders
-        {
-            TICConfig.instance.theme.formatControl(slider)
-        }
-        leftMarginSlider.value = 0
-        topLabel.text = TICConfig.instance.locale.top
-        leftLabel.text = TICConfig.instance.locale.left
-        rightLabel.text = TICConfig.instance.locale.right
-        
-        TICConfig.instance.theme.formatLabel(topLabel)
-        TICConfig.instance.theme.formatLabel(leftLabel)
-        TICConfig.instance.theme.formatLabel(rightLabel)
-    }
-    
-    @IBAction func handleTopSliderValueChanged(_ sender: UISlider) {
-        
-        self.delegate.setBodyStyle(.marginTop, String(Int(300 * sender.value))+"px" )
-    }
-    
-    @IBAction func handleLeftSliderValueChanged(_ sender: UISlider) {
-        fontDelegate!.setDivLeftMargin(newMargin: Int(sender.value))
-        //self.delegate.setBodyStyle(.marginLeft, String(Int(300 * sender.value))+"px" )
-    }
-    
-    @IBAction func handleRightSliderValueChanged(_ sender: UISlider) {
-        
-        self.delegate.setBodyStyle(.marginRight, String(Int(300 * sender.value))+"px" )
     }
 }

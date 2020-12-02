@@ -19,10 +19,12 @@ public protocol TICFormatDelegate {
     func setStyle(_ property : CSSProperty, _ value : String, _ section : TextSection)
     func setBodyStyle(_ property : CSSProperty, _ value : String)
     
-    func setImageBlur(_ alpha: CGFloat)
-    func showFontDetails()
+    func setImageBlur(_ value: Float)
+    func setImageBrightness(_ value: Float)
+    func setImageContrast(_ value: Float)
+    func setImageSaturation(_ value: Float)
     func showColorDetails()
-    func showMargins()
+    func getDivHeight() -> CGFloat
 }
 
 public protocol SBFontFormatDelegate
@@ -30,6 +32,8 @@ public protocol SBFontFormatDelegate
     func setLineHeightFromFontSize(_ size : Int)
     func getDivLeftMargin() -> Int
     func setDivLeftMargin(newMargin: Int)
+    func getDivTopMargin() -> Int
+    func setDivTopMargin(newMargin: Int)
     func getDivWidth() -> Int
     func setDivWidth(newWidth: Int)
 }

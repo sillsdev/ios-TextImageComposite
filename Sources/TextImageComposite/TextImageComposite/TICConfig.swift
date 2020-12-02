@@ -24,6 +24,7 @@ public class TICConfig
     public var fonts: [TICFont]         = [TICFont.init(title : "Helvetica", fontFamily: "Helvetica")]
     public var locale: TICLocalization  = TICLocalization.us_en()
     public var theme: TICTheme          = TICTheme.defaultTheme()
+    public var active: Bool             = false
     
     public var selectedImage : UIImage?
     

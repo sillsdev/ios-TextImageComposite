@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TICAlignmentPanelView" customModule="TextImageComposite" customModuleProvider="target">
             <connections>
-                <outlet property="leftMarginSlider" destination="PZ8-75-uml" id="g9I-8y-MHd"/>
                 <outlet property="lineSpacingSlider" destination="Bj6-00-fw8" id="UUv-id-EDp"/>
                 <outlet property="textWidthSlider" destination="Wm6-iT-Thg" id="Y5G-Ai-VyB"/>
                 <outletCollection property="selectableButtons" destination="zdS-gy-giW" collectionClass="NSMutableArray" id="hIu-yf-K8I"/>
@@ -67,12 +66,6 @@
                         <action selector="textWidthValueChanged:" destination="-1" eventType="valueChanged" id="V5B-f4-fnG"/>
                     </connections>
                 </slider>
-                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="320" minimumValueImage="ic_align_left" translatesAutoresizingMaskIntoConstraints="NO" id="PZ8-75-uml">
-                    <rect key="frame" x="18" y="117.5" width="304" height="31"/>
-                    <connections>
-                        <action selector="leftMarginSliderValueChanged:" destination="-1" eventType="valueChanged" id="CPi-KY-eNi"/>
-                    </connections>
-                </slider>
             </subviews>
             <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -82,14 +75,11 @@
                 <constraint firstAttribute="trailing" secondItem="Wm6-iT-Thg" secondAttribute="trailing" constant="20" symbolic="YES" id="ITk-2x-ayM"/>
                 <constraint firstItem="Bj6-00-fw8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="K9Q-Kt-gzv"/>
                 <constraint firstItem="iYo-b2-kbw" firstAttribute="centerY" secondItem="Wpu-fg-JxV" secondAttribute="centerY" id="OEJ-Nc-cZL"/>
-                <constraint firstAttribute="trailing" secondItem="PZ8-75-uml" secondAttribute="trailing" id="Ol2-Sh-Un3"/>
                 <constraint firstItem="iYo-b2-kbw" firstAttribute="leading" secondItem="Wpu-fg-JxV" secondAttribute="trailing" constant="40" id="Q1k-Lx-O5Y"/>
-                <constraint firstItem="Wm6-iT-Thg" firstAttribute="baseline" secondItem="PZ8-75-uml" secondAttribute="firstBaseline" constant="8" symbolType="layoutAnchor" id="ZcK-9u-Nq0"/>
                 <constraint firstItem="zdS-gy-giW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="aw7-Aq-RRC"/>
                 <constraint firstAttribute="trailing" secondItem="Bj6-00-fw8" secondAttribute="trailing" constant="20" symbolic="YES" id="eCt-nA-VGQ"/>
                 <constraint firstItem="Wm6-iT-Thg" firstAttribute="firstBaseline" secondItem="Bj6-00-fw8" secondAttribute="baseline" constant="8" symbolType="layoutAnchor" id="llZ-Hu-MuF"/>
                 <constraint firstItem="Bj6-00-fw8" firstAttribute="firstBaseline" secondItem="Wpu-fg-JxV" secondAttribute="baseline" constant="8" symbolType="layoutAnchor" id="r6n-7d-xbO"/>
-                <constraint firstItem="PZ8-75-uml" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="xQf-Vn-Vjl"/>
                 <constraint firstItem="Wpu-fg-JxV" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="zuI-mW-iZf"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>

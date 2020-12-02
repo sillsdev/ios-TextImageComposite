@@ -43,13 +43,15 @@ class TICAppViewController: UIViewController {
                                                           TICImage.init(imageName: "nature_5.jpg", thumbName: "thumb_nature_5.jpg"),
                                                           TICImage.init(imageName: "nature_6.jpg", thumbName: "thumb_nature_6.jpg"),
                                                           TICImage.init(imageName: "nature_7.jpg", thumbName: "thumb_nature_7.jpg"),
-                                                          TICImage.init(imageName: "nature_8.jpg", thumbName: "thumb_nature_8.jpg")]
+                                                          TICImage.init(imageName: "nature_8.jpg", thumbName: "thumb_nature_8.jpg"),
+                                                          TICImage.init(imageName: "ocean.jpg", thumbName: "thumb_ocean.jpg")]
         
         return textureImageUrls + natureImageUrls
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+
     }
 
     @IBAction func promptPressed(_ sender: Any) {
@@ -59,11 +61,30 @@ class TICAppViewController: UIViewController {
         TICConfig.instance.fonts = fonts()
         TICConfig.instance.locale = TICLocalization.us_en()
         TICConfig.instance.theme = TICTheme.defaultTheme()
+        //UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
         let storyboard = UIStoryboard(name: TICConfig.instance.storyboardName, bundle: TICConfig.instance.bundle)
         let nvc = storyboard.instantiateViewController(withIdentifier: TICConfig.instance.viewControllerName) as! UINavigationController
         
         present(nvc, animated: true, completion: nil)
     }
+/*    public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if TICConfig.instance.active {
+            return .portrait
+        } else {
+            return .all
+        }
+    }
+  
+    public override var shouldAutorotate: Bool {
+        if TICConfig.instance.active {
+            return false
+        } else {
+            return true
+        }
+    }
     
+    public override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return UIInterfaceOrientation.portrait
+    }*/
 }
 

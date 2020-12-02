@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TICExtrasPanelView" customModule="TICExample" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TICExtrasPanelView" customModule="TextImageComposite" customModuleProvider="target">
             <connections>
-                <outlet property="blurLabel" destination="wcj-FP-N4a" id="z5P-9F-CNj"/>
                 <outlet property="blurSlider" destination="zsm-nP-vlm" id="zxB-QE-Ubt"/>
             </connections>
         </placeholder>
@@ -19,18 +17,8 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="140"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Blur" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wcj-FP-N4a">
-                    <rect key="frame" x="35" y="25" width="140" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="140" id="K3B-Oj-DIX"/>
-                        <constraint firstAttribute="height" constant="22" id="djF-UN-bn7"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="zsm-nP-vlm">
-                    <rect key="frame" x="33" y="55" width="254" height="31"/>
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="10" minimumValueImage="ic_blur" translatesAutoresizingMaskIntoConstraints="NO" id="zsm-nP-vlm">
+                    <rect key="frame" x="18" y="55" width="284" height="31"/>
                     <connections>
                         <action selector="handleBlurSliderValueChanged:" destination="-1" eventType="valueChanged" id="j9v-FP-dGy"/>
                     </connections>
@@ -38,10 +26,8 @@
             </subviews>
             <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="zsm-nP-vlm" firstAttribute="leading" secondItem="wcj-FP-N4a" secondAttribute="leading" id="Iuq-9M-r3G"/>
-                <constraint firstItem="zsm-nP-vlm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="35" id="ND6-Q0-FxE"/>
-                <constraint firstItem="zsm-nP-vlm" firstAttribute="top" secondItem="wcj-FP-N4a" secondAttribute="bottom" constant="8" id="UYE-cO-gNa"/>
-                <constraint firstAttribute="trailing" secondItem="zsm-nP-vlm" secondAttribute="trailing" constant="35" id="nCl-w6-0H5"/>
+                <constraint firstItem="zsm-nP-vlm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="ND6-Q0-FxE"/>
+                <constraint firstAttribute="trailing" secondItem="zsm-nP-vlm" secondAttribute="trailing" constant="20" symbolic="YES" id="nCl-w6-0H5"/>
                 <constraint firstItem="zsm-nP-vlm" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="sbh-2i-2Xb"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
@@ -50,4 +36,7 @@
             <point key="canvasLocation" x="-321" y="-101"/>
         </view>
     </objects>
+    <resources>
+        <image name="ic_blur" width="29" height="29"/>
+    </resources>
 </document>

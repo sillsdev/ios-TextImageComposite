@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6312C7AE256EC62C00FE9AC9 /* thumb_ocean.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6312C7AC256EC62C00FE9AC9 /* thumb_ocean.jpg */; };
+		6312C7AF256EC62C00FE9AC9 /* ocean.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6312C7AD256EC62C00FE9AC9 /* ocean.jpg */; };
 		6343AB8E255C47170052127E /* TextImageComposite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 63DB4AE7255AF70D0051185C /* TextImageComposite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		63DB4ABA255AF4BE0051185C /* thumb_nature_5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63DB4A96255AF4BE0051185C /* thumb_nature_5.jpg */; };
 		63DB4ABB255AF4BE0051185C /* thumb_nature_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63DB4A97255AF4BE0051185C /* thumb_nature_4.jpg */; };
@@ -84,6 +86,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6312C7AC256EC62C00FE9AC9 /* thumb_ocean.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thumb_ocean.jpg; sourceTree = "<group>"; };
+		6312C7AD256EC62C00FE9AC9 /* ocean.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ocean.jpg; sourceTree = "<group>"; };
 		63DB4A96255AF4BE0051185C /* thumb_nature_5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thumb_nature_5.jpg; sourceTree = "<group>"; };
 		63DB4A97255AF4BE0051185C /* thumb_nature_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thumb_nature_4.jpg; sourceTree = "<group>"; };
 		63DB4A98255AF4BE0051185C /* thumb_nature_6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thumb_nature_6.jpg; sourceTree = "<group>"; };
@@ -181,6 +185,8 @@
 		63DB4A95255AF4BE0051185C /* nature */ = {
 			isa = PBXGroup;
 			children = (
+				6312C7AD256EC62C00FE9AC9 /* ocean.jpg */,
+				6312C7AC256EC62C00FE9AC9 /* thumb_ocean.jpg */,
 				63DB4A96255AF4BE0051185C /* thumb_nature_5.jpg */,
 				63DB4A97255AF4BE0051185C /* thumb_nature_4.jpg */,
 				63DB4A98255AF4BE0051185C /* thumb_nature_6.jpg */,
@@ -401,12 +407,14 @@
 				63F15A60255AF01900ED404A /* LaunchScreen.storyboard in Resources */,
 				63DB4ABE255AF4BE0051185C /* thumb_nature_3.jpg in Resources */,
 				63DB4AC3255AF4BE0051185C /* nature_7.jpg in Resources */,
+				6312C7AE256EC62C00FE9AC9 /* thumb_ocean.jpg in Resources */,
 				63F15A5D255AF01900ED404A /* Assets.xcassets in Resources */,
 				63DB4AC4255AF4BE0051185C /* nature_5.jpg in Resources */,
 				63DB4AD6255AF4BE0051185C /* thumb_texture_4.jpg in Resources */,
 				63DB4AD1255AF4BE0051185C /* thumb_texture_6.jpg in Resources */,
 				63DB4ACE255AF4BE0051185C /* texture_1.jpg in Resources */,
 				63DB4ACB255AF4BE0051185C /* texture_2.jpg in Resources */,
+				6312C7AF256EC62C00FE9AC9 /* ocean.jpg in Resources */,
 				63DB4ACF255AF4BE0051185C /* thumb_texture_2.jpg in Resources */,
 				63DB4AC8255AF4BE0051185C /* nature_2.jpg in Resources */,
 				63DB4AD0255AF4BE0051185C /* texture_5.jpg in Resources */,
