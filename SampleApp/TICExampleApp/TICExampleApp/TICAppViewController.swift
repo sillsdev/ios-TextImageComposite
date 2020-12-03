@@ -64,7 +64,7 @@ class TICAppViewController: UIViewController {
         //UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
         let storyboard = UIStoryboard(name: TICConfig.instance.storyboardName, bundle: TICConfig.instance.bundle)
         let nvc = storyboard.instantiateViewController(withIdentifier: TICConfig.instance.viewControllerName) as! UINavigationController
-        
+        nvc.modalPresentationStyle = .fullScreen
         present(nvc, animated: true, completion: nil)
     }
 /*    public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {

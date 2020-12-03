@@ -107,7 +107,7 @@ public class TICAlignmentPanelView : TICFormatPanelView, SBFontFormatDelegate
         return divWidth
     }
     public func setDivWidth(newWidth: Int) {
-        let maxDivWidth = (Int(imageWidth) - abs(divLeftMargin)) - 40
+        let maxDivWidth = (Int(imageWidth) - abs(divLeftMargin))
         if (newWidth < maxDivWidth) {
             divWidth = newWidth
         } else {

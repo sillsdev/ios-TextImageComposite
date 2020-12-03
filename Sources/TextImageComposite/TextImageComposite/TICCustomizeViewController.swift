@@ -194,6 +194,7 @@ public class TICCustomizeViewController : UIViewController
         webView.backgroundColor = .clear
         webView.scrollView.backgroundColor = .clear
         webView.isOpaque = false
+        webView.isUserInteractionEnabled = false
         webContainerView.addSubview(webView)
         filter = CIFilter(name: "CIColorControls")
         beginImage = CIImage(image: TICConfig.instance.selectedImage!)
