@@ -145,6 +145,8 @@ public class TICCustomizeViewController : UIViewController
     @IBOutlet weak var toolbarDividersView: UIView!
     @IBOutlet weak var fontButton: UIButton!
     @IBOutlet weak var webContainerView: UIView!
+    @IBOutlet weak var referenceFormatButton: UIButton!
+    @IBOutlet weak var toolbarScrollView: UIScrollView!
     var webView: WKWebView!
     
     var fontSizeView: TICFontAttributesPanelView!
@@ -333,40 +335,48 @@ public class TICCustomizeViewController : UIViewController
         selectedToolbarButton = sender
     }
     
-    @IBAction func handleFontButtonTap(_ sender: Any) {
+    @IBAction func handleFontButtonTap(_ sender: UIButton) {
         
         //self.panelContainerView.addSubview(self.fontView)
         self.panelContainerView.addSubview(self.fontViewController.view)
     }
     
-    @IBAction func handleFontSizeButtonTap(_ sender: Any) {
+    @IBAction func handleFontSizeButtonTap(_ sender: UIButton) {
         
         self.panelContainerView.addSubview(self.fontSizeView)
+        centerButton(button: sender)
     }
-    @IBAction func handleColorButtonTap(_ sender: Any) {
+    @IBAction func handleColorButtonTap(_ sender: UIButton) {
         
         self.panelContainerView.addSubview(self.colorView)
+        centerButton(button: sender)
     }
     
-    @IBAction func handleAlignmentButtonTap(_ sender: Any) {
+    @IBAction func handleAlignmentButtonTap(_ sender: UIButton) {
         
         self.panelContainerView.addSubview(self.alignmentView)
+        centerButton(button: sender)
+
     }
     
-    @IBAction func handleExtrasButtonTap(_ sender: Any) {
+    @IBAction func handleExtrasButtonTap(_ sender: UIButton) {
         
         self.panelContainerView.addSubview(self.extrasView)
+        centerButton(button: sender)
     }
     
-    @IBAction func handleReferenceFontButtonTap(_ sender: Any) {
+    @IBAction func handleReferenceFontButtonTap(_ sender: UIButton) {
         self.panelContainerView.addSubview(self.referenceSizeView)
     }
     
-    @IBAction func colorFilterButtonTap(_ sender: Any) {
+    @IBAction func colorFilterButtonTap(_ sender: UIButton) {
         self.panelContainerView.addSubview(self.colorFilterView)
+        centerButton(button: sender)
     }
-    @IBAction func handleTextShadowTap(_ sender: Any) {
+    @IBAction func handleTextShadowTap(_ sender: UIButton) {
         self.panelContainerView.addSubview(self.shadowView)
+        centerButton(button: sender)
+
     }
     @IBAction func handlePan(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: view)
@@ -399,6 +409,18 @@ public class TICCustomizeViewController : UIViewController
         }
     }
     
+    func centerButton(button: UIButton) {
+        let xCenter = max(0, (button.center.x - self.toolbarScrollView.frame.width/2))
+        if xCenter > toolbarScrollView.contentOffset.x {
+            if !toolbarScrollView.bounds.contains(referenceFormatButton.frame) {
+                self.toolbarScrollView.setContentOffset(CGPoint(x: xCenter, y: self.toolbarScrollView.contentOffset.y), animated: true)
+            }
+        } else {
+            if !toolbarScrollView.bounds.contains(fontButton.frame) {
+                self.toolbarScrollView.setContentOffset(CGPoint(x: xCenter, y: self.toolbarScrollView.contentOffset.y), animated: true)
+            }
+        }
+    }
     func createContentController() -> WKUserContentController {
         let contentController = WKUserContentController()
 //        contentController.add(self, name: "addVersePosition")

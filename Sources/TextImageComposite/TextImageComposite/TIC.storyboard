@@ -63,7 +63,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="134-tY-mey" userLabel="Toolbar View">
                                         <rect key="frame" x="0.0" y="0.0" width="807" height="44"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83b-JB-Sep" userLabel="Button 2">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="83b-JB-Sep" userLabel="Font Select">
                                                 <rect key="frame" x="0.0" y="0.0" width="100" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="100" id="vnW-nT-pso"/>
@@ -73,49 +73,49 @@
                                                     <action selector="handleFontButtonTap:" destination="IDA-r8-eeI" eventType="touchUpInside" id="6yY-YS-qz4"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VAC-am-8mQ" userLabel="Button 3">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VAC-am-8mQ" userLabel="Font Size">
                                                 <rect key="frame" x="101" y="0.0" width="100" height="44"/>
                                                 <state key="normal" image="ic_font_bigger"/>
                                                 <connections>
                                                     <action selector="handleFontSizeButtonTap:" destination="IDA-r8-eeI" eventType="touchUpInside" id="v7R-xS-kWM"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Fj-vn-5MY" userLabel="Button 4">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Fj-vn-5MY" userLabel="Text Alignment">
                                                 <rect key="frame" x="303" y="0.0" width="100" height="44"/>
                                                 <state key="normal" image="ic_color_fill"/>
                                                 <connections>
                                                     <action selector="handleColorButtonTap:" destination="IDA-r8-eeI" eventType="touchUpInside" id="HUN-hw-XB3"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4uY-kz-Wgg" userLabel="Button 5">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4uY-kz-Wgg" userLabel="Text Color">
                                                 <rect key="frame" x="202" y="0.0" width="100" height="44"/>
                                                 <state key="normal" image="ic_align_center"/>
                                                 <connections>
                                                     <action selector="handleAlignmentButtonTap:" destination="IDA-r8-eeI" eventType="touchUpInside" id="z3B-cL-w6g"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WEr-eh-1dQ" userLabel="Button 6">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WEr-eh-1dQ" userLabel="Text Shadow">
                                                 <rect key="frame" x="404" y="0.0" width="100" height="44"/>
                                                 <state key="normal" image="ic_text_shadow"/>
                                                 <connections>
                                                     <action selector="handleTextShadowTap:" destination="IDA-r8-eeI" eventType="touchUpInside" id="s6a-gM-7v5"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rFZ-hj-W3E" userLabel="Button 7">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rFZ-hj-W3E" userLabel="Image Attributes">
                                                 <rect key="frame" x="505" y="0.0" width="100" height="44"/>
                                                 <state key="normal" image="ic_brightness"/>
                                                 <connections>
                                                     <action selector="colorFilterButtonTap:" destination="IDA-r8-eeI" eventType="touchUpInside" id="TlA-iQ-ztG"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UwX-2S-yGO" userLabel="Button 8">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UwX-2S-yGO" userLabel="Image Blur">
                                                 <rect key="frame" x="606" y="0.0" width="100" height="44"/>
                                                 <state key="normal" image="ic_blur"/>
                                                 <connections>
                                                     <action selector="handleExtrasButtonTap:" destination="IDA-r8-eeI" eventType="touchUpInside" id="5kV-HD-0Xu"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CtI-E6-0K1" userLabel="Button 9">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CtI-E6-0K1" userLabel="Reference Format">
                                                 <rect key="frame" x="707" y="0.0" width="100" height="44"/>
                                                 <state key="normal" image="ic_reference"/>
                                                 <connections>
@@ -280,8 +280,10 @@
                         <outlet property="fontButton" destination="83b-JB-Sep" id="sDx-Cn-HYd"/>
                         <outlet property="imageView" destination="voH-g1-nBx" id="sjb-3e-ZSB"/>
                         <outlet property="panelContainerView" destination="Bhy-Xl-dgD" id="tyq-9M-q1J"/>
+                        <outlet property="referenceFormatButton" destination="CtI-E6-0K1" id="Zib-NM-IdT"/>
                         <outlet property="saveButton" destination="mu1-t8-Xoi" id="5Jv-Dz-Pwp"/>
                         <outlet property="toolbarDividersView" destination="wv9-oc-lqv" id="BF0-78-ayE"/>
+                        <outlet property="toolbarScrollView" destination="Y6a-Om-7JW" id="Tww-lK-lzF"/>
                         <outlet property="webContainerView" destination="BQs-Sd-x6w" id="EqR-ru-OpI"/>
                         <outletCollection property="toolbarButtons" destination="VAC-am-8mQ" collectionClass="NSMutableArray" id="YfA-nQ-rKU"/>
                         <outletCollection property="toolbarButtons" destination="0Fj-vn-5MY" collectionClass="NSMutableArray" id="xCu-2j-jWD"/>
