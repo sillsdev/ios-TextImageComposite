@@ -27,6 +27,7 @@ public class TICConfig
     public var active: Bool             = false
     
     public var selectedImage : UIImage?
+    public var selectedURL : URL?
     
     public var bundle: Bundle {
         let bundle = Bundle(identifier: "org.sil.TextImageComposite")
@@ -39,6 +40,8 @@ public class TICConfig
     public var storyboardName: String {
         return "TIC"
     }
+    public var imageCache = NSCache<NSString, AnyObject>()
+
 }
 
 public struct TICTheme {
@@ -120,37 +123,17 @@ public struct TICTheme {
 public struct TICLocalization
 {
     var cancel: String!
-    var chooseImage: String!
+    var ok: String!
     var save: String!
     var share: String!
-    var size: String!
-    var blur: String!
-    var customize: String!
-    var margins: String!
-    var opacity: String!
-    var top: String!
-    var left: String!
-    var right: String!
-    var lineHeight: String!
-    var letterSpacing: String!
     var done: String!
     
     static public func us_en() -> TICLocalization {
         var locale = TICLocalization()
         locale.cancel = "Cancel"
-        locale.chooseImage = "Choose Image"
+        locale.ok = "OK"
         locale.save = "Save"
         locale.share = "Share"
-        locale.size = "Size"
-        locale.blur = "Blur"
-        locale.customize = "Customize"
-        locale.margins = "Margins"
-        locale.opacity = "Opacity"
-        locale.top = "Top"
-        locale.left = "Left"
-        locale.right = "Right"
-        locale.lineHeight = "Line Height"
-        locale.letterSpacing = "Letter Spacing"
         locale.done = "Done"
         
         return locale
@@ -159,19 +142,9 @@ public struct TICLocalization
     static public func lorem() -> TICLocalization {
         var locale = TICLocalization()
         locale.cancel = "Lorem"
-        locale.chooseImage = "Eget Egestas"
+        locale.ok = "KO"
         locale.save = "Dolor"
         locale.share = "Sit"
-        locale.size = "Amet"
-        locale.blur = "Elit"
-        locale.customize = "Consectetur"
-        locale.margins = "Adipiscing"
-        locale.opacity = "Capit"
-        locale.top = "Lop"
-        locale.left = "Ifet"
-        locale.right = "Thrig"
-        locale.lineHeight = "Nil Ehgit"
-        locale.letterSpacing = "Tellre Pacsin"
         locale.done = "Pol"
         
         return locale
@@ -181,16 +154,13 @@ public struct TICLocalization
 public struct TICImage
 {
     var imageURL : URL
-    var thumbURL : URL
     
-    public init(imageURL : URL, thumbURL : URL) {
+    public init(imageURL : URL) {
         self.imageURL = imageURL
-        self.thumbURL = thumbURL
     }
     
-    public init(imageName : String, thumbName : String) {
+    public init(imageName : String) {
         self.imageURL = Bundle.main.url(forResource: imageName, withExtension: "")!
-        self.thumbURL = Bundle.main.url(forResource: thumbName, withExtension: "")!
     }
 }
 

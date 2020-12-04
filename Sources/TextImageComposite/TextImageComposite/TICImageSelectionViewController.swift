@@ -31,7 +31,7 @@ public class TICImageSelectionPreview : UIView
         TICConfig.instance.theme.formatControl(chooseImageButton)
         
         self.cancelButton.setTitle(TICConfig.instance.locale.cancel, for: .normal)
-        self.chooseImageButton.setTitle(TICConfig.instance.locale.chooseImage, for: .normal)
+        self.chooseImageButton.setTitle(TICConfig.instance.locale.ok, for: .normal)
     }
     
     @IBAction func handleCancelPreviewButtonTap(_ sender: Any) {
@@ -200,9 +200,12 @@ extension TICImageSelectionViewController : TICImageSelectionPreviewDelegate {
         
         do {
             if let url = imageUrl {
-                let data = try Data(contentsOf: url)
-                TICConfig.instance.selectedImage = UIImage(data:data)
+                TICConfig.instance.selectedURL = imageUrl
+                TICConfig.instance.selectedImage = nil
+                //let data = try Data(contentsOf: url)
+                //TICConfig.instance.selectedImage = UIImage(data:data)
             } else if let image = self.image {
+                TICConfig.instance.selectedURL = nil
                 TICConfig.instance.selectedImage = image
             }
         } catch {
@@ -233,7 +236,7 @@ extension TICImageSelectionViewController : UICollectionViewDataSource
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TICImageCell", for: indexPath) as! TICImageCell
-        cell.imageView.imageURL = TICConfig.instance.images[indexPath.item].thumbURL
+        cell.imageView.imageURL = TICConfig.instance.images[indexPath.item].imageURL
         
         return cell
     }

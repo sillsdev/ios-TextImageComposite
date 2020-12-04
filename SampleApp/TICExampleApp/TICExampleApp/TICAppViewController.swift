@@ -10,6 +10,7 @@ import UIKit
 import TextImageComposite
 
 class TICAppViewController: UIViewController {
+    var firstTime = false
     func fonts() -> [TICFont] {
         
         var list : [TICFont] = []
@@ -28,25 +29,30 @@ class TICAppViewController: UIViewController {
         return list
     }
     func images() -> [TICImage] {
-        let textureImageUrls : [TICImage] = [TICImage.init(imageName: "texture_1.jpg", thumbName: "thumb_texture_1.jpg"),
-                                                           TICImage.init(imageName: "texture_2.jpg", thumbName: "thumb_texture_2.jpg"),
-                                                           TICImage.init(imageName: "texture_3.jpg", thumbName: "thumb_texture_3.jpg"),
-                                                           TICImage.init(imageName: "texture_4.jpg", thumbName: "thumb_texture_4.jpg"),
-                                                           TICImage.init(imageName: "texture_5.jpg", thumbName: "thumb_texture_5.jpg"),
-                                                           TICImage.init(imageName: "texture_6.jpg", thumbName: "thumb_texture_6.jpg"),
-                                                           TICImage.init(imageName: "texture_7.jpg", thumbName: "thumb_texture_7.jpg"),]
+        let textureImageUrls : [TICImage] = [TICImage.init(imageName: "texture_1.jpg"),
+                                                           TICImage.init(imageName: "texture_2.jpg"),
+                                                           TICImage.init(imageName: "texture_3.jpg"),
+                                                           TICImage.init(imageName: "texture_4.jpg"),
+                                                           TICImage.init(imageName: "texture_5.jpg"),
+                                                           TICImage.init(imageName: "texture_6.jpg"),
+                                                           TICImage.init(imageName: "texture_7.jpg"),]
         
-        let natureImageUrls : [TICImage] = [TICImage.init(imageName: "nature_1.jpg", thumbName: "thumb_nature_1.jpg"),
-                                                          TICImage.init(imageName: "nature_2.jpg", thumbName: "thumb_nature_2.jpg"),
-                                                          TICImage.init(imageName: "nature_3.jpg", thumbName: "thumb_nature_3.jpg"),
-                                                          TICImage.init(imageName: "nature_4.jpg", thumbName: "thumb_nature_4.jpg"),
-                                                          TICImage.init(imageName: "nature_5.jpg", thumbName: "thumb_nature_5.jpg"),
-                                                          TICImage.init(imageName: "nature_6.jpg", thumbName: "thumb_nature_6.jpg"),
-                                                          TICImage.init(imageName: "nature_7.jpg", thumbName: "thumb_nature_7.jpg"),
-                                                          TICImage.init(imageName: "nature_8.jpg", thumbName: "thumb_nature_8.jpg"),
-                                                          TICImage.init(imageName: "ocean.jpg", thumbName: "thumb_ocean.jpg")]
+        let natureImageUrls : [TICImage] = [TICImage.init(imageName: "ray-hennessy-HlJ7U9WHRR8-unsplash-1080.jpg"),
+                                                          TICImage.init(imageName: "cross-66700_1920-pixabay-1080.jpg"),
+                                                          TICImage.init(imageName: "aaron-burden-6jYoil2GhVk-unsplash-1080.jpg"),
+                                                          TICImage.init(imageName: "aaron-burden-BxmJUeJrlp4-unsplash-1080.jpg"),
+                                                          TICImage.init(imageName: "bady-qb-MDgRcuGYu58-unsplash-1080.jpg"),
+                                                          TICImage.init(imageName: "damian-patkowski-T-LfvX-7IVg-unsplash-1080.jpg"),
+                                                          TICImage.init(imageName: "desert-790640_1920-pixabay-1080.jpg"),
+                                                          TICImage.init(imageName: "ryan-schroeder-Gg7uKdHFb_c-unsplash-1080.jpg"),
+                                                          TICImage.init(imageName: "wheat-3241114_1920-pixabay-1080.jpg"),
+                                                          TICImage.init(imageName: "sam-ueGaQiHV86o-unsplash-1080.jpg"),
+                                                          TICImage.init(imageName: "chris-gallimore-f9fJ6nxndoo-unsplash-1080.jpg"),
+                                                          TICImage.init(imageName: "desert-1731660-pexels-1080.jpg"),
+                                                          TICImage.init(imageName: "gabriel-garcia-marengo-kOqBCFsGTs8-unsplash-1080.jpg"),
+                                                          TICImage.init(imageName: "jeremy-bishop-QHZn3-0bbEM-unsplash-1080.jpg")]
         
-        return textureImageUrls + natureImageUrls
+        return natureImageUrls
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,12 +61,16 @@ class TICAppViewController: UIViewController {
     }
 
     @IBAction func promptPressed(_ sender: Any) {
+        if !firstTime {
+            firstTime = true
+            TICConfig.instance.images = images()
+            TICConfig.instance.fonts = fonts()
+            TICConfig.instance.locale = TICLocalization.us_en()
+            TICConfig.instance.theme = TICTheme.defaultTheme()
+
+        }
         TICConfig.instance.text = "In the beginning, God created the heavens and the earth."
         TICConfig.instance.reference = "Genesis 1:1"
-        TICConfig.instance.images = images()
-        TICConfig.instance.fonts = fonts()
-        TICConfig.instance.locale = TICLocalization.us_en()
-        TICConfig.instance.theme = TICTheme.defaultTheme()
         //UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
         let storyboard = UIStoryboard(name: TICConfig.instance.storyboardName, bundle: TICConfig.instance.bundle)
         let nvc = storyboard.instantiateViewController(withIdentifier: TICConfig.instance.viewControllerName) as! UINavigationController

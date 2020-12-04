@@ -23,7 +23,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HZz-uK-rkW" userLabel="Composite View">
                                 <rect key="frame" x="-4" y="0.0" width="328" height="327.5"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nature_2.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="voH-g1-nBx" userLabel="Image View" customClass="BlurredImageView" customModule="TextImageComposite" customModuleProvider="target">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gabriel-garcia-marengo-kOqBCFsGTs8-unsplash-1080.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="voH-g1-nBx" userLabel="Image View" customClass="BlurredImageView" customModule="TextImageComposite" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="328" height="327.5"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
@@ -54,7 +54,7 @@
                                     <outletCollection property="gestureRecognizers" destination="hhI-5G-4Li" appends="YES" id="6bq-TI-ei6"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bhy-Xl-dgD" userLabel="Panel Container View" customClass="TICFontPanelView" customModule="TextImageComposite" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bhy-Xl-dgD" userLabel="Panel Container View" customClass="TICFormatPanelView" customModule="TextImageComposite" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="327.5" width="320" height="152.5"/>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y6a-Om-7JW">
@@ -511,6 +511,7 @@
     </scenes>
     <resources>
         <image name="camera.png" width="30" height="30"/>
+        <image name="gabriel-garcia-marengo-kOqBCFsGTs8-unsplash-1080.jpg" width="1080" height="1080"/>
         <image name="ic_align_center" width="29" height="29"/>
         <image name="ic_blur" width="29" height="29"/>
         <image name="ic_brightness" width="29" height="29"/>
@@ -519,7 +520,6 @@
         <image name="ic_font_choice" width="29" height="29"/>
         <image name="ic_reference" width="29" height="29"/>
         <image name="ic_text_shadow" width="29" height="29"/>
-        <image name="nature_2.jpg" width="2048" height="2048"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

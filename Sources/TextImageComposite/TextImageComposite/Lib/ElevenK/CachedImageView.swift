@@ -10,13 +10,12 @@ import UIKit
 
 public class CachedImageView : UIImageView
 {
-    let imageCache = NSCache<NSString, AnyObject>()
     
     var imageURL: URL? {
         
         didSet {
             
-            if let img = self.imageCache.object(forKey: NSString(string: (self.imageURL?.absoluteString)!) ) as? UIImage {
+            if let img = TICConfig.instance.imageCache.object(forKey: NSString(string: (self.imageURL?.absoluteString)!) ) as? UIImage {
                 //print("using cache:\(self.imageURLString)")
                 self.image = img
             } else {
@@ -33,8 +32,8 @@ public class CachedImageView : UIImageView
                     DispatchQueue.main.async(execute: {
                         [weak self] in
                         let img = UIImage(data: data!)
-                        
-                        self?.imageCache.setObject(img!, forKey: NSString(string: (self?.imageURL?.absoluteString)! ) )
+                        let a = self?.imageURL?.absoluteString
+                        TICConfig.instance.imageCache.setObject(img!, forKey: NSString(string: (self?.imageURL?.absoluteString)! ) )
                         
                         self?.image = img
                     })

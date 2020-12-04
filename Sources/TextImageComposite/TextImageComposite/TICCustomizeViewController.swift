@@ -196,8 +196,15 @@ public class TICCustomizeViewController : UIViewController
         webView.isOpaque = false
         webView.isUserInteractionEnabled = false
         webContainerView.addSubview(webView)
+        
+        if TICConfig.instance.selectedURL != nil {
+            self.imageView.imageURL = TICConfig.instance.selectedURL
+        } else {
+            self.imageView.image = TICConfig.instance.selectedImage
+        }
+        
         filter = CIFilter(name: "CIColorControls")
-        beginImage = CIImage(image: TICConfig.instance.selectedImage!)
+        beginImage = CIImage(image: self.imageView.image!)
         filter.setValue(beginImage, forKey: kCIInputImageKey)
         
         self.saveButton.title = TICConfig.instance.locale.save
@@ -209,8 +216,6 @@ public class TICCustomizeViewController : UIViewController
         
         self.webView.load(request)
 //        self.webView.loadRequest(request)
-        
-        self.imageView.image = TICConfig.instance.selectedImage
         
         //widthInPixels = imageView.frame.width * UIScreen.main.scale
         self.setupEditorPanels()
