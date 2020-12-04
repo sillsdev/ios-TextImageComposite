@@ -32,7 +32,6 @@ public class CachedImageView : UIImageView
                     DispatchQueue.main.async(execute: {
                         [weak self] in
                         let img = UIImage(data: data!)
-                        let a = self?.imageURL?.absoluteString
                         TICConfig.instance.imageCache.setObject(img!, forKey: NSString(string: (self?.imageURL?.absoluteString)! ) )
                         
                         self?.image = img

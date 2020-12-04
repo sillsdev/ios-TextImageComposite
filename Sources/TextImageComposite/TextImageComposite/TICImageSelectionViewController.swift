@@ -196,20 +196,13 @@ extension TICImageSelectionViewController : TICImageSelectionPreviewDelegate {
         }
     }
     
-    func selectImage() {
-        
-        do {
-            if let url = imageUrl {
-                TICConfig.instance.selectedURL = imageUrl
-                TICConfig.instance.selectedImage = nil
-                //let data = try Data(contentsOf: url)
-                //TICConfig.instance.selectedImage = UIImage(data:data)
-            } else if let image = self.image {
-                TICConfig.instance.selectedURL = nil
-                TICConfig.instance.selectedImage = image
-            }
-        } catch {
-            
+    func selectImage() {        
+        if let url = imageUrl {
+            TICConfig.instance.selectedURL = url
+            TICConfig.instance.selectedImage = nil
+        } else if let image = self.image {
+            TICConfig.instance.selectedURL = nil
+            TICConfig.instance.selectedImage = image
         }
        
         self.performSegue(withIdentifier: "ShowEditor", sender: nil)
