@@ -69,7 +69,7 @@ public struct TICTheme {
         control.tintColor = self.tintColor
         
         if let slider = control as? UISlider {
-            slider.thumbTintColor = self.contrastColor
+            slider.thumbTintColor = self.tintColor
             slider.maximumTrackTintColor = self.accentColor
             slider.minimumTrackTintColor = self.tintColor
         }
@@ -77,7 +77,7 @@ public struct TICTheme {
     
     func formatToolbarButton(_ button : UIButton) {
         if(button.isSelected) {
-            button.backgroundColor = self.tintColor
+            button.backgroundColor = self.backgroundColor
             button.tintColor = self.contrastColor
         } else {
             button.backgroundColor = self.backgroundColor

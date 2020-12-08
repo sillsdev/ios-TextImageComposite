@@ -122,6 +122,7 @@ public class TICFormatPanelView : UIView
             for btn : UIButton in selectableButtons {
                 btn.setImage(btn.imageView?.image?.withRenderingMode(.alwaysTemplate), for: .normal)
                 btn.tintColor = TICConfig.instance.theme.accentColor
+                btn.backgroundColor = TICConfig.instance.theme.buttonBackgroundColor
                 
                 btn.addTarget(self, action: #selector(handleSelectableButtonTap(_:)), for: .touchUpInside)
             }
