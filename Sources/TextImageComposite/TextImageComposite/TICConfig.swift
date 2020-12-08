@@ -124,15 +124,22 @@ public struct TICLocalization
 {
     var cancel: String!
     var ok: String!
-    var save: String!
     var share: String!
     var done: String!
     
+    public init(cancel: String, ok: String, share: String, done: String) {
+        self.cancel = cancel
+        self.ok = ok
+        self.share = share
+        self.done = done
+    }
+    public init() {
+        
+    }
     static public func us_en() -> TICLocalization {
         var locale = TICLocalization()
         locale.cancel = "Cancel"
         locale.ok = "OK"
-        locale.save = "Save"
         locale.share = "Share"
         locale.done = "Done"
         
@@ -143,7 +150,6 @@ public struct TICLocalization
         var locale = TICLocalization()
         locale.cancel = "Lorem"
         locale.ok = "KO"
-        locale.save = "Dolor"
         locale.share = "Sit"
         locale.done = "Pol"
         

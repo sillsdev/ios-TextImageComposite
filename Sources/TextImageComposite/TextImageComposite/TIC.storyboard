@@ -268,7 +268,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ypf-97-Qbj">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="mu1-t8-Xoi">
+                        <barButtonItem key="rightBarButtonItem" image="ic_action_save" id="mu1-t8-Xoi">
                             <connections>
                                 <action selector="handleSaveButtonTap:" destination="IDA-r8-eeI" id="IIC-qf-agZ"/>
                             </connections>
@@ -514,6 +514,7 @@
     <resources>
         <image name="camera.png" width="30" height="30"/>
         <image name="gabriel-garcia-marengo-kOqBCFsGTs8-unsplash-1080.jpg" width="1080" height="1080"/>
+        <image name="ic_action_save" width="29" height="29"/>
         <image name="ic_align_center" width="29" height="29"/>
         <image name="ic_blur" width="29" height="29"/>
         <image name="ic_brightness" width="29" height="29"/>

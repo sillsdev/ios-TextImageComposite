@@ -209,8 +209,6 @@ public class TICCustomizeViewController : UIViewController
         beginImage = CIImage(image: self.imageView.image!)
         filter.setValue(beginImage, forKey: kCIInputImageKey)
         
-        self.saveButton.title = TICConfig.instance.locale.save
-        
         //using empty string to remove default `Back` text on NavigationBar back item
         self.navigationItem.title = " "//TICConfig.instance.locale.chooseImage
         
