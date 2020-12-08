@@ -53,6 +53,9 @@ public struct TICTheme {
     var buttonBackgroundColor: UIColor!
     var viewBackgroundColor: UIColor!
     
+    public init() {
+        
+    }
     func formatControl(_ control : UIControl) {
         control.tintColor = self.tintColor
         
