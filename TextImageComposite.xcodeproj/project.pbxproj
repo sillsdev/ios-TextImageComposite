@@ -42,6 +42,8 @@
 		63AA59832568729200A8D5BB /* TICTextShadowPanelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63AA59822568729200A8D5BB /* TICTextShadowPanelView.xib */; };
 		63AA5995256DB8AA00A8D5BB /* TICColorFilterPanelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63AA5994256DB8AA00A8D5BB /* TICColorFilterPanelView.xib */; };
 		63AA5999256DBB6900A8D5BB /* TICColorFilterPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AA5998256DBB6900A8D5BB /* TICColorFilterPanelView.swift */; };
+		63B1A94325813A2E000E5C5F /* check_black.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B1A94125813A2E000E5C5F /* check_black.png */; };
+		63B1A94425813A2E000E5C5F /* check_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B1A94225813A2E000E5C5F /* check_white.png */; };
 		63F1595A255AECA200ED404A /* TextImageComposite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63F15950255AECA200ED404A /* TextImageComposite.framework */; };
 /* End PBXBuildFile section */
 
@@ -92,6 +94,8 @@
 		63AA59822568729200A8D5BB /* TICTextShadowPanelView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TICTextShadowPanelView.xib; sourceTree = "<group>"; };
 		63AA5994256DB8AA00A8D5BB /* TICColorFilterPanelView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TICColorFilterPanelView.xib; sourceTree = "<group>"; };
 		63AA5998256DBB6900A8D5BB /* TICColorFilterPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TICColorFilterPanelView.swift; path = XIB/TICColorFilterPanelView.swift; sourceTree = "<group>"; };
+		63B1A94125813A2E000E5C5F /* check_black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check_black.png; sourceTree = "<group>"; };
+		63B1A94225813A2E000E5C5F /* check_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check_white.png; sourceTree = "<group>"; };
 		63F15950255AECA200ED404A /* TextImageComposite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TextImageComposite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63F15959255AECA200ED404A /* TextImageCompositeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TextImageCompositeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -172,6 +176,7 @@
 		6343C6BA255C3CB700177A45 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				63B1A94025813A2E000E5C5F /* Icons */,
 				637E0879255D829B0065E3E9 /* Images.xcassets */,
 			);
 			path = Images;
@@ -205,6 +210,15 @@
 				6343C6D7255C3CB700177A45 /* UIView+Layout.swift */,
 			);
 			path = ElevenK;
+			sourceTree = "<group>";
+		};
+		63B1A94025813A2E000E5C5F /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				63B1A94125813A2E000E5C5F /* check_black.png */,
+				63B1A94225813A2E000E5C5F /* check_white.png */,
+			);
+			path = Icons;
 			sourceTree = "<group>";
 		};
 		63F15946255AECA200ED404A = {
@@ -320,7 +334,9 @@
 				6343C6E0255C3CB700177A45 /* TICColorPanelView.xib in Resources */,
 				63A797882576DC6600232B21 /* TICFontPanel.storyboard in Resources */,
 				6386EDDA2565A1DF003E4506 /* TICFontAttributesPanelView.xib in Resources */,
+				63B1A94325813A2E000E5C5F /* check_black.png in Resources */,
 				6343C6F7255C3CB700177A45 /* jquery-3.2.1.min.js in Resources */,
+				63B1A94425813A2E000E5C5F /* check_white.png in Resources */,
 				63AA59832568729200A8D5BB /* TICTextShadowPanelView.xib in Resources */,
 				6343C6DE255C3CB700177A45 /* TICAlignmentPanelView.xib in Resources */,
 				63AA5995256DB8AA00A8D5BB /* TICColorFilterPanelView.xib in Resources */,
