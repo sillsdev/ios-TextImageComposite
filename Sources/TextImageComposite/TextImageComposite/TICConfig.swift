@@ -99,7 +99,7 @@ public struct TICTheme {
     }
     
     func formatNavbar(_ navbar : UINavigationBar) {
-        navbar.tintColor = self.accentColor
+        navbar.tintColor = UIColor.white
         navbar.barTintColor = self.contrastColor
         navbar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:self.accentColor as Any]
     }
