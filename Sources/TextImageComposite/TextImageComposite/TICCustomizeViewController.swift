@@ -212,10 +212,7 @@ public class TICCustomizeViewController : UIViewController
         //using empty string to remove default `Back` text on NavigationBar back item
         self.navigationItem.title = " "//TICConfig.instance.locale.chooseImage
         
-        let request = URLRequest(url: TICConfig.instance.bundle.url(forResource: "composite", withExtension: "html")!)
-        
-        self.webView.load(request)
-//        self.webView.loadRequest(request)
+        loadHTML()
         
         //widthInPixels = imageView.frame.width * UIScreen.main.scale
         self.setupEditorPanels()
@@ -293,6 +290,26 @@ public class TICCustomizeViewController : UIViewController
         }
     }
 
+    func loadHTML() {
+        if let filepath = TICConfig.instance.bundle.path(forResource: "composite", ofType: "html") {
+            do {
+                let contents = try String(contentsOfFile: filepath)
+                var fontString = ""
+                for font in TICConfig.instance.fonts {
+                    if font.fileName != nil {
+                        let fontUrlString = TICConfig.instance.fontBaseURL!.absoluteString + font.fileName!
+                        let newFontString = "@font-face { font-family: \(font.fontFamily); src: url('\(fontUrlString)') format('truetype'); font-weight: normal; font-style: normal; }"
+                        fontString = fontString + newFontString
+                    }
+                }
+                let html = contents.replacingOccurrences(of: "//FONTS", with: fontString)
+                let assetsUrl = TICConfig.instance.bundle.resourceURL!.appendingPathComponent("HTML")
+                webView.loadHTMLString(html, baseURL: assetsUrl)
+            } catch {
+                // contents could not be loaded
+            }
+        }
+    }
     @IBAction func handleSaveButtonTap(_ sender: Any) {
         
         compositeImage = UIImage.init(view: self.compositeView)
@@ -455,7 +472,7 @@ public class TICCustomizeViewController : UIViewController
         }
         return retVal
     }
-    
+
 }
 
 extension TICCustomizeViewController : WKNavigationDelegate {

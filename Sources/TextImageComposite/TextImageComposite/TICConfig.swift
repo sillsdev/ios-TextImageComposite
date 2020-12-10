@@ -25,6 +25,7 @@ public class TICConfig
     public var locale: TICLocalization  = TICLocalization.us_en()
     public var theme: TICTheme          = TICTheme.defaultTheme()
     public var active: Bool             = false
+    public var fontBaseURL: URL?
     
     public var selectedImage : UIImage?
     public var selectedURL : URL?
@@ -186,9 +187,11 @@ public struct TICFont
 {
     var title : String
     var fontFamily : String
+    var fileName: String?
     
-    public init(title : String, fontFamily : String) {
+    public init(title : String, fontFamily : String, fileName : String? = nil) {
         self.title = title
         self.fontFamily = fontFamily
+        self.fileName = fileName
     }
 }

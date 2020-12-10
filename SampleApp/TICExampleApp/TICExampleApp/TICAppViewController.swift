@@ -14,9 +14,10 @@ class TICAppViewController: UIViewController {
     func fonts() -> [TICFont] {
         
         var list : [TICFont] = []
+        TICConfig.instance.fontBaseURL = Bundle.main.resourceURL!
         
         //Custom font added through Info.plist
-        list.append(TICFont.init(title : "Andika", fontFamily: "Andika New Basic"))
+        list.append(TICFont.init(title : "Andika", fontFamily: "Andika New Basic", fileName: "AndikaNewBasic-R.ttf"))
         
         //system fonts
         list.append(TICFont.init(title : "Arial", fontFamily: "Arial"))
@@ -77,6 +78,7 @@ class TICAppViewController: UIViewController {
         nvc.modalPresentationStyle = .fullScreen
         present(nvc, animated: true, completion: nil)
     }
+
 /*    public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if TICConfig.instance.active {
             return .portrait
