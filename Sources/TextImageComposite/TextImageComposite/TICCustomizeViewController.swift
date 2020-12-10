@@ -479,8 +479,10 @@ extension TICCustomizeViewController : WKNavigationDelegate {
     // MARK: - WKNavigationDelegate
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         let js = "reset('\(TICConfig.instance.text)', '\(TICConfig.instance.reference)')"
+        let initialFont = TICConfig.instance.fonts[0]
         self.webView.evaluateJavaScript(js, completionHandler: nil)
         self.setStyle(.textAlign, Alignment.center.stringValue(), .both )
+        self.setStyle(.fontFamily, initialFont.fontFamily, .both)
         self.widthInPixels = self.getBodyWidth()
         if alignmentView != nil {
             alignmentView.imageWidth = widthInPixels
