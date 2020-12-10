@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TICAlignmentPanelView" customModule="TextImageComposite" customModuleProvider="target">
+            <connections>
+                <outlet property="lineSpacingSlider" destination="Bj6-00-fw8" id="UUv-id-EDp"/>
+                <outlet property="textWidthSlider" destination="Wm6-iT-Thg" id="Y5G-Ai-VyB"/>
+                <outletCollection property="selectableButtons" destination="zdS-gy-giW" collectionClass="NSMutableArray" id="hIu-yf-K8I"/>
+                <outletCollection property="selectableButtons" destination="Wpu-fg-JxV" collectionClass="NSMutableArray" id="QHm-b7-ROM"/>
+                <outletCollection property="selectableButtons" destination="iYo-b2-kbw" collectionClass="NSMutableArray" id="ziw-fY-7xc"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="140"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zdS-gy-giW" userLabel="Button1">
+                    <rect key="frame" x="75" y="20" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="7Kj-yO-0ZN"/>
+                        <constraint firstAttribute="height" constant="30" id="jBf-je-80v"/>
+                    </constraints>
+                    <state key="normal" image="ic_align_left"/>
+                    <connections>
+                        <action selector="handleJustificationButtonTap:" destination="-1" eventType="touchUpInside" id="HCf-B0-bRJ"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wpu-fg-JxV" userLabel="Button2">
+                    <rect key="frame" x="145" y="20" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="407-u9-unR"/>
+                        <constraint firstAttribute="height" constant="30" id="Qaf-Yq-Aqv"/>
+                    </constraints>
+                    <state key="normal" image="ic_align_center"/>
+                    <connections>
+                        <action selector="handleJustificationButtonTap:" destination="-1" eventType="touchUpInside" id="tgh-ow-VKP"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iYo-b2-kbw" userLabel="Button3">
+                    <rect key="frame" x="215" y="20" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="Ehe-wW-JZZ"/>
+                        <constraint firstAttribute="width" constant="30" id="xBg-kQ-1e1"/>
+                    </constraints>
+                    <state key="normal" image="ic_align_right"/>
+                    <connections>
+                        <action selector="handleJustificationButtonTap:" destination="-1" eventType="touchUpInside" id="ur3-wy-l5G"/>
+                    </connections>
+                </button>
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="25" minValue="20" maxValue="75" minimumValueImage="ic_format_line_spacing" translatesAutoresizingMaskIntoConstraints="NO" id="Bj6-00-fw8">
+                    <rect key="frame" x="18" y="57.5" width="284" height="31"/>
+                    <connections>
+                        <action selector="lineSpacingValueChanged:" destination="-1" eventType="valueChanged" id="Tqd-oR-34e"/>
+                    </connections>
+                </slider>
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" minimumValueImage="ic_text_width" translatesAutoresizingMaskIntoConstraints="NO" id="Wm6-iT-Thg">
+                    <rect key="frame" x="18" y="95.5" width="284" height="31"/>
+                    <connections>
+                        <action selector="textWidthValueChanged:" destination="-1" eventType="valueChanged" id="V5B-f4-fnG"/>
+                    </connections>
+                </slider>
+            </subviews>
+            <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Wpu-fg-JxV" firstAttribute="leading" secondItem="zdS-gy-giW" secondAttribute="trailing" constant="40" id="737-rn-xuf"/>
+                <constraint firstItem="Wpu-fg-JxV" firstAttribute="centerY" secondItem="zdS-gy-giW" secondAttribute="centerY" id="84T-ht-eiZ"/>
+                <constraint firstItem="Wm6-iT-Thg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="FsM-SA-y7b"/>
+                <constraint firstAttribute="trailing" secondItem="Wm6-iT-Thg" secondAttribute="trailing" constant="20" symbolic="YES" id="ITk-2x-ayM"/>
+                <constraint firstItem="Bj6-00-fw8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="K9Q-Kt-gzv"/>
+                <constraint firstItem="iYo-b2-kbw" firstAttribute="centerY" secondItem="Wpu-fg-JxV" secondAttribute="centerY" id="OEJ-Nc-cZL"/>
+                <constraint firstItem="iYo-b2-kbw" firstAttribute="leading" secondItem="Wpu-fg-JxV" secondAttribute="trailing" constant="40" id="Q1k-Lx-O5Y"/>
+                <constraint firstItem="zdS-gy-giW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="aw7-Aq-RRC"/>
+                <constraint firstAttribute="trailing" secondItem="Bj6-00-fw8" secondAttribute="trailing" constant="20" symbolic="YES" id="eCt-nA-VGQ"/>
+                <constraint firstItem="Wm6-iT-Thg" firstAttribute="firstBaseline" secondItem="Bj6-00-fw8" secondAttribute="baseline" constant="8" symbolType="layoutAnchor" id="llZ-Hu-MuF"/>
+                <constraint firstItem="Bj6-00-fw8" firstAttribute="firstBaseline" secondItem="Wpu-fg-JxV" secondAttribute="baseline" constant="8" symbolType="layoutAnchor" id="r6n-7d-xbO"/>
+                <constraint firstItem="Wpu-fg-JxV" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="zuI-mW-iZf"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-14.4" y="-32.383808095952027"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ic_align_center" width="29" height="29"/>
+        <image name="ic_align_left" width="29" height="29"/>
+        <image name="ic_align_right" width="29" height="29"/>
+        <image name="ic_format_line_spacing" width="29" height="29"/>
+        <image name="ic_text_width" width="29" height="29"/>
+    </resources>
+</document>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TICColorPickerPanelView" customModule="TextImageComposite" customModuleProvider="target">
+            <connections>
+                <outlet property="brightnessSlider" destination="eL5-WC-2oH" id="NwV-Ch-AgB"/>
+                <outlet property="closeButton" destination="5Z9-eQ-bwW" id="SrY-7a-tcl"/>
+                <outlet property="colorPicker" destination="9Wg-5C-J9A" id="QoH-JQ-7uE"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="140"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Wg-5C-J9A" customClass="ColorPicker" customModule="TextImageComposite" customModuleProvider="target">
+                    <rect key="frame" x="30" y="35" width="175" height="80"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eL5-WC-2oH" customClass="BrightnessSlider" customModule="TextImageComposite" customModuleProvider="target">
+                    <rect key="frame" x="225" y="35" width="65" height="80"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="65" id="H5G-iL-sK3"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Z9-eQ-bwW">
+                    <rect key="frame" x="294" y="3" width="22" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="22" id="Cx9-0N-LQZ"/>
+                        <constraint firstAttribute="height" constant="22" id="mQB-xx-Noy"/>
+                    </constraints>
+                    <state key="normal" image="close.png"/>
+                    <connections>
+                        <action selector="handleCloseButtonTap:" destination="-1" eventType="touchUpInside" id="Y4v-xb-qmP"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="5Z9-eQ-bwW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="3" id="22T-XB-MpZ"/>
+                <constraint firstItem="9Wg-5C-J9A" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="4pL-99-Tea"/>
+                <constraint firstItem="eL5-WC-2oH" firstAttribute="leading" secondItem="9Wg-5C-J9A" secondAttribute="trailing" constant="20" id="5hJ-Mq-IOC"/>
+                <constraint firstItem="9Wg-5C-J9A" firstAttribute="bottom" secondItem="eL5-WC-2oH" secondAttribute="bottom" id="7kf-vN-BLd"/>
+                <constraint firstAttribute="trailing" secondItem="eL5-WC-2oH" secondAttribute="trailing" constant="30" id="DAG-fK-fZU"/>
+                <constraint firstItem="9Wg-5C-J9A" firstAttribute="top" secondItem="eL5-WC-2oH" secondAttribute="top" id="N4P-BE-ugr"/>
+                <constraint firstAttribute="bottom" secondItem="9Wg-5C-J9A" secondAttribute="bottom" constant="25" id="flI-7R-6G5"/>
+                <constraint firstItem="9Wg-5C-J9A" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="35" id="j6C-7B-Y8J"/>
+                <constraint firstAttribute="trailing" secondItem="5Z9-eQ-bwW" secondAttribute="trailing" constant="4" id="z0d-sI-rT4"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-14.4" y="-52.173913043478265"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="close.png" width="20" height="20"/>
+    </resources>
+</document>
