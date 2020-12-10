@@ -478,7 +478,7 @@ public class TICCustomizeViewController : UIViewController
 extension TICCustomizeViewController : WKNavigationDelegate {
     // MARK: - WKNavigationDelegate
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        let text = TICConfig.instance.text
+        let text = TICConfig.instance.text.replacingOccurrences(of: "\n", with: "<br>")
         let reference = TICConfig.instance.reference
         print("Text: \(text) Reference:\(reference)")
         let js = "reset('\(text)', '\(reference)')"
