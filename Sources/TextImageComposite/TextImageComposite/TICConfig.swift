@@ -110,7 +110,7 @@ public struct TICTheme {
         theme.backgroundColor = UIColor.colorWithHex("EEEEEE") //
         theme.tintColor = UIColor.colorWithHex("7cb55d") //
         theme.accentColor = UIColor.colorWithHex("888888") //
-        theme.contrastColor = UIColor.green //
+        theme.contrastColor = UIColor.colorWithHex("627D4D") //
         theme.highlightColor = UIColor.colorWithHex("d1d2d1")
         theme.buttonBackgroundColor = UIColor.init(red: 0.820, green: 0.820, blue: 0.839, alpha: 1) // systemGray4
         theme.viewBackgroundColor = UIColor.init(red: 0.933, green: 0.933, blue: 0.933, alpha: 1) //

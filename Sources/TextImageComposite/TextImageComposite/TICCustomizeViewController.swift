@@ -478,11 +478,9 @@ public class TICCustomizeViewController : UIViewController
 extension TICCustomizeViewController : WKNavigationDelegate {
     // MARK: - WKNavigationDelegate
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        let text = TICConfig.instance.text.replacingOccurrences(of: "\n", with: "<br>")
+        let text = TICConfig.instance.text.replacingOccurrences(of: "\n", with: "<br>").replacingOccurrences(of: "\t", with: "")
         let reference = TICConfig.instance.reference
-        print("Text: \(text) Reference:\(reference)")
         let js = "reset('\(text)', '\(reference)')"
-        print("Reset: \(js)")
         let initialFont = TICConfig.instance.fonts[0]
         self.webView.evaluateJavaScript(js, completionHandler: nil)
         self.setStyle(.textAlign, Alignment.center.stringValue(), .both )
