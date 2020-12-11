@@ -29,11 +29,11 @@ public class TextProvider: NSObject, UIActivityItemSource {
 public class ImageProvider: NSObject, UIActivityItemSource {
     
     public func activityViewControllerPlaceholderItem(_ activityViewController: UIActivityViewController) -> Any {
-        return UIImage(named: "check_black")!
+        return UIImage(named: "ic_check_black")!
     }
     
     public func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
-        return UIImage(named:"check_black")
+        return UIImage(named:"ic_check_black")
     }
 }
 

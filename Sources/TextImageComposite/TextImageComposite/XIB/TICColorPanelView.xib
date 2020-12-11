@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -36,7 +36,7 @@
                         <constraint firstAttribute="height" constant="30" id="Syv-sb-HaS"/>
                         <constraint firstAttribute="width" constant="46" id="aB4-LA-plF"/>
                     </constraints>
-                    <state key="selected" image="check_white"/>
+                    <state key="selected" image="ic_check_white"/>
                     <connections>
                         <action selector="handleColorDetailsButtonTap:" destination="-1" eventType="touchUpInside" id="DgG-i6-OpN"/>
                     </connections>
@@ -48,7 +48,7 @@
                         <constraint firstAttribute="height" constant="30" id="EIa-6S-rVb"/>
                         <constraint firstAttribute="width" constant="46" id="UPp-yk-wq7"/>
                     </constraints>
-                    <state key="selected" image="check_white"/>
+                    <state key="selected" image="ic_check_white"/>
                     <connections>
                         <action selector="handleBlackButtonTap:" destination="-1" eventType="touchUpInside" id="pou-II-gH6"/>
                     </connections>
@@ -60,7 +60,7 @@
                         <constraint firstAttribute="height" constant="30" id="Vvb-YD-71u"/>
                         <constraint firstAttribute="width" constant="46" id="kxS-JT-DMg"/>
                     </constraints>
-                    <state key="selected" image="check_black"/>
+                    <state key="selected" image="ic_check_black"/>
                     <connections>
                         <action selector="handleWhiteButtonTap:" destination="-1" eventType="touchUpInside" id="NQk-ox-BNZ"/>
                     </connections>
@@ -85,8 +85,8 @@
         </view>
     </objects>
     <resources>
-        <image name="check_black" width="16" height="16"/>
-        <image name="check_white" width="16" height="16"/>
+        <image name="ic_check_black" width="10" height="10"/>
+        <image name="ic_check_white" width="10" height="10"/>
         <image name="ic_opacity" width="29" height="29"/>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

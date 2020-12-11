@@ -432,7 +432,7 @@
                                 <action selector="handleCancelButtonTap:" destination="dzM-Oa-pUX" id="NYB-DH-6Cc"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="camera.png" id="kn1-ta-M9z">
+                        <barButtonItem key="rightBarButtonItem" image="ic_camera" id="kn1-ta-M9z">
                             <connections>
                                 <action selector="handleChooseButtonTap:" destination="dzM-Oa-pUX" id="6O4-7O-gd0"/>
                             </connections>
@@ -512,12 +512,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="camera.png" width="30" height="30"/>
         <image name="gabriel-garcia-marengo-kOqBCFsGTs8-unsplash-1080.jpg" width="1080" height="1080"/>
         <image name="ic_action_save" width="29" height="29"/>
         <image name="ic_align_center" width="29" height="29"/>
         <image name="ic_blur" width="29" height="29"/>
         <image name="ic_brightness" width="29" height="29"/>
+        <image name="ic_camera" width="30" height="30"/>
         <image name="ic_color_fill" width="29" height="29"/>
         <image name="ic_font_bigger" width="29" height="29"/>
         <image name="ic_font_choice" width="29" height="29"/>

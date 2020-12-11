@@ -298,7 +298,7 @@ public class TICCustomizeViewController : UIViewController
                 for font in TICConfig.instance.fonts {
                     if font.fileName != nil {
                         let fontUrlString = TICConfig.instance.fontBaseURL!.absoluteString + font.fileName!
-                        let newFontString = "@font-face { font-family: \(font.fontFamily); src: url('\(fontUrlString)') format('truetype'); font-weight: normal; font-style: normal; }"
+                        let newFontString = "@font-face { font-family: \(font.fontFamily); src: url('\(fontUrlString)') format('truetype'); font-weight: normal; font-style: normal; }\n"
                         fontString = fontString + newFontString
                     }
                 }
@@ -478,7 +478,9 @@ public class TICCustomizeViewController : UIViewController
 extension TICCustomizeViewController : WKNavigationDelegate {
     // MARK: - WKNavigationDelegate
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        let js = "reset('\(TICConfig.instance.text)', '\(TICConfig.instance.reference)')"
+        let text = TICConfig.instance.text.replacingOccurrences(of: "\n", with: "<br>").replacingOccurrences(of: "\t", with: "")
+        let reference = TICConfig.instance.reference
+        let js = "reset('\(text)', '\(reference)')"
         let initialFont = TICConfig.instance.fonts[0]
         self.webView.evaluateJavaScript(js, completionHandler: nil)
         self.setStyle(.textAlign, Alignment.center.stringValue(), .both )
