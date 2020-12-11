@@ -136,18 +136,19 @@ public class TICImageSelectionViewController : UIViewController {
     }
     
     @IBAction func handleChooseButtonTap(_ sender: UIBarButtonItem) {
-        
-        picker.delegate = self
-        picker.allowsEditing = true
-        picker.modalPresentationStyle = .popover
-        picker.sourceType = .photoLibrary
-        picker.mediaTypes = [kUTTypeImage as String]
-        
-        let presentationController = picker.popoverPresentationController
-        presentationController?.barButtonItem = sender
-        presentationController?.permittedArrowDirections = UIPopoverArrowDirection.up
-        
-        self.present(picker, animated: true, completion: nil)
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            picker.delegate = self
+            picker.allowsEditing = true
+            picker.modalPresentationStyle = .popover
+            picker.sourceType = .photoLibrary
+            picker.mediaTypes = [kUTTypeImage as String]
+            
+            let presentationController = picker.popoverPresentationController
+            presentationController?.barButtonItem = sender
+            presentationController?.permittedArrowDirections = UIPopoverArrowDirection.up
+            
+            self.present(picker, animated: true, completion: nil)
+        }
     }
 }
 
