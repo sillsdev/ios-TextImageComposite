@@ -218,7 +218,7 @@ public class TICCustomizeViewController : UIViewController
         self.setupEditorPanels()
         self.setupToolbarButtons()
         
-        centerButton(button: fontButton)
+        self.toolbarScrollView.setContentOffset(CGPoint(x: fontButton.center.x, y: self.toolbarScrollView.contentOffset.y), animated: true)
         toolbarDividersView.subviews.forEach {
             $0.backgroundColor = TICConfig.instance.theme.highlightColor
         }
