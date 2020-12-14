@@ -218,6 +218,7 @@ public class TICCustomizeViewController : UIViewController
         self.setupEditorPanels()
         self.setupToolbarButtons()
         
+        centerButton(button: fontButton)
         toolbarDividersView.subviews.forEach {
             $0.backgroundColor = TICConfig.instance.theme.highlightColor
         }
@@ -426,15 +427,7 @@ public class TICCustomizeViewController : UIViewController
     
     func centerButton(button: UIButton) {
         let xCenter = max(0, (button.center.x - self.toolbarScrollView.frame.width/2))
-        if xCenter > toolbarScrollView.contentOffset.x {
-            if !toolbarScrollView.bounds.contains(referenceFormatButton.frame) {
-                self.toolbarScrollView.setContentOffset(CGPoint(x: xCenter, y: self.toolbarScrollView.contentOffset.y), animated: true)
-            }
-        } else {
-            if !toolbarScrollView.bounds.contains(fontButton.frame) {
-                self.toolbarScrollView.setContentOffset(CGPoint(x: xCenter, y: self.toolbarScrollView.contentOffset.y), animated: true)
-            }
-        }
+        self.toolbarScrollView.setContentOffset(CGPoint(x: xCenter, y: self.toolbarScrollView.contentOffset.y), animated: true)
     }
     func createContentController() -> WKUserContentController {
         let contentController = WKUserContentController()
