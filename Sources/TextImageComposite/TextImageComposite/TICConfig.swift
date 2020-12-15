@@ -29,6 +29,7 @@ public class TICConfig
     
     public var selectedImage : UIImage?
     public var selectedURL : URL?
+    public var watermarkImage: TICWatermark?
     
     public var bundle: Bundle {
         let bundle = Bundle(identifier: "org.sil.TextImageComposite")
@@ -193,5 +194,70 @@ public struct TICFont
         self.title = title
         self.fontFamily = fontFamily
         self.fileName = fileName
+    }
+}
+
+public enum TICWatermarkAlignment: String {
+    case TOP_LEFT = "top-left"
+    case TOP_CENTRE = "top-centre"
+    case TOP_RIGHT = "top-right"
+    case BOTTOM_LEFT = "bottom-left"
+    case BOTTOM_CENTRE = "bottom-centre"
+    case BOTTOM_RIGHT = "bottom-right"
+}
+
+public struct TICWatermark
+{
+    public var watermarkImage: UIImage?
+    public var alignment: TICWatermarkAlignment
+    public var marginPercent: Int
+    public var widthPercent: Int
+    
+    public init(watermarkImage: UIImage, alignment: TICWatermarkAlignment, marginPercent: Int, widthPercent: Int) {
+        self.watermarkImage = watermarkImage
+        self.alignment = alignment
+        self.marginPercent = marginPercent
+        self.widthPercent = widthPercent
+    }
+    func getWatermarkHeight(_ imageSideSize: Int) -> Int {
+        let heightInPoints = watermarkImage!.size.height
+        let widthInPoints = watermarkImage!.size.width
+        let watermarkHeight = Int(Double(heightInPoints / widthInPoints) * Double(getWatermarkWidth(imageSideSize)))
+        return watermarkHeight
+    }
+    func getWatermarkWidth(_ imageSideSize: Int) -> Int {
+        let watermarkWidth = imageSideSize * widthPercent / 100
+        return watermarkWidth
+    }
+    public func getXY(_ imageSideSize: Int) -> (x: Int, y: Int) {
+        var x: Int = 0
+        var y: Int = 0
+        
+        let watermarkWidth = getWatermarkWidth(imageSideSize)
+        let watermarkHeight = getWatermarkHeight(imageSideSize)
+        let marginX = imageSideSize * marginPercent / 100
+        let marginY = imageSideSize * marginPercent / 100
+        
+        switch alignment {
+        case .TOP_LEFT:
+            x = marginX
+            y = marginY
+        case .TOP_CENTRE:
+            x = (imageSideSize / 2) - (watermarkWidth / 2)
+            y = marginY
+        case .TOP_RIGHT:
+            x = imageSideSize - watermarkWidth - marginX
+            y = marginY
+        case .BOTTOM_LEFT:
+            x = marginX
+            y = imageSideSize - watermarkHeight - marginY
+        case .BOTTOM_CENTRE:
+            x = (imageSideSize / 2) - (watermarkWidth / 2)
+            y = imageSideSize - watermarkHeight - marginY
+        case .BOTTOM_RIGHT:
+            x = imageSideSize - watermarkWidth - marginX
+            y = imageSideSize - watermarkHeight - marginY
+        }
+        return (x,y)
     }
 }

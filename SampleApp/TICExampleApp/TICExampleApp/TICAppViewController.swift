@@ -11,6 +11,7 @@ import TextImageComposite
 
 class TICAppViewController: UIViewController {
     var firstTime = false
+    var testWatermark = true
     func fonts() -> [TICFont] {
         
         var list : [TICFont] = []
@@ -72,24 +73,29 @@ class TICAppViewController: UIViewController {
         }
         TICConfig.instance.text = "In the beginning, God created the heavens and the earth."
         TICConfig.instance.reference = "Genesis 1:1"
-        //UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+        if testWatermark {
+            TICConfig.instance.watermarkImage = TICWatermark.init(watermarkImage: UIImage.init(named: "watermark.png")!, alignment: .BOTTOM_RIGHT, marginPercent: 5, widthPercent: 25)
+        }
+        TICConfig.instance.active = true
         let storyboard = UIStoryboard(name: TICConfig.instance.storyboardName, bundle: TICConfig.instance.bundle)
         let nvc = storyboard.instantiateViewController(withIdentifier: TICConfig.instance.viewControllerName) as! UINavigationController
         nvc.modalPresentationStyle = .fullScreen
         present(nvc, animated: true, completion: nil)
     }
 
-/*    public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if TICConfig.instance.active {
-            return .portrait
-        } else {
-            return .all
+    public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        get {
+            if TICConfig.instance.active {
+                return .portrait
+            } else {
+                return .all
+            }
         }
     }
   
     public override var shouldAutorotate: Bool {
         if TICConfig.instance.active {
-            return false
+            return true
         } else {
             return true
         }
@@ -97,6 +103,6 @@ class TICAppViewController: UIViewController {
     
     public override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         return UIInterfaceOrientation.portrait
-    }*/
+    }
 }
 

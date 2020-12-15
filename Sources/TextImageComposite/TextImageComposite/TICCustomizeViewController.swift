@@ -199,11 +199,7 @@ public class TICCustomizeViewController : UIViewController
         webView.isUserInteractionEnabled = false
         webContainerView.addSubview(webView)
         
-        if TICConfig.instance.selectedURL != nil {
-            self.imageView.imageURL = TICConfig.instance.selectedURL
-        } else {
-            self.imageView.image = TICConfig.instance.selectedImage
-        }
+        setupImage()
         
         filter = CIFilter(name: "CIColorControls")
         beginImage = CIImage(image: self.imageView.image!)
@@ -231,7 +227,6 @@ public class TICCustomizeViewController : UIViewController
     func setupEditorPanels()
     {
         var panels: [TICFormatPanelView] = []
-
         let f = self.panelContainerView.bounds
         self.alignmentView = TICAlignmentPanelView(frame: f)
         self.extrasView = TICExtrasPanelView(frame: f)
@@ -290,7 +285,28 @@ public class TICCustomizeViewController : UIViewController
             i += 1
         }
     }
-
+    
+    func setupImage() {
+        var baseImage: UIImage?
+        if TICConfig.instance.selectedURL != nil {
+            baseImage = UIImage(contentsOfFile: TICConfig.instance.selectedURL!.path)
+        } else {
+            baseImage = TICConfig.instance.selectedImage
+        }
+        if let watermark = TICConfig.instance.watermarkImage {
+            // If watermark defined
+            let pointCoordinates = watermark.getXY(Int(baseImage!.size.width))
+            let watermarkImage = watermark.watermarkImage!
+            UIGraphicsBeginImageContextWithOptions(baseImage!.size, false, 0.0)
+            baseImage!.draw(in: CGRect(x: 0.0, y: 0.0, width: baseImage!.size.width, height: baseImage!.size.height))
+            watermarkImage.draw(in: CGRect(x: pointCoordinates.x, y: pointCoordinates.y, width: watermark.getWatermarkWidth(Int(baseImage!.size.width)), height: watermark.getWatermarkWidth(Int(baseImage!.size.height))))
+            let result = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            self.imageView.image = result
+        } else {
+            self.imageView.image = baseImage
+        }
+    }
     func loadHTML() {
         if let filepath = TICConfig.instance.bundle.path(forResource: "composite", ofType: "html") {
             do {
@@ -481,6 +497,7 @@ extension TICCustomizeViewController : WKNavigationDelegate {
         self.widthInPixels = self.getBodyWidth()
         if alignmentView != nil {
             alignmentView.imageWidth = widthInPixels
+            alignmentView.setDivWidth(newWidth: Int(widthInPixels) * 75 / 100)
         }
     }
 

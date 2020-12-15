@@ -26,6 +26,7 @@
 		6365625F2579876E005B3E7B /* aaron-burden-jUPGga_tB4c-unsplash-1080.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 636562562579876E005B3E7B /* aaron-burden-jUPGga_tB4c-unsplash-1080.jpg */; };
 		636562602579876E005B3E7B /* kevin-ianeselli-4iTVoGYY7bM-unsplash-1080.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 636562572579876E005B3E7B /* kevin-ianeselli-4iTVoGYY7bM-unsplash-1080.jpg */; };
 		636562612579876E005B3E7B /* aaron-burden-vKBdY7e7KFk-unsplash-1080.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 636562582579876E005B3E7B /* aaron-burden-vKBdY7e7KFk-unsplash-1080.jpg */; };
+		6397FF762589252100ABACCB /* watermark.png in Resources */ = {isa = PBXBuildFile; fileRef = 6397FF752589252100ABACCB /* watermark.png */; };
 		63DB4ACA255AF4BE0051185C /* texture_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63DB4AA7255AF4BE0051185C /* texture_3.jpg */; };
 		63DB4ACB255AF4BE0051185C /* texture_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63DB4AA8255AF4BE0051185C /* texture_2.jpg */; };
 		63DB4ACE255AF4BE0051185C /* texture_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63DB4AAB255AF4BE0051185C /* texture_1.jpg */; };
@@ -97,6 +98,7 @@
 		636562562579876E005B3E7B /* aaron-burden-jUPGga_tB4c-unsplash-1080.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "aaron-burden-jUPGga_tB4c-unsplash-1080.jpg"; sourceTree = "<group>"; };
 		636562572579876E005B3E7B /* kevin-ianeselli-4iTVoGYY7bM-unsplash-1080.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "kevin-ianeselli-4iTVoGYY7bM-unsplash-1080.jpg"; sourceTree = "<group>"; };
 		636562582579876E005B3E7B /* aaron-burden-vKBdY7e7KFk-unsplash-1080.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "aaron-burden-vKBdY7e7KFk-unsplash-1080.jpg"; sourceTree = "<group>"; };
+		6397FF752589252100ABACCB /* watermark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = watermark.png; sourceTree = "<group>"; };
 		63DB4AA7255AF4BE0051185C /* texture_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = texture_3.jpg; sourceTree = "<group>"; };
 		63DB4AA8255AF4BE0051185C /* texture_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = texture_2.jpg; sourceTree = "<group>"; };
 		63DB4AAB255AF4BE0051185C /* texture_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = texture_1.jpg; sourceTree = "<group>"; };
@@ -150,6 +152,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6397FF74258924BF00ABACCB /* watermark */ = {
+			isa = PBXGroup;
+			children = (
+				6397FF752589252100ABACCB /* watermark.png */,
+			);
+			path = watermark;
+			sourceTree = "<group>";
+		};
 		63DB4A93255AF4BE0051185C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -162,6 +172,7 @@
 		63DB4A94255AF4BE0051185C /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				6397FF74258924BF00ABACCB /* watermark */,
 				63DB4A95255AF4BE0051185C /* nature */,
 				63DB4AA6255AF4BE0051185C /* texture */,
 			);
@@ -396,6 +407,7 @@
 				6365624225798223005B3E7B /* gabriel-garcia-marengo-kOqBCFsGTs8-unsplash-1080.jpg in Resources */,
 				63F15A5B255AF01800ED404A /* Main.storyboard in Resources */,
 				63DB4AD7255AF4BE0051185C /* texture_7.jpg in Resources */,
+				6397FF762589252100ABACCB /* watermark.png in Resources */,
 				63DB4ADA255AF4BE0051185C /* AndikaNewBasic-R.ttf in Resources */,
 				63DB4AD9255AF4BE0051185C /* AndikaNewBasic-B.ttf in Resources */,
 				63DB4ADB255AF4BE0051185C /* AndikaNewBasic-BI.ttf in Resources */,

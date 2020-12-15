@@ -18,10 +18,10 @@ public class TICAlignmentPanelView : TICFormatPanelView, SBFontFormatDelegate
     var lineHeight : Int = 25
     var imageWidth : CGFloat = 320 {
         didSet {
-            divWidth = Int(imageWidth)
+            divWidth = Int(imageWidth * 75 / 100)
             if textWidthSlider != nil {
                 textWidthSlider.maximumValue = Float(imageWidth)
-                textWidthSlider.value = Float(imageWidth)
+                textWidthSlider.value = Float(imageWidth * 75 / 100)
             }
         }
     }
@@ -40,10 +40,10 @@ public class TICAlignmentPanelView : TICFormatPanelView, SBFontFormatDelegate
         lineSpacingSlider.value = 25
         textWidthSlider.maximumValue = Float(imageWidth)
         textWidthSlider.minimumValue = 100
-        textWidthSlider.value = Float(imageWidth)
+        textWidthSlider.value = Float(imageWidth * 75 / 100)
         divLeftMargin = 0
         divTopMargin = 0
-        divWidth = Int(imageWidth)
+        divWidth = Int(imageWidth * 75 / 100)
     }
     
     @IBAction func lineSpacingValueChanged(_ sender: UISlider) {
