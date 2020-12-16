@@ -1,5 +1,5 @@
 # TextImageComposite
-![Language](https://img.shields.io/badge/language-Swift%203.2-orange.svg)
+![Language](https://img.shields.io/badge/language-Swift%205.0-orange.svg)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/sillsdev/ios-TextImageComposite/blob/master/LICENSE.md)
 
 
