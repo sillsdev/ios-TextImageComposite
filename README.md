@@ -1,6 +1,4 @@
 # TextImageComposite
-[![Platform](https://img.shields.io/cocoapods/p/TextImageComposite.svg?style=flat)](http://cocoapods.org/pods/TextImageComposite)
-[![CocoaPods](https://img.shields.io/cocoapods/v/TextImageComposite.svg?style=flat)](http://cocoapods.org/pods/TextImageComposite)
 ![Language](https://img.shields.io/badge/language-Swift%203.2-orange.svg)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/sillsdev/ios-TextImageComposite/blob/master/LICENSE.md)
 
