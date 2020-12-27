@@ -66,7 +66,7 @@ public class TICShareViewController : UIViewController
             
             let activityItems : [Any] = [img] //[ImageProvider(), TextProvider()]
             let vc = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-            
+            vc.popoverPresentationController?.sourceView = self.shareButton
             self.present(vc, animated: true, completion: nil)
         }
     }
