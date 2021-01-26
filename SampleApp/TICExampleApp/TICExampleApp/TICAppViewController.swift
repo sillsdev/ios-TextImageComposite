@@ -69,7 +69,7 @@ class TICAppViewController: UIViewController {
             TICConfig.instance.fonts = fonts()
             TICConfig.instance.locale = TICLocalization.us_en()
             TICConfig.instance.theme = TICTheme.defaultTheme()
-
+            TICConfig.instance.sharingDelegate = VideoGenerator()
         }
         TICConfig.instance.text = "In the beginning, God created the heavens and the earth."
         TICConfig.instance.reference = "Genesis 1:1"

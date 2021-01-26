@@ -14,6 +14,11 @@ public class TextImageComposite
     //used to load the bundle by name
 }
 
+public protocol SharingDelegate
+{
+    func createVideo(_ config: TICConfig, _ image: UIImage) -> NSURL?
+}
+
 public class TICConfig
 {
     static public let instance = TICConfig()
@@ -30,6 +35,7 @@ public class TICConfig
     public var selectedImage : UIImage?
     public var selectedURL : URL?
     public var watermarkImage: TICWatermark?
+    public var sharingDelegate: SharingDelegate?
     
     public var bundle: Bundle {
         let bundle = Bundle(identifier: "org.sil.TextImageComposite")
