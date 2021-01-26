@@ -64,11 +64,24 @@ public class TICShareViewController : UIViewController
         
         if let img = self.compositeImage {
             
-            let activityItems : [Any] = [img] //[ImageProvider(), TextProvider()]
+            var activityItems : [Any] = [img]
+            if TICConfig.instance.sharingDelegate != nil {
+                if let videoURL = TICConfig.instance.sharingDelegate!.createVideo(TICConfig.instance, img) {
+                    activityItems = [videoURL]
+                }
+            } 
+
             let vc = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
             vc.popoverPresentationController?.sourceView = self.shareButton
             self.present(vc, animated: true, completion: nil)
+            
         }
+        
+    }
+    
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
     }
     
     @IBAction func handleCancelButtonTap(_ sender: Any) {

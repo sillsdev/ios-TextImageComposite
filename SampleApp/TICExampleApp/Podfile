@@ -1,0 +1,6 @@
+platform :ios, '9.3'
+use_frameworks!
+
+target 'TICExampleApp' do
+  pod 'mobile-ffmpeg-video', '= 4.4.LTS'
+end
