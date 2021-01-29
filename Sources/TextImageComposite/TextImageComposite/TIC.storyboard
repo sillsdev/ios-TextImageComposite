@@ -378,20 +378,29 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fCs-X7-gLZ">
-                                            <rect key="frame" x="16" y="11" width="168" height="21.5"/>
+                                            <rect key="frame" x="57" y="11" width="127" height="21.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_image" translatesAutoresizingMaskIntoConstraints="NO" id="C7b-MV-Lke">
+                                            <rect key="frame" x="20" y="7.5" width="29" height="29"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="C7b-MV-Lke" secondAttribute="height" multiplier="1:1" id="sa6-Jr-wFj"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="fCs-X7-gLZ" firstAttribute="top" secondItem="cZT-dU-t7v" secondAttribute="topMargin" id="Gs9-9X-8uc"/>
-                                        <constraint firstItem="fCs-X7-gLZ" firstAttribute="leading" secondItem="cZT-dU-t7v" secondAttribute="leadingMargin" id="ZE3-8f-dqy"/>
+                                        <constraint firstItem="C7b-MV-Lke" firstAttribute="centerY" secondItem="cZT-dU-t7v" secondAttribute="centerY" id="Heq-wT-peK"/>
+                                        <constraint firstItem="C7b-MV-Lke" firstAttribute="leading" secondItem="cZT-dU-t7v" secondAttribute="leading" constant="20" symbolic="YES" id="Kk6-3m-3v7"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="fCs-X7-gLZ" secondAttribute="bottom" id="c66-28-Zjb"/>
+                                        <constraint firstItem="fCs-X7-gLZ" firstAttribute="leading" secondItem="C7b-MV-Lke" secondAttribute="trailing" constant="8" symbolic="YES" id="cOL-rh-u1a"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="fCs-X7-gLZ" secondAttribute="trailing" id="ebG-pd-qe4"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="sourceImage" destination="C7b-MV-Lke" id="EdA-H7-gbO"/>
                                     <outlet property="sourceLabel" destination="fCs-X7-gLZ" id="GaI-NI-kX8"/>
                                 </connections>
                             </tableViewCell>

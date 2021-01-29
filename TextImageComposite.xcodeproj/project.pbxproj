@@ -126,6 +126,8 @@
 			children = (
 				6343C6D9255C3CB700177A45 /* TIC.storyboard */,
 				6343C6B7255C3CB700177A45 /* TICCustomizeViewController.swift */,
+				634E788425C36AFD00DBB849 /* ShareTypeTableViewController.swift */,
+				634E788825C36B1A00DBB849 /* ShareTypeTableViewCell.swift */,
 				634E787325C0756C00DBB849 /* TICImageSelectPanel */,
 				634E786E25C0745D00DBB849 /* TICFontPanel */,
 				634E786B25C073E400DBB849 /* XIBPanelViews */,
@@ -136,8 +138,6 @@
 				6343C6DB255C3CB700177A45 /* Info.plist */,
 				6343C6DC255C3CB700177A45 /* TICConfig.swift */,
 				634E787E25C1BD8900DBB849 /* UIImageExtension.swift */,
-				634E788425C36AFD00DBB849 /* ShareTypeTableViewController.swift */,
-				634E788825C36B1A00DBB849 /* ShareTypeTableViewCell.swift */,
 			);
 			name = TextImageComposite;
 			path = Sources/TextImageComposite/TextImageComposite;

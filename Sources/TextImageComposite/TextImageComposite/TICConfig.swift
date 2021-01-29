@@ -94,7 +94,7 @@ public struct TICTheme {
     func formatToolbarButton(_ button : UIButton) {
         if(button.isSelected) {
             button.backgroundColor = self.backgroundColor
-            button.tintColor = self.contrastColor
+            button.tintColor = self.tintColor
         } else {
             button.backgroundColor = self.backgroundColor
             button.tintColor = self.accentColor

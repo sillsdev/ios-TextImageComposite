@@ -21,7 +21,7 @@ class ShareTypeTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.backgroundColor = TICConfig.instance.theme.viewBackgroundColor
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -44,19 +44,23 @@ class ShareTypeTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ShareTypeCell", for: indexPath)
+        cell.backgroundColor = TICConfig.instance.theme.viewBackgroundColor
+        cell.tintColor = TICConfig.instance.theme.tintColor
         if let shareCell = cell as? ShareTypeTableViewCell {
+            shareCell.sourceLabel.textColor = TICConfig.instance.theme.tintColor
             switch indexPath.row {
             case 0:
+                shareCell.sourceImage.image = UIImage.init(named: "ic_image", in: TICConfig.instance.bundle, compatibleWith: nil)
                 shareCell.sourceLabel.text = shareOperation ? TICConfig.instance.locale.shareImage : TICConfig.instance.locale.saveImage
                 break
             case 1:
+                shareCell.sourceImage.image = UIImage(named: "ic_video", in: TICConfig.instance.bundle, compatibleWith: nil)
                 shareCell.sourceLabel.text = shareOperation ? TICConfig.instance.locale.shareVideo : TICConfig.instance.locale.saveVideo
                 break
             default:
                 break
             }
-            // Configure the cell...
-            }
+        }
         return cell
     }
     
