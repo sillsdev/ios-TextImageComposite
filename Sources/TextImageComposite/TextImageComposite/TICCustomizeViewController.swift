@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import WebKit
+import Photos
 import os.log
 
 public enum Alignment: Int {
@@ -44,7 +45,84 @@ public enum CSSProperty: String {
     case textShadow = "text-shadow"
     case maxWidth = "max-width"
 }
+extension TICCustomizeViewController : UIPopoverPresentationControllerDelegate {
+    public func presentationController(_ controller: UIPresentationController, viewControllerForAdaptivePresentationStyle style: UIModalPresentationStyle) -> UIViewController? {
+        return UINavigationController(rootViewController: controller.presentedViewController)
+    }
+    public func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        var retMode = UIModalPresentationStyle.currentContext
+        // Views below are always popover
+        if let _: ShareTypeTableViewController = controller.presentedViewController as? ShareTypeTableViewController {
+            retMode = UIModalPresentationStyle.none
+        }
+        return retMode
+    }
+}
+extension TICCustomizeViewController : TICImageSelectionDelegate {
+    public func getAnchorButton() -> UIBarButtonItem {
+        return saveButton
+    }
+    
+    public func changeSelectedImage() {
+        setupImage()
+        getFinalImageView()
+    }
+    
+}
 
+extension TICCustomizeViewController : TICShareDelegate {
+    public func share(type: TICShareOutputType) {
+        let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: delayTime) {
+            self.compositeImage = UIImage.init(view: self.compositeView)
+            if let img = self.compositeImage {
+                var activityItems : [Any] = []
+                switch type {
+                case .image:
+                    activityItems = [img]
+                case .video:
+                    if let videoURL = TICConfig.instance.sharingDelegate!.createVideo(TICConfig.instance, img) {
+                        activityItems = [videoURL]
+                    }
+                }
+                if !activityItems.isEmpty {
+                    let vc = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+                    vc.popoverPresentationController?.barButtonItem = self.shareButton
+                    self.present(vc, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
+    public func save(type: TICShareOutputType) {
+        let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: delayTime) {
+            self.compositeImage = UIImage.init(view: self.compositeView)
+            if let img = self.compositeImage
+            {
+                switch type {
+                case .image:
+                    UIImageWriteToSavedPhotosAlbum(img, self, #selector(self.imageSaved(_:didFinishSavingWithError:contextInfo:)), nil)
+                case .video:
+                    if let videoURL = TICConfig.instance.sharingDelegate!.createVideo(TICConfig.instance, img) {
+                        PHPhotoLibrary.shared().performChanges({
+                            PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: videoURL as URL)
+                        }) { saved, error in
+                            if saved {
+                                let alertController = UIAlertController(title: "Your video was successfully saved", message: nil, preferredStyle: .alert)
+                                let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                                alertController.addAction(defaultAction)
+                                self.present(alertController, animated: true, completion: nil)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    
+}
 extension TICCustomizeViewController : TICFormatDelegate {
     
     public func setStyle(_ property : CSSProperty, _ value : String, _ section : TextSection) {
@@ -120,26 +198,12 @@ extension TICCustomizeViewController : TICFormatDelegate {
             self.imageView.addBlur(CGFloat(blurValue/10))
         }
         
-        
-   /*
-        
-        if let ciImage = filter.value(forKey: "outputImage") as? CIImage {
-            if #available(iOS 10.0, *) {
-                let blurredCIImage = ciImage.applyingGaussianBlur(sigma: Double(blurValue))
-                let croppedImage = blurredCIImage.cropped(to: ciImage.extent)
-                imageView.image = UIImage(ciImage: croppedImage)
-            } else {
-                imageView.image = UIImage(ciImage: ciImage)
-                self.imageView.addBlur(CGFloat(blurValue/10))
-            }
-            
-        }
- */
     }
 }
 
 public class TICCustomizeViewController : UIViewController
 {
+    @IBOutlet weak var imageSelect: UIButton!
     @IBOutlet weak var imageView: BlurredImageView!
     @IBOutlet weak var compositeView: UIView!
     @IBOutlet weak var toolbarDividersView: UIView!
@@ -147,6 +211,7 @@ public class TICCustomizeViewController : UIViewController
     @IBOutlet weak var webContainerView: UIView!
     @IBOutlet weak var referenceFormatButton: UIButton!
     @IBOutlet weak var toolbarScrollView: UIScrollView!
+    @IBOutlet weak var cancelBarButton: UIBarButtonItem!
     var webView: WKWebView!
     
     var fontSizeView: TICFontAttributesPanelView!
@@ -166,6 +231,7 @@ public class TICCustomizeViewController : UIViewController
     var beginImage: CIImage!
     
     var fontViewController: TICFontPanelViewController!
+    var imageSelectController: TICImageSelectPanel!
     var lastX: Int = 0
     var lastY: Int = 0
     
@@ -174,7 +240,8 @@ public class TICCustomizeViewController : UIViewController
     @IBOutlet var toolbarButtons: [UIButton]!
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
-
+    @IBOutlet weak var shareButton: UIBarButtonItem!
+    
     var compositeImage: UIImage?
     var fontSize: Int = 15
     var selectedToolbarButton: UIButton? = nil
@@ -183,6 +250,16 @@ public class TICCustomizeViewController : UIViewController
     override public func viewDidLoad()
     {
         super.viewDidLoad()
+        TICConfig.instance.active = true
+        
+        self.cancelBarButton.title = TICConfig.instance.locale.cancel
+        
+        //using empty string to remove default `Back` text on NavigationBar back item
+        self.navigationItem.title = " "//TICConfig.instance.locale.chooseImage
+        self.cancelBarButton.title = TICConfig.instance.locale.cancel
+        
+        TICConfig.instance.theme.formatNavbar((self.navigationController?.navigationBar)!)
+
         view.backgroundColor = TICConfig.instance.theme.viewBackgroundColor
         let contentController = createContentController()
         let webConfiguration = WKWebViewConfiguration()
@@ -199,11 +276,12 @@ public class TICCustomizeViewController : UIViewController
         webView.isUserInteractionEnabled = false
         webContainerView.addSubview(webView)
         
-        setupImage()
-        
+        TICConfig.instance.selectedURL = TICConfig.instance.images[0].imageURL
+        TICConfig.instance.selectedImage = nil
+
         filter = CIFilter(name: "CIColorControls")
-        beginImage = CIImage(image: self.imageView.image!)
-        filter.setValue(beginImage, forKey: kCIInputImageKey)
+
+        setupImage()
         
         //using empty string to remove default `Back` text on NavigationBar back item
         self.navigationItem.title = " "//TICConfig.instance.locale.chooseImage
@@ -214,7 +292,7 @@ public class TICCustomizeViewController : UIViewController
         self.setupEditorPanels()
         self.setupToolbarButtons()
         
-        self.toolbarScrollView.setContentOffset(CGPoint(x: fontButton.center.x, y: self.toolbarScrollView.contentOffset.y), animated: true)
+        self.toolbarScrollView.setContentOffset(CGPoint(x: imageSelect.center.x, y: self.toolbarScrollView.contentOffset.y), animated: true)
         toolbarDividersView.subviews.forEach {
             $0.backgroundColor = TICConfig.instance.theme.highlightColor
         }
@@ -226,7 +304,7 @@ public class TICCustomizeViewController : UIViewController
 
     func setupEditorPanels()
     {
-        var panels: [TICFormatPanelView] = []
+        var panels: [TICBasePanelView] = []
         let f = self.panelContainerView.bounds
         self.alignmentView = TICAlignmentPanelView(frame: f)
         self.extrasView = TICExtrasPanelView(frame: f)
@@ -239,8 +317,10 @@ public class TICCustomizeViewController : UIViewController
         
         let fontPanelStoryboard =  UIStoryboard(name: "TICFontPanel", bundle: TICConfig.instance.bundle)
         fontViewController = fontPanelStoryboard.instantiateViewController(withIdentifier: "FontPanelViewController") as? TICFontPanelViewController
+        let imageSelectStoryboard = UIStoryboard(name: "TICImageSelectPanel", bundle: TICConfig.instance.bundle)
+        imageSelectController = imageSelectStoryboard.instantiateViewController(withIdentifier: "TICImageSelectPanel") as? TICImageSelectPanel
+        imageSelectController.selectImageDelegate = self
         
-
         alignmentView.imageWidth = widthInPixels
         
         panels.append(self.alignmentView)
@@ -260,6 +340,9 @@ public class TICCustomizeViewController : UIViewController
         self.panelContainerView.addSubview(fontViewController.view)
         fontViewController.view.constrainToFillSuperview()
         
+        self.panelContainerView.addSubview(imageSelectController.view)
+        imageSelectController.view.constrainToFillSuperview()
+        
         fontViewController.delegate = self
         fontViewController.setAvailableFonts(fonts: TICConfig.instance.fonts)
         fontSizeView.fontDelegate = alignmentView
@@ -272,7 +355,7 @@ public class TICCustomizeViewController : UIViewController
     func setupToolbarButtons() {
         var i = 0
         for btn : UIButton in self.toolbarButtons {
-             if (btn == fontButton) {
+             if (btn == imageSelect) {
                 self.selectedToolbarButton = btn
                 btn.isSelected = true
             }
@@ -306,6 +389,10 @@ public class TICCustomizeViewController : UIViewController
         } else {
             self.imageView.image = baseImage
         }
+        
+        beginImage = CIImage(image: self.imageView.image!)
+        filter.setValue(beginImage, forKey: kCIInputImageKey)
+
     }
     func loadHTML() {
         if let filepath = TICConfig.instance.bundle.path(forResource: "composite", ofType: "html") {
@@ -328,30 +415,48 @@ public class TICCustomizeViewController : UIViewController
         }
     }
     @IBAction func handleSaveButtonTap(_ sender: Any) {
-        
-        compositeImage = UIImage.init(view: self.compositeView)
-        if let img = compositeImage
-        {
-            UIImageWriteToSavedPhotosAlbum(img, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+        if TICConfig.instance.sharingDelegate == nil {
+            save(type: .image)
+        } else {
+            showShareTypeOptions(barButton: saveButton, shareOperation: false)
         }
     }
     
-    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
-        
-        if error == nil {
-            /*
-            let ac = UIAlertController(title: "Saved!", message: "Image saved to your photos.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            present(ac, animated: true, completion: nil)
-             */
-            TICConfig.instance.active = false
-            self.performSegue(withIdentifier: "ShowComposite", sender: self)
+    @IBAction func handleShareButtonTap(_ sender: Any) {
+        if TICConfig.instance.sharingDelegate == nil {
+            share(type: .image)
         } else {
+            showShareTypeOptions(barButton: shareButton, shareOperation: true)
+        }
+    }
+    
+    func showShareTypeOptions(barButton: UIBarButtonItem, shareOperation: Bool) {
+        if let popoverContent = self.storyboard?.instantiateViewController(withIdentifier: "ShareTypeVC") as? ShareTypeTableViewController {
+            popoverContent.shareOperation = shareOperation
+            popoverContent.shareDelegate = self
+            popoverContent.modalPresentationStyle = .popover
+            if let popover = popoverContent.popoverPresentationController {
+
+                popover.barButtonItem = barButton
+
+                // the size you want to display
+                popoverContent.preferredContentSize = CGSize(width: 200, height: 100)
+                popover.delegate = self
+            }
+
+            self.present(popoverContent, animated: true, completion: nil)
+        }
+    }
+    @objc func imageSaved(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if error == nil {
+            TICConfig.instance.active = true
+        }  else {
             let ac = UIAlertController(title: "Save error", message: error?.localizedDescription, preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             present(ac, animated: true, completion: nil)
         }
     }
+
     //MARK: - Toolbar
     
     @IBAction func handleToolbarButtonTap(_ sender: UIButton) {
@@ -365,6 +470,10 @@ public class TICCustomizeViewController : UIViewController
         TICConfig.instance.theme.formatToolbarButton(sender)
         
         selectedToolbarButton = sender
+    }
+    
+    @IBAction func handleImageSelectTap(_ sender: Any) {
+        self.panelContainerView.addSubview(self.imageSelectController.view)
     }
     
     @IBAction func handleFontButtonTap(_ sender: UIButton) {
@@ -432,13 +541,9 @@ public class TICCustomizeViewController : UIViewController
             }
         }
     }
-    override public func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if segue.identifier == "ShowComposite" {
-            if let vc = segue.destination as? TICShareViewController {
-                vc.compositeImage = self.compositeImage
-            }
-        }
+    @IBAction func cancelBarButtonPressed(_ sender: Any) {
+        TICConfig.instance.active = false
+        self.dismiss(animated: true, completion: nil)
     }
     
     func centerButton(button: UIButton) {

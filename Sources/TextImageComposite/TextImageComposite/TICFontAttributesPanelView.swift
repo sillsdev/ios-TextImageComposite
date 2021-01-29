@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TICFontAttributesPanelView : TICFormatPanelView {
+class TICFontAttributesPanelView : TICBasePanelView {
 
     @IBOutlet weak var boldButton: UIButton!
     @IBOutlet weak var italicsButton: UIButton!

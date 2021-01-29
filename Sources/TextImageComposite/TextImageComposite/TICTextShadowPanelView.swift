@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TICTextShadowPanelView : TICFormatPanelView {
+class TICTextShadowPanelView : TICBasePanelView {
 
     @IBOutlet weak var resizeSlider: UISlider!
     override public func layoutSubviews() {

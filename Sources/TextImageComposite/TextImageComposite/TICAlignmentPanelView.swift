@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class TICAlignmentPanelView : TICFormatPanelView, SBFontFormatDelegate
+public class TICAlignmentPanelView : TICBasePanelView, SBFontFormatDelegate
 {
 
     @IBOutlet weak var lineSpacingSlider: UISlider!

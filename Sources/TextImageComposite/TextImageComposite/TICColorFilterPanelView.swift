@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TICColorFilterPanelView : TICFormatPanelView {
+class TICColorFilterPanelView : TICBasePanelView {
 
     @IBOutlet weak var brightnessSlider: UISlider!
     @IBOutlet weak var contrastSlider: UISlider!

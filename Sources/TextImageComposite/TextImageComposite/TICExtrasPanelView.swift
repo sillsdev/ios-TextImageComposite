@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class TICExtrasPanelView : TICFormatPanelView
+public class TICExtrasPanelView : TICBasePanelView
 {
     @IBOutlet weak var blurSlider: UISlider!
     

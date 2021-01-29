@@ -27,14 +27,44 @@
                                     <action selector="promptPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qW4-Uc-sg0"/>
                                 </connections>
                             </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" title="Test Watermark" translatesAutoresizingMaskIntoConstraints="NO" id="4zp-51-r4Q">
+                                <rect key="frame" x="355" y="821" width="51" height="31"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test Watermark" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQq-6R-d2n">
+                                <rect key="frame" x="227" y="826" width="120" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="McZ-Fk-FQA">
+                                <rect key="frame" x="355" y="770" width="51" height="31"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test Video" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHa-nE-fT8">
+                                <rect key="frame" x="266" y="775" width="81" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemTealColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="McZ-Fk-FQA" secondAttribute="trailing" constant="10" id="3lO-Tc-2SS"/>
                             <constraint firstItem="LwP-sK-oqo" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="CZS-6J-vxN"/>
+                            <constraint firstItem="cQq-6R-d2n" firstAttribute="centerY" secondItem="4zp-51-r4Q" secondAttribute="centerY" id="HQ8-UH-uBs"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="4zp-51-r4Q" secondAttribute="trailing" constant="10" id="SvL-sR-qEJ"/>
                             <constraint firstItem="LwP-sK-oqo" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="XBc-Co-DbV"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="4zp-51-r4Q" secondAttribute="bottom" constant="10" id="ex5-tI-uCo"/>
+                            <constraint firstItem="4zp-51-r4Q" firstAttribute="leading" secondItem="cQq-6R-d2n" secondAttribute="trailing" constant="8" symbolic="YES" id="nXp-Sy-Q1P"/>
+                            <constraint firstItem="EHa-nE-fT8" firstAttribute="centerY" secondItem="McZ-Fk-FQA" secondAttribute="centerY" id="qyh-cX-Ifk"/>
+                            <constraint firstItem="4zp-51-r4Q" firstAttribute="top" secondItem="McZ-Fk-FQA" secondAttribute="bottom" constant="20" id="u1E-ak-FBf"/>
+                            <constraint firstItem="McZ-Fk-FQA" firstAttribute="leading" secondItem="EHa-nE-fT8" secondAttribute="trailing" constant="8" symbolic="YES" id="ulo-gb-osr"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="videoSlider" destination="McZ-Fk-FQA" id="zFq-oA-foH"/>
+                        <outlet property="watermarkSlider" destination="4zp-51-r4Q" id="hxn-tb-rSg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
