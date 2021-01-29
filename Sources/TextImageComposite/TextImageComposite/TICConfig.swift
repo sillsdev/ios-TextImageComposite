@@ -146,12 +146,22 @@ public struct TICLocalization
     var ok: String!
     var share: String!
     var done: String!
+    var shareImage: String!
+    var shareVideo: String!
+    var saveImage: String!
+    var saveVideo: String!
     
-    public init(cancel: String, ok: String, share: String, done: String) {
+    public init(cancel: String, ok: String, share: String, done: String,
+                shareImage: String, shareVideo: String,
+                saveImage: String, saveVideo: String) {
         self.cancel = cancel
         self.ok = ok
         self.share = share
         self.done = done
+        self.shareImage = shareImage
+        self.shareVideo = shareVideo
+        self.saveImage = saveImage
+        self.saveVideo = saveVideo
     }
     public init() {
         
@@ -162,7 +172,10 @@ public struct TICLocalization
         locale.ok = "OK"
         locale.share = "Share"
         locale.done = "Done"
-        
+        locale.shareVideo = "Share Video"
+        locale.shareImage = "Share Image"
+        locale.saveVideo = "Save Video"
+        locale.saveImage = "Save Image"
         return locale
     }
     
@@ -172,6 +185,10 @@ public struct TICLocalization
         locale.ok = "KO"
         locale.share = "Sit"
         locale.done = "Pol"
+        locale.shareVideo = "Ipsum unem"
+        locale.shareImage = "Ipsum wen"
+        locale.saveVideo = "Porce unem"
+        locale.saveImage = "Porce wen"
         
         return locale
     }

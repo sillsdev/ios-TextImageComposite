@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class TICColorPanelView : TICFormatPanelView, SBColorFormatDelegate
+public class TICColorPanelView : TICBasePanelView, SBColorFormatDelegate
 {
     @IBOutlet weak var whiteButton : UIButton!
     @IBOutlet weak var blackButton : UIButton!
@@ -69,7 +69,7 @@ public class TICColorPanelView : TICFormatPanelView, SBColorFormatDelegate
     }
 }
 
-public class TICColorPickerPanelView : TICFormatPanelView, ColorPickerDelegate {
+public class TICColorPickerPanelView : TICBasePanelView, ColorPickerDelegate {
     
     @IBOutlet weak var colorPicker : ColorPicker!
     @IBOutlet weak var brightnessSlider : BrightnessSlider!
