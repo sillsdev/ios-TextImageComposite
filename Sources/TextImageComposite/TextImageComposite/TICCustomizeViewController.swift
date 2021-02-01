@@ -604,6 +604,7 @@ extension TICCustomizeViewController : WKNavigationDelegate {
             alignmentView.imageWidth = widthInPixels
             alignmentView.setDivWidth(newWidth: Int(widthInPixels) * 75 / 100)
         }
+        self.fontFormatDelegate.setDivTopMarginCenter()
     }
 
 }

@@ -103,6 +103,19 @@ public class TICAlignmentPanelView : TICBasePanelView, SBFontFormatDelegate
             self.delegate.setBodyStyle(.marginTop, String(divTopMargin) + "px")
         }
     }
+    public func setDivTopMarginCenter() {
+        var divHeight = Int(delegate.getDivHeight())
+        let maxIntHeight = Int(Float(imageWidth)) // ImageHeight = ImageWidth
+        if (divHeight > maxIntHeight) {
+            divHeight = maxIntHeight
+        }
+        let maxAdjustment =  maxIntHeight - divHeight
+        let centerAdjustment = maxAdjustment / 2
+        divTopMargin = centerAdjustment
+        if (divTopMargin > 0) {
+            self.delegate.setBodyStyle(.marginTop, String(divTopMargin) + "px")
+        }
+    }
     public func getDivWidth() -> Int {
         return divWidth
     }

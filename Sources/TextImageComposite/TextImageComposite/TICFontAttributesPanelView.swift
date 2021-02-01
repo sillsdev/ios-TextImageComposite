@@ -19,7 +19,7 @@ class TICFontAttributesPanelView : TICBasePanelView {
         super.layoutSubviews()
         
         TICConfig.instance.theme.formatControl(fontSizeSlider)
-        fontSizeSlider.value = 15
+        fontSizeSlider.value = 20
         TICConfig.instance.theme.formatControl(letterSpacingSlider)
     }
     @IBAction func italicsButtonPressed(_ sender: Any) {

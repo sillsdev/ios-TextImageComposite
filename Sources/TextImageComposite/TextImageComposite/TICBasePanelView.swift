@@ -33,6 +33,7 @@ public protocol SBFontFormatDelegate
     func setDivLeftMargin(newMargin: Int)
     func getDivTopMargin() -> Int
     func setDivTopMargin(newMargin: Int)
+    func setDivTopMarginCenter()
     func getDivWidth() -> Int
     func setDivWidth(newWidth: Int)
 }
