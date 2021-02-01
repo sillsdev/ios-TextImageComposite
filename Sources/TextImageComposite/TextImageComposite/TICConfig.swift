@@ -14,6 +14,11 @@ public class TextImageComposite
     //used to load the bundle by name
 }
 
+public protocol SharingDelegate
+{
+    func createVideo(_ config: TICConfig, _ image: UIImage) -> NSURL?
+}
+
 public class TICConfig
 {
     
@@ -31,6 +36,7 @@ public class TICConfig
     public var selectedImage : UIImage?
     public var selectedURL : URL?
     public var watermarkImage: TICWatermark?
+    public var sharingDelegate: SharingDelegate?
     
     public static var instance: TICConfig {
         if _instance == nil {
@@ -88,7 +94,7 @@ public struct TICTheme {
     func formatToolbarButton(_ button : UIButton) {
         if(button.isSelected) {
             button.backgroundColor = self.backgroundColor
-            button.tintColor = self.contrastColor
+            button.tintColor = self.tintColor
         } else {
             button.backgroundColor = self.backgroundColor
             button.tintColor = self.accentColor
@@ -148,12 +154,32 @@ public struct TICLocalization
     var ok: String!
     var share: String!
     var done: String!
+    var shareImage: String!
+    var shareVideo: String!
+    var saveImage: String!
+    var saveVideo: String!
     
+    public init(cancel: String, ok: String, share: String, done: String,
+                shareImage: String, shareVideo: String,
+                saveImage: String, saveVideo: String) {
+        self.cancel = cancel
+        self.ok = ok
+        self.share = share
+        self.done = done
+        self.shareImage = shareImage
+        self.shareVideo = shareVideo
+        self.saveImage = saveImage
+        self.saveVideo = saveVideo
+    }
     public init(cancel: String, ok: String, share: String, done: String) {
         self.cancel = cancel
         self.ok = ok
         self.share = share
         self.done = done
+        self.shareImage = ""
+        self.shareVideo = ""
+        self.saveImage = ""
+        self.saveVideo = ""
     }
     public init() {
         
@@ -164,7 +190,10 @@ public struct TICLocalization
         locale.ok = "OK"
         locale.share = "Share"
         locale.done = "Done"
-        
+        locale.shareVideo = "Share Video"
+        locale.shareImage = "Share Image"
+        locale.saveVideo = "Save Video"
+        locale.saveImage = "Save Image"
         return locale
     }
     
@@ -174,6 +203,10 @@ public struct TICLocalization
         locale.ok = "KO"
         locale.share = "Sit"
         locale.done = "Pol"
+        locale.shareVideo = "Ipsum unem"
+        locale.shareImage = "Ipsum wen"
+        locale.saveVideo = "Porce unem"
+        locale.saveImage = "Porce wen"
         
         return locale
     }

@@ -1,6 +1,5 @@
 //
-//  TICPanelView.swift
-//  TICExample
+//  TICBasePanelView.swift
 //
 //  Created by Jacob Bullock on 11/22/17.
 //  Copyright © 2017 SIL. All rights reserved.
@@ -34,6 +33,7 @@ public protocol SBFontFormatDelegate
     func setDivLeftMargin(newMargin: Int)
     func getDivTopMargin() -> Int
     func setDivTopMargin(newMargin: Int)
+    func setDivTopMarginCenter()
     func getDivWidth() -> Int
     func setDivWidth(newWidth: Int)
 }
@@ -43,7 +43,12 @@ public protocol SBColorFormatDelegate
     func customColorWasSelected()
 }
 
-public class TICFormatPanelView : UIView
+public protocol TICImageSelectionDelegate
+{
+    func changeSelectedImage()
+    func getAnchorButton() -> UIBarButtonItem
+}
+public class TICBasePanelView : UIView
 {
     @IBOutlet var actionButtons: [UIButton]?
     @IBOutlet var selectableButtons: [UIButton]?

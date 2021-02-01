@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class TICAlignmentPanelView : TICFormatPanelView, SBFontFormatDelegate
+public class TICAlignmentPanelView : TICBasePanelView, SBFontFormatDelegate
 {
 
     @IBOutlet weak var lineSpacingSlider: UISlider!
@@ -99,6 +99,19 @@ public class TICAlignmentPanelView : TICFormatPanelView, SBFontFormatDelegate
         var adjustment = newMargin > maxAdjustment ? maxAdjustment : newMargin
         adjustment = newMargin < 0 ? 0 : adjustment
         divTopMargin = adjustment
+        if (divTopMargin > 0) {
+            self.delegate.setBodyStyle(.marginTop, String(divTopMargin) + "px")
+        }
+    }
+    public func setDivTopMarginCenter() {
+        var divHeight = Int(delegate.getDivHeight())
+        let maxIntHeight = Int(Float(imageWidth)) // ImageHeight = ImageWidth
+        if (divHeight > maxIntHeight) {
+            divHeight = maxIntHeight
+        }
+        let maxAdjustment =  maxIntHeight - divHeight
+        let centerAdjustment = maxAdjustment / 2
+        divTopMargin = centerAdjustment
         if (divTopMargin > 0) {
             self.delegate.setBodyStyle(.marginTop, String(divTopMargin) + "px")
         }

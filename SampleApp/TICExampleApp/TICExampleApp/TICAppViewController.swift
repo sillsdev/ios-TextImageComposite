@@ -11,7 +11,8 @@ import TextImageComposite
 
 class TICAppViewController: UIViewController {
     var firstTime = false
-    var testWatermark = true
+    @IBOutlet weak var watermarkSlider: UISwitch!
+    @IBOutlet weak var videoSlider: UISwitch!
     func fonts() -> [TICFont] {
         
         var list : [TICFont] = []
@@ -69,12 +70,22 @@ class TICAppViewController: UIViewController {
             TICConfig.instance.fonts = fonts()
             TICConfig.instance.locale = TICLocalization.us_en()
             TICConfig.instance.theme = TICTheme.defaultTheme()
-
         }
         TICConfig.instance.text = "In the beginning, God created the heavens and the earth."
         TICConfig.instance.reference = "Genesis 1:1"
-        if testWatermark {
-            TICConfig.instance.watermarkImage = TICWatermark.init(watermarkImage: UIImage.init(named: "watermark.png")!, alignment: .BOTTOM_RIGHT, marginPercent: 5, widthPercent: 25)
+        if watermarkSlider.isOn {
+            if TICConfig.instance.watermarkImage == nil {
+                TICConfig.instance.watermarkImage = TICWatermark.init(watermarkImage: UIImage.init(named: "watermark.png")!, alignment: .BOTTOM_RIGHT, marginPercent: 5, widthPercent: 25)
+            }
+        } else {
+            TICConfig.instance.watermarkImage = nil
+        }
+        if videoSlider.isOn {
+            if (TICConfig.instance.sharingDelegate == nil) {
+                TICConfig.instance.sharingDelegate = VideoGenerator()
+            }
+        } else {
+            TICConfig.instance.sharingDelegate = nil
         }
         TICConfig.instance.active = true
         let storyboard = UIStoryboard(name: TICConfig.instance.storyboardName, bundle: TICConfig.instance.bundle)

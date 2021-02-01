@@ -1,0 +1,16 @@
+PODS:
+  - mobile-ffmpeg-video (4.4.LTS)
+
+DEPENDENCIES:
+  - mobile-ffmpeg-video (= 4.4.LTS)
+
+SPEC REPOS:
+  trunk:
+    - mobile-ffmpeg-video
+
+SPEC CHECKSUMS:
+  mobile-ffmpeg-video: f14c9680812ecfc68a3c95396b3ca4f61484f5e7
+
+PODFILE CHECKSUM: 172adc5611aacd71d9de81a81d6b75254afada70
+
+COCOAPODS: 1.10.1

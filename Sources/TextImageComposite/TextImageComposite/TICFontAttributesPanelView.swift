@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TICFontAttributesPanelView : TICFormatPanelView {
+class TICFontAttributesPanelView : TICBasePanelView {
 
     @IBOutlet weak var boldButton: UIButton!
     @IBOutlet weak var italicsButton: UIButton!
@@ -19,7 +19,7 @@ class TICFontAttributesPanelView : TICFormatPanelView {
         super.layoutSubviews()
         
         TICConfig.instance.theme.formatControl(fontSizeSlider)
-        fontSizeSlider.value = 15
+        fontSizeSlider.value = 20
         TICConfig.instance.theme.formatControl(letterSpacingSlider)
     }
     @IBAction func italicsButtonPressed(_ sender: Any) {
