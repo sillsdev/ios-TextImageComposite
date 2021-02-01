@@ -171,6 +171,16 @@ public struct TICLocalization
         self.saveImage = saveImage
         self.saveVideo = saveVideo
     }
+    public init(cancel: String, ok: String, share: String, done: String) {
+        self.cancel = cancel
+        self.ok = ok
+        self.share = share
+        self.done = done
+        self.shareImage = ""
+        self.shareVideo = ""
+        self.saveImage = ""
+        self.saveVideo = ""
+    }
     public init() {
         
     }
