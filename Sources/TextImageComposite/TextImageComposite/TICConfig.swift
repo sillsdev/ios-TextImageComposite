@@ -21,7 +21,8 @@ public protocol SharingDelegate
 
 public class TICConfig
 {
-    static public let instance = TICConfig()
+    
+    static var _instance: TICConfig? = nil
     
     public var text: String             = ""
     public var reference: String        = ""
@@ -36,6 +37,13 @@ public class TICConfig
     public var selectedURL : URL?
     public var watermarkImage: TICWatermark?
     public var sharingDelegate: SharingDelegate?
+    
+    public static var instance: TICConfig {
+        if _instance == nil {
+            _instance = TICConfig()
+        }
+        return _instance!
+    }
     
     public var bundle: Bundle {
         let bundle = Bundle(identifier: "org.sil.TextImageComposite")
