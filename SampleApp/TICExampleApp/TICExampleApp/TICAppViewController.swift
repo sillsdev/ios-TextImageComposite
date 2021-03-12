@@ -13,6 +13,7 @@ class TICAppViewController: UIViewController {
     var firstTime = false
     @IBOutlet weak var watermarkSlider: UISwitch!
     @IBOutlet weak var videoSlider: UISwitch!
+    @IBOutlet weak var noReferenceSlider: UISwitch!
     func fonts() -> [TICFont] {
         
         var list : [TICFont] = []
@@ -72,7 +73,11 @@ class TICAppViewController: UIViewController {
             TICConfig.instance.theme = TICTheme.defaultTheme()
         }
         TICConfig.instance.text = "In the beginning, God created the heavens and the earth."
-        TICConfig.instance.reference = "Genesis 1:1"
+        if noReferenceSlider.isOn {
+            TICConfig.instance.reference = ""
+        } else {
+            TICConfig.instance.reference = "Genesis 1:1"
+        }
         if watermarkSlider.isOn {
             if TICConfig.instance.watermarkImage == nil {
                 TICConfig.instance.watermarkImage = TICWatermark.init(watermarkImage: UIImage.init(named: "watermark.png")!, alignment: .BOTTOM_RIGHT, marginPercent: 5, widthPercent: 25)

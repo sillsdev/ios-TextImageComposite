@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Edit Text View Controller-->
+        <scene sceneID="l7I-7s-mPu">
+            <objects>
+                <viewController storyboardIdentifier="EditTextViewController" id="OI9-dn-gde" customClass="EditTextViewController" customModule="TextImageComposite" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ub9-Yq-HZI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Am2-La-aJD">
+                                <rect key="frame" x="20" y="88" width="374" height="474.5"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Ge-5c-8SF">
+                                <rect key="frame" x="0.0" y="562.5" width="414" height="2"/>
+                                <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="tD1-aH-b7R"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="pNj-jq-iCO"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="pNj-jq-iCO" firstAttribute="trailing" secondItem="5Ge-5c-8SF" secondAttribute="trailing" id="48F-K5-hOf"/>
+                            <constraint firstItem="Am2-La-aJD" firstAttribute="leading" secondItem="pNj-jq-iCO" secondAttribute="leading" constant="20" id="DBi-Qx-abR"/>
+                            <constraint firstItem="Am2-La-aJD" firstAttribute="top" secondItem="pNj-jq-iCO" secondAttribute="top" id="QTF-az-wf0"/>
+                            <constraint firstItem="pNj-jq-iCO" firstAttribute="trailing" secondItem="Am2-La-aJD" secondAttribute="trailing" constant="20" id="Qcd-hh-Ocz"/>
+                            <constraint firstItem="5Ge-5c-8SF" firstAttribute="leading" secondItem="pNj-jq-iCO" secondAttribute="leading" id="tjN-uG-Zft"/>
+                            <constraint firstItem="5Ge-5c-8SF" firstAttribute="top" secondItem="Am2-La-aJD" secondAttribute="bottom" id="wP3-Tp-U8K"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Nyl-t0-mEW">
+                        <barButtonItem key="rightBarButtonItem" image="ic_done" id="1MO-ht-pzz">
+                            <connections>
+                                <action selector="onDoneButtonPressed:" destination="OI9-dn-gde" id="DBL-Em-F3q"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="dividerLine" destination="5Ge-5c-8SF" id="sGV-h4-f43"/>
+                        <outlet property="textView" destination="Am2-La-aJD" id="Xh7-ZI-Ney"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fD4-9M-sSA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="892.75362318840587" y="174.77678571428569"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="XoO-pD-dUd">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OKN-iJ-u5V" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="t3i-7s-ggL">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="OI9-dn-gde" kind="relationship" relationship="rootViewController" id="ZwU-Cx-jG0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e8f-lZ-mfs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-17.39130434782609" y="174.77678571428569"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="ic_done" width="29" height="29"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

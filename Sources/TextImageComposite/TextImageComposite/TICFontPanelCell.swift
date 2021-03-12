@@ -15,11 +15,11 @@ class TICFontPanelCell: UITableViewCell {
         didSet {
             let font = UIFont(name: cellFont!.fontFamily, size: 17)
             setUnselectedText()
-            fontNameLabel.textColor = TICConfig.instance.theme.tintColor
+            fontNameLabel.textColor = TICConfig.instance.theme.textColor
             fontNameLabel.font = font
             fontNameLabel.backgroundColor = TICConfig.instance.theme.viewBackgroundColor
             fontNameLabel.text = cellFont!.title
-            selectedLabel.textColor = TICConfig.instance.theme.tintColor
+            selectedLabel.textColor = TICConfig.instance.theme.textColor
             selectedLabel.backgroundColor = TICConfig.instance.theme.viewBackgroundColor
             self.accessoryType = .none
         }

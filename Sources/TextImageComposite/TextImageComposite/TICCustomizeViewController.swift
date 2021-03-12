@@ -200,7 +200,11 @@ extension TICCustomizeViewController : TICFormatDelegate {
         
     }
 }
-
+extension TICCustomizeViewController: UIGestureRecognizerDelegate {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+         return true
+    }
+}
 public class TICCustomizeViewController : UIViewController
 {
     @IBOutlet weak var imageSelect: UIButton!
@@ -234,7 +238,8 @@ public class TICCustomizeViewController : UIViewController
     var imageSelectController: TICImageSelectPanel!
     var lastX: Int = 0
     var lastY: Int = 0
-    
+    var doubleTap: UITapGestureRecognizer?
+
     @IBOutlet weak var panelContainerView: UIView!
     
     @IBOutlet var toolbarButtons: [UIButton]!
@@ -242,6 +247,13 @@ public class TICCustomizeViewController : UIViewController
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
     
+    @IBAction func double(_ sender:UITapGestureRecognizer) {
+        NSLog("Double tap")
+        let editTextStoryboard = UIStoryboard(name: "EditText", bundle: TICConfig.instance.bundle)
+        let editTextVC = editTextStoryboard.instantiateViewController(withIdentifier: "EditTextViewController") as! EditTextViewController
+        editTextVC.webView = webView
+        self.navigationController?.pushViewController(editTextVC, animated: true)
+    }
     var compositeImage: UIImage?
     var fontSize: Int = 15
     var selectedToolbarButton: UIButton? = nil
@@ -276,6 +288,13 @@ public class TICCustomizeViewController : UIViewController
         webView.isUserInteractionEnabled = false
         webContainerView.addSubview(webView)
         
+        let doubleTapSelector : Selector = #selector(TICCustomizeViewController .double(_:))
+        doubleTap = UITapGestureRecognizer(target: self, action: doubleTapSelector)
+        doubleTap!.numberOfTapsRequired = 2
+        doubleTap!.numberOfTouchesRequired = 1
+        doubleTap!.delegate = self
+        compositeView.addGestureRecognizer(doubleTap!)
+        
         TICConfig.instance.selectedURL = TICConfig.instance.images[0].imageURL
         TICConfig.instance.selectedImage = nil
 
@@ -285,6 +304,8 @@ public class TICCustomizeViewController : UIViewController
         
         //using empty string to remove default `Back` text on NavigationBar back item
         self.navigationItem.title = " "//TICConfig.instance.locale.chooseImage
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
         
         loadHTML()
         
@@ -311,7 +332,11 @@ public class TICCustomizeViewController : UIViewController
         self.colorView = TICColorPanelView(frame: f)
         self.colorDetailsView = TICColorPickerPanelView(frame: f)
         self.fontSizeView = TICFontAttributesPanelView(frame: f)
-        self.referenceSizeView = TICReferenceFontPanelView(frame: f)
+        if (TICConfig.instance.reference.isEmpty) {
+            referenceFormatButton.isHidden = true
+        } else {
+            self.referenceSizeView = TICReferenceFontPanelView(frame: f)
+        }
         self.shadowView = TICTextShadowPanelView(frame: f)
         self.colorFilterView = TICColorFilterPanelView(frame: f)
         
@@ -328,7 +353,9 @@ public class TICCustomizeViewController : UIViewController
         panels.append(self.colorView)
         panels.append(self.colorDetailsView)
         panels.append(self.fontSizeView)
-        panels.append(self.referenceSizeView)
+        if !TICConfig.instance.reference.isEmpty {
+            panels.append(self.referenceSizeView)
+        }
         panels.append(self.shadowView)
         panels.append(self.colorFilterView)
         
@@ -562,6 +589,12 @@ public class TICCustomizeViewController : UIViewController
       return floatWidth
     }
 
+    static func setTextAndReference(webView: WKWebView?) {
+        let text = TICConfig.instance.text.replacingOccurrences(of: "\n", with: "<br>").replacingOccurrences(of: "\t", with: "")
+        let reference = TICConfig.instance.reference
+        let js = "reset('\(text)', '\(reference)')"
+        webView?.evaluateJavaScript(js, completionHandler: nil)
+    }
     static func evaluateJavaScript(_ script: String, webView: WKWebView?) -> AnyObject {
         var finished = false
         var retVal: AnyObject = 0 as AnyObject
@@ -592,11 +625,8 @@ public class TICCustomizeViewController : UIViewController
 extension TICCustomizeViewController : WKNavigationDelegate {
     // MARK: - WKNavigationDelegate
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        let text = TICConfig.instance.text.replacingOccurrences(of: "\n", with: "<br>").replacingOccurrences(of: "\t", with: "")
-        let reference = TICConfig.instance.reference
-        let js = "reset('\(text)', '\(reference)')"
         let initialFont = TICConfig.instance.fonts[0]
-        self.webView.evaluateJavaScript(js, completionHandler: nil)
+        TICCustomizeViewController.setTextAndReference(webView: webView)
         self.setStyle(.textAlign, Alignment.center.stringValue(), .both )
         self.setStyle(.fontFamily, initialFont.fontFamily, .both)
         self.widthInPixels = self.getBodyWidth()

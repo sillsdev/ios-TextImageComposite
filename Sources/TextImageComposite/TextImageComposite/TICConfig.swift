@@ -68,8 +68,9 @@ public struct TICTheme {
     var highlightColor: UIColor!
     var buttonBackgroundColor: UIColor!
     var viewBackgroundColor: UIColor!
+    var textColor: UIColor!
     
-    public init(backgroundColor: UIColor, contrastColor: UIColor, accentColor: UIColor, tintColor: UIColor, highlightColor: UIColor, buttonBackgroundColor: UIColor, viewBackgroundColor: UIColor) {
+    public init(backgroundColor: UIColor, contrastColor: UIColor, accentColor: UIColor, tintColor: UIColor, highlightColor: UIColor, buttonBackgroundColor: UIColor, viewBackgroundColor: UIColor, textColor: UIColor) {
         self.backgroundColor = backgroundColor
         self.contrastColor = contrastColor
         self.accentColor = accentColor
@@ -77,6 +78,7 @@ public struct TICTheme {
         self.highlightColor = highlightColor
         self.buttonBackgroundColor = buttonBackgroundColor
         self.viewBackgroundColor = viewBackgroundColor
+        self.textColor = textColor
     }
     public init() {
         
@@ -129,7 +131,7 @@ public struct TICTheme {
         theme.highlightColor = UIColor.colorWithHex("d1d2d1")
         theme.buttonBackgroundColor = UIColor.init(red: 0.820, green: 0.820, blue: 0.839, alpha: 1) // systemGray4
         theme.viewBackgroundColor = UIColor.init(red: 0.933, green: 0.933, blue: 0.933, alpha: 1) //
-        
+        theme.textColor = UIColor.black
         return theme
     }
     
@@ -143,6 +145,7 @@ public struct TICTheme {
         theme.highlightColor = .brown
         theme.buttonBackgroundColor = .cyan
         theme.viewBackgroundColor = .white
+        theme.textColor = .black
 
         return theme
     }
@@ -158,10 +161,11 @@ public struct TICLocalization
     var shareVideo: String!
     var saveImage: String!
     var saveVideo: String!
+    var editText: String!
     
     public init(cancel: String, ok: String, share: String, done: String,
                 shareImage: String, shareVideo: String,
-                saveImage: String, saveVideo: String) {
+                saveImage: String, saveVideo: String, editText: String) {
         self.cancel = cancel
         self.ok = ok
         self.share = share
@@ -170,6 +174,7 @@ public struct TICLocalization
         self.shareVideo = shareVideo
         self.saveImage = saveImage
         self.saveVideo = saveVideo
+        self.editText = editText
     }
     public init(cancel: String, ok: String, share: String, done: String) {
         self.cancel = cancel
@@ -180,6 +185,7 @@ public struct TICLocalization
         self.shareVideo = ""
         self.saveImage = ""
         self.saveVideo = ""
+        self.editText = ""
     }
     public init() {
         
@@ -194,6 +200,7 @@ public struct TICLocalization
         locale.shareImage = "Share Image"
         locale.saveVideo = "Save Video"
         locale.saveImage = "Save Image"
+        locale.editText = "Edit Text"
         return locale
     }
     
@@ -207,6 +214,7 @@ public struct TICLocalization
         locale.shareImage = "Ipsum wen"
         locale.saveVideo = "Porce unem"
         locale.saveImage = "Porce wen"
+        locale.editText = "Gypt wurse"
         
         return locale
     }
