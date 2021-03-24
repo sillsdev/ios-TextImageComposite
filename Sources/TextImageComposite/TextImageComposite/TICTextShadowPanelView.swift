@@ -12,10 +12,10 @@ class TICTextShadowPanelView : TICBasePanelView {
     @IBOutlet weak var resizeSlider: UISlider!
     override public func layoutSubviews() {
         super.layoutSubviews()
-        resizeSlider.value = 1
+        resizeSlider.value = 2
         TICConfig.instance.theme.formatControl(resizeSlider)
-        if let btn = viewWithTag(100) as? UIButton {
-            // Set No Shadow as default
+        if let btn = viewWithTag(101) as? UIButton {
+            // Set Shadow as default
             self.handleSelectableButtonTap(btn)
         }
 
