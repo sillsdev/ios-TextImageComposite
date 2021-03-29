@@ -44,6 +44,7 @@ public enum CSSProperty: String {
     case marginRight = "margin-right"
     case textShadow = "text-shadow"
     case maxWidth = "max-width"
+    case dir = "direction"
 }
 extension TICCustomizeViewController : UIPopoverPresentationControllerDelegate {
     public func presentationController(_ controller: UIPresentationController, viewControllerForAdaptivePresentationStyle style: UIModalPresentationStyle) -> UIViewController? {
@@ -627,6 +628,9 @@ extension TICCustomizeViewController : WKNavigationDelegate {
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         let initialFont = TICConfig.instance.fonts[0]
         TICCustomizeViewController.setTextAndReference(webView: webView)
+        if TICConfig.instance.rtl {
+            self.setStyle(.dir, "rtl", .both)
+        }
         self.setStyle(.textAlign, Alignment.center.stringValue(), .both )
         self.setStyle(.fontFamily, initialFont.fontFamily, .both)
         self.widthInPixels = self.getBodyWidth()
@@ -634,6 +638,7 @@ extension TICCustomizeViewController : WKNavigationDelegate {
             alignmentView.imageWidth = widthInPixels
             alignmentView.setDivWidth(newWidth: Int(widthInPixels) * 75 / 100)
         }
+
         self.fontFormatDelegate.setDivTopMarginCenter()
     }
 

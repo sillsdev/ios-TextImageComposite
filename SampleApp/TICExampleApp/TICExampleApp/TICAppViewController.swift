@@ -14,6 +14,7 @@ class TICAppViewController: UIViewController {
     @IBOutlet weak var watermarkSlider: UISwitch!
     @IBOutlet weak var videoSlider: UISwitch!
     @IBOutlet weak var noReferenceSlider: UISwitch!
+    @IBOutlet weak var rtlTest: UISwitch!
     func fonts() -> [TICFont] {
         
         var list : [TICFont] = []
@@ -72,11 +73,21 @@ class TICAppViewController: UIViewController {
             TICConfig.instance.locale = TICLocalization.us_en()
             TICConfig.instance.theme = TICTheme.defaultTheme()
         }
-        TICConfig.instance.text = "In the beginning, God created the heavens and the earth."
-        if noReferenceSlider.isOn {
+        if rtlTest.isOn {
+            TICConfig.instance.text = "وْمْلِّي سْمَعْ الْمَلِكْ هِيرُودُسْ هَادْشِّي، خَافْ هُوَ وْݣَاعْ النَّاسْ اللِّي فْأُورْشَلِيمْ."
+            TICConfig.instance.rtl = true
+        } else {
+            TICConfig.instance.text = "In the beginning, God created the heavens and the earth."
+        }
+         if noReferenceSlider.isOn {
             TICConfig.instance.reference = ""
         } else {
-            TICConfig.instance.reference = "Genesis 1:1"
+            if rtlTest.isOn {
+                TICConfig.instance.reference = " إنجيل متّى ٢\u{200f}:٣"
+            } else {
+                TICConfig.instance.reference = "Genesis 1:1"
+            }
+
         }
         if watermarkSlider.isOn {
             if TICConfig.instance.watermarkImage == nil {
