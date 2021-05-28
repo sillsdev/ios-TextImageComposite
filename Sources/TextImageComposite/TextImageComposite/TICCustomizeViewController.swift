@@ -626,13 +626,13 @@ public class TICCustomizeViewController : UIViewController
 extension TICCustomizeViewController : WKNavigationDelegate {
     // MARK: - WKNavigationDelegate
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        let initialFont = TICConfig.instance.fonts[0]
+        let initialFontFamily = !TICConfig.instance.defaultFont.isEmpty ? TICConfig.instance.defaultFont : TICConfig.instance.fonts[0].fontFamily
         TICCustomizeViewController.setTextAndReference(webView: webView)
         if TICConfig.instance.rtl {
             self.setStyle(.dir, "rtl", .both)
         }
         self.setStyle(.textAlign, Alignment.center.stringValue(), .both )
-        self.setStyle(.fontFamily, initialFont.fontFamily, .both)
+        self.setStyle(.fontFamily, initialFontFamily, .both)
         self.widthInPixels = self.getBodyWidth()
         if alignmentView != nil {
             alignmentView.imageWidth = widthInPixels

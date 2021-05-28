@@ -70,6 +70,7 @@ class TICAppViewController: UIViewController {
             firstTime = true
             TICConfig.instance.images = images()
             TICConfig.instance.fonts = fonts()
+            TICConfig.instance.defaultFont = "Verdana"
             TICConfig.instance.locale = TICLocalization.us_en()
             TICConfig.instance.theme = TICTheme.defaultTheme()
         }

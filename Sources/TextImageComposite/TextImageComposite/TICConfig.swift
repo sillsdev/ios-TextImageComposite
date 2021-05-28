@@ -28,6 +28,7 @@ public class TICConfig
     public var reference: String        = ""
     public var images: [TICImage]       = []
     public var fonts: [TICFont]         = [TICFont.init(title : "Helvetica", fontFamily: "Helvetica")]
+    public var defaultFont: String      = ""
     public var locale: TICLocalization  = TICLocalization.us_en()
     public var theme: TICTheme          = TICTheme.defaultTheme()
     public var rtl: Bool                = false
