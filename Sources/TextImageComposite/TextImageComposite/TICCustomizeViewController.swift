@@ -435,11 +435,35 @@ public class TICCustomizeViewController : UIViewController
                     }
                 }
                 let html = contents.replacingOccurrences(of: "//FONTS", with: fontString)
-                let assetsUrl = TICConfig.instance.bundle.resourceURL!.appendingPathComponent("HTML")
-                webView.loadHTMLString(html, baseURL: assetsUrl)
+                let assetsUrl = TICConfig.instance.bundle.resourceURL!
+                if TICConfig.instance.containerApp {
+                    loadHTMLForContainer(html: html, webView: webView, localUrl: assetsUrl)
+                } else {
+                    webView.loadHTMLString(html, baseURL: assetsUrl)
+                }
             } catch {
                 // contents could not be loaded
             }
+        }
+    }
+    func loadHTMLForContainer(html: String, webView: WKWebView, localUrl: URL) {
+        do {
+            let jqueryUrl = TICConfig.instance.fontBaseURL!.appendingPathComponent("jquery-3.2.1.min.js")
+            if !FileManager.default.fileExists(atPath: jqueryUrl.path) {
+                let srcUrl = localUrl.appendingPathComponent("jquery-3.2.1.min.js")
+                if FileManager.default.fileExists(atPath: srcUrl.path) {
+                    NSLog("Copying \(srcUrl.path) to \(jqueryUrl.path)")
+                    try FileManager.default.copyItem(at: srcUrl, to: jqueryUrl)
+                }
+            }
+            let dstURL = TICConfig.instance.fontBaseURL!.appendingPathComponent("TICHTML.html")
+            if FileManager.default.fileExists(atPath: dstURL.path) {
+                try FileManager.default.removeItem(at: dstURL)
+            }
+            try html.write(to: dstURL, atomically: false, encoding: .utf8)
+            webView.loadFileURL(dstURL, allowingReadAccessTo: TICConfig.instance.fontBaseURL!)
+        } catch {
+            NSLog("Error on loadHTMLForContainer")
         }
     }
     @IBAction func handleSaveButtonTap(_ sender: Any) {

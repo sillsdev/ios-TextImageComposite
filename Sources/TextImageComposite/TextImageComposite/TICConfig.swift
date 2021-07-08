@@ -59,6 +59,7 @@ public class TICConfig
         return "TIC"
     }
     public var imageCache = NSCache<NSString, AnyObject>()
+    public var containerApp: Bool = false
 
 }
 
