@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6324E62425FBD47500C97B2B /* EditText.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6324E62325FBD47500C97B2B /* EditText.storyboard */; };
-		6324E62825FBD4B700C97B2B /* EditTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6324E62725FBD4B700C97B2B /* EditTextViewController.swift */; };
+		6338C13E26B2D5C700737AE6 /* EditTextBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6338C13D26B2D5C700737AE6 /* EditTextBaseViewController.swift */; };
+		6338C14026B31DA600737AE6 /* ic_done.png in Resources */ = {isa = PBXBuildFile; fileRef = 6338C13F26B31DA600737AE6 /* ic_done.png */; };
 		6343C6DD255C3CB700177A45 /* TICColorPickerPanelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6343C6AD255C3CB700177A45 /* TICColorPickerPanelView.xib */; };
 		6343C6DE255C3CB700177A45 /* TICAlignmentPanelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6343C6AE255C3CB700177A45 /* TICAlignmentPanelView.xib */; };
 		6343C6E0255C3CB700177A45 /* TICColorPanelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6343C6B0255C3CB700177A45 /* TICColorPanelView.xib */; };
@@ -61,8 +61,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6324E62325FBD47500C97B2B /* EditText.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EditText.storyboard; sourceTree = "<group>"; };
-		6324E62725FBD4B700C97B2B /* EditTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTextViewController.swift; sourceTree = "<group>"; };
+		6338C13D26B2D5C700737AE6 /* EditTextBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTextBaseViewController.swift; sourceTree = "<group>"; };
+		6338C13F26B31DA600737AE6 /* ic_done.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_done.png; sourceTree = "<group>"; };
 		6343C6AD255C3CB700177A45 /* TICColorPickerPanelView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TICColorPickerPanelView.xib; sourceTree = "<group>"; };
 		6343C6AE255C3CB700177A45 /* TICAlignmentPanelView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TICAlignmentPanelView.xib; sourceTree = "<group>"; };
 		6343C6B0255C3CB700177A45 /* TICColorPanelView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TICColorPanelView.xib; sourceTree = "<group>"; };
@@ -128,8 +128,7 @@
 		6324E62225FBD42800C97B2B /* EditText */ = {
 			isa = PBXGroup;
 			children = (
-				6324E62325FBD47500C97B2B /* EditText.storyboard */,
-				6324E62725FBD4B700C97B2B /* EditTextViewController.swift */,
+				6338C13D26B2D5C700737AE6 /* EditTextBaseViewController.swift */,
 			);
 			name = EditText;
 			sourceTree = "<group>";
@@ -175,6 +174,7 @@
 		6343C6B9255C3CB700177A45 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6338C13F26B31DA600737AE6 /* ic_done.png */,
 				6343C6BA255C3CB700177A45 /* Images */,
 				6343C6CA255C3CB700177A45 /* HTML */,
 			);
@@ -368,7 +368,6 @@
 				63A797882576DC6600232B21 /* TICFontPanel.storyboard in Resources */,
 				6386EDDA2565A1DF003E4506 /* TICFontAttributesPanelView.xib in Resources */,
 				6343C6F7255C3CB700177A45 /* jquery-3.2.1.min.js in Resources */,
-				6324E62425FBD47500C97B2B /* EditText.storyboard in Resources */,
 				63AA59832568729200A8D5BB /* TICTextShadowPanelView.xib in Resources */,
 				6343C6DE255C3CB700177A45 /* TICAlignmentPanelView.xib in Resources */,
 				63AA5995256DB8AA00A8D5BB /* TICColorFilterPanelView.xib in Resources */,
@@ -378,6 +377,7 @@
 				6343C6DD255C3CB700177A45 /* TICColorPickerPanelView.xib in Resources */,
 				634E787525C075AF00DBB849 /* TICImageSelectPanel.storyboard in Resources */,
 				6343C6E3255C3CB700177A45 /* TICExtrasPanelView.xib in Resources */,
+				6338C14026B31DA600737AE6 /* ic_done.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,7 +396,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6343C706255C3CB800177A45 /* TICConfig.swift in Sources */,
-				6324E62825FBD4B700C97B2B /* EditTextViewController.swift in Sources */,
 				6343C6E5255C3CB700177A45 /* TICImageCell.swift in Sources */,
 				634E787F25C1BD8900DBB849 /* UIImageExtension.swift in Sources */,
 				636FCD012576E05F00ED4E9C /* TICFontPanelCell.swift in Sources */,
@@ -406,6 +405,7 @@
 				63AA5999256DBB6900A8D5BB /* TICColorFilterPanelView.swift in Sources */,
 				634E788525C36AFD00DBB849 /* ShareTypeTableViewController.swift in Sources */,
 				63AA595D2568004A00A8D5BB /* TICReferenceFontPanelView.swift in Sources */,
+				6338C13E26B2D5C700737AE6 /* EditTextBaseViewController.swift in Sources */,
 				6343C6FA255C3CB700177A45 /* TICColorPanelView.swift in Sources */,
 				63A7978C2576DD5700232B21 /* TICFontPanelViewController.swift in Sources */,
 				6343C6FF255C3CB700177A45 /* BrightnessSlider.swift in Sources */,

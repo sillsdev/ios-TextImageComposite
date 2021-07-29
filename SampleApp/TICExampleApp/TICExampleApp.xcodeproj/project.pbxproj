@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6338C14226B322CC00737AE6 /* ExampleAppTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6338C14126B322CC00737AE6 /* ExampleAppTextViewController.swift */; };
 		6343AB8E255C47170052127E /* TextImageComposite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 63DB4AE7255AF70D0051185C /* TextImageComposite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6365623125798201005B3E7B /* desert-1731660-pexels-1080.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6365622525798200005B3E7B /* desert-1731660-pexels-1080.jpg */; };
 		6365623225798201005B3E7B /* sam-ueGaQiHV86o-unsplash-1080.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6365622625798200005B3E7B /* sam-ueGaQiHV86o-unsplash-1080.jpg */; };
@@ -86,6 +87,7 @@
 
 /* Begin PBXFileReference section */
 		5620FFFBC87CE9C10DA8580C /* Pods-TICExampleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TICExampleApp.debug.xcconfig"; path = "Target Support Files/Pods-TICExampleApp/Pods-TICExampleApp.debug.xcconfig"; sourceTree = "<group>"; };
+		6338C14126B322CC00737AE6 /* ExampleAppTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleAppTextViewController.swift; sourceTree = "<group>"; };
 		6365622525798200005B3E7B /* desert-1731660-pexels-1080.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "desert-1731660-pexels-1080.jpg"; sourceTree = "<group>"; };
 		6365622625798200005B3E7B /* sam-ueGaQiHV86o-unsplash-1080.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "sam-ueGaQiHV86o-unsplash-1080.jpg"; sourceTree = "<group>"; };
 		6365622725798200005B3E7B /* ray-hennessy-HlJ7U9WHRR8-unsplash-1080.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ray-hennessy-HlJ7U9WHRR8-unsplash-1080.jpg"; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 				63F15A5C255AF01900ED404A /* Assets.xcassets */,
 				63F15A5E255AF01900ED404A /* LaunchScreen.storyboard */,
 				63F15A61255AF01900ED404A /* Info.plist */,
+				6338C14126B322CC00737AE6 /* ExampleAppTextViewController.swift */,
 			);
 			path = TICExampleApp;
 			sourceTree = "<group>";
@@ -531,6 +534,7 @@
 				E3BB8E9B25C0574C00B1AAB0 /* NSFileManager+DirectoryLocations.m in Sources */,
 				63F15A58255AF01800ED404A /* TICAppViewController.swift in Sources */,
 				63F15A54255AF01800ED404A /* AppDelegate.swift in Sources */,
+				6338C14226B322CC00737AE6 /* ExampleAppTextViewController.swift in Sources */,
 				E3BB8E9625C0573100B1AAB0 /* FileUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

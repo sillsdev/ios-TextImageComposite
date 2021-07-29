@@ -250,10 +250,12 @@ public class TICCustomizeViewController : UIViewController
     
     @IBAction func double(_ sender:UITapGestureRecognizer) {
         NSLog("Double tap")
-        let editTextStoryboard = UIStoryboard(name: "EditText", bundle: TICConfig.instance.bundle)
-        let editTextVC = editTextStoryboard.instantiateViewController(withIdentifier: "EditTextViewController") as! EditTextViewController
-        editTextVC.webView = webView
-        self.navigationController?.pushViewController(editTextVC, animated: true)
+        if let editTextVC = TICConfig.instance.textViewDelegate == nil ?
+            EditTextBaseViewController() :
+            TICConfig.instance.textViewDelegate?.getTextViewController() {
+            editTextVC.webView = webView
+            self.navigationController?.pushViewController(editTextVC, animated: true)
+        }
     }
     var compositeImage: UIImage?
     var fontSize: Int = 15

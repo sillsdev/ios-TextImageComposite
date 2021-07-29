@@ -18,7 +18,10 @@ public protocol SharingDelegate
 {
     func createVideo(_ config: TICConfig, _ image: UIImage) -> NSURL?
 }
-
+public protocol TICTextViewDelegate
+{
+    func getTextViewController() -> EditTextBaseViewController
+}
 public class TICConfig
 {
     
@@ -39,6 +42,7 @@ public class TICConfig
     public var selectedURL : URL?
     public var watermarkImage: TICWatermark?
     public var sharingDelegate: SharingDelegate?
+    public var textViewDelegate: TICTextViewDelegate?
     
     public static var instance: TICConfig {
         if _instance == nil {

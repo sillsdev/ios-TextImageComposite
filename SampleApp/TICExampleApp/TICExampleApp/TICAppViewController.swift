@@ -9,7 +9,8 @@
 import UIKit
 import TextImageComposite
 
-class TICAppViewController: UIViewController {
+class TICAppViewController: UIViewController, TICTextViewDelegate  {
+    
     var firstTime = false
     @IBOutlet weak var watermarkSlider: UISwitch!
     @IBOutlet weak var videoSlider: UISwitch!
@@ -104,6 +105,7 @@ class TICAppViewController: UIViewController {
         } else {
             TICConfig.instance.sharingDelegate = nil
         }
+        TICConfig.instance.textViewDelegate = self
         TICConfig.instance.active = true
         let storyboard = UIStoryboard(name: TICConfig.instance.storyboardName, bundle: TICConfig.instance.bundle)
         let nvc = storyboard.instantiateViewController(withIdentifier: TICConfig.instance.viewControllerName) as! UINavigationController
@@ -131,6 +133,12 @@ class TICAppViewController: UIViewController {
     
     public override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         return UIInterfaceOrientation.portrait
+    }
+    
+    // MARK:- TICTextViewDelegate
+    func getTextViewController() -> EditTextBaseViewController {
+        let vc = ExampleAppTextViewController()
+        return vc
     }
 }
 
