@@ -617,7 +617,8 @@ public class TICCustomizeViewController : UIViewController
     }
 
     static func setTextAndReference(webView: WKWebView?) {
-        let text = TICConfig.instance.text.replacingOccurrences(of: "\n", with: "<br>").replacingOccurrences(of: "\t", with: "")
+        var text = TICConfig.instance.text.replacingOccurrences(of: "\n", with: "<br>").replacingOccurrences(of: "\t", with: "")
+        text = text.replacingOccurrences(of: "\'", with: "&#39")
         let reference = TICConfig.instance.reference
         let js = "reset('\(text)', '\(reference)')"
         webView?.evaluateJavaScript(js, completionHandler: nil)

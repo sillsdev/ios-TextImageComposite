@@ -80,6 +80,8 @@ class TICAppViewController: UIViewController, TICTextViewDelegate  {
             TICConfig.instance.rtl = true
         } else {
             TICConfig.instance.text = "In the beginning, God created the heavens and the earth."
+            //TICConfig.instance.text = "Zacarias yacj ũssawe\'shtyi dyuus yatte \n selpiwa\'j en ãjte\', na\'wẽc yuu: \" & < > ` "
+            //TICConfig.instance.text = "Andy namicu Teófilo, indya\'s cjiyu\'jna fi\'jatstju cue\'sh ensu na\'wẽ yuuc tyã\'sna. Tyã\'sa\' tyã\'wẽ yũuya\' tacjetsíyna, Cristo yacj u\'jusawe\'sha\' ma\'wẽrrajne\'ta ew uy tyã\'wẽytyi tyãawe\'sha\' cue\'shtyi pta\'sh, atsa\' tyã\'sa\' maava tyã\'wẽyta ew pta\'shna fi\'jrra nviit wẽe. Tyãa pa\'ga andyva ma\'wẽrrajne\' yũu tyã\'sa\' wala ew jypa\'yacy paapẽjyrra indyna pta\'shna fi\'jatstju, cyaj isa yuj pta\'shi\'ne\'ta sũjũne\'nga."
         }
          if noReferenceSlider.isOn {
             TICConfig.instance.reference = ""
