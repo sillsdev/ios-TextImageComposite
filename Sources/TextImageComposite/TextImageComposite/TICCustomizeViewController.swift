@@ -408,7 +408,7 @@ public class TICCustomizeViewController : UIViewController
         }
         if let watermark = TICConfig.instance.watermarkImage {
             // If watermark defined
-            let pointCoordinates = watermark.getXY(Int(baseImage!.size.width))
+            let pointCoordinates = watermark.getXY(Int(baseImage!.size.width), Int(baseImage!.size.height))
             let watermarkImage = watermark.watermarkImage!
             UIGraphicsBeginImageContextWithOptions(baseImage!.size, false, 0.0)
             baseImage!.draw(in: CGRect(x: 0.0, y: 0.0, width: baseImage!.size.width, height: baseImage!.size.height))

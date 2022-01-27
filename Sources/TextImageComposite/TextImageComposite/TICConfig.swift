@@ -285,34 +285,34 @@ public struct TICWatermark
         let watermarkWidth = imageSideSize * widthPercent / 100
         return watermarkWidth
     }
-    public func getXY(_ imageSideSize: Int) -> (x: Int, y: Int) {
+    public func getXY(_ imageWidthSize: Int, _ imageHeightSize: Int) -> (x: Int, y: Int) {
         var x: Int = 0
         var y: Int = 0
         
-        let watermarkWidth = getWatermarkWidth(imageSideSize)
-        let watermarkHeight = getWatermarkHeight(imageSideSize)
-        let marginX = imageSideSize * marginPercent / 100
-        let marginY = imageSideSize * marginPercent / 100
+        let watermarkWidth = getWatermarkWidth(imageWidthSize)
+        let watermarkHeight = getWatermarkHeight(imageHeightSize)
+        let marginX = imageWidthSize * marginPercent / 100
+        let marginY = imageHeightSize * marginPercent / 100
         
         switch alignment {
         case .TOP_LEFT:
             x = marginX
             y = marginY
         case .TOP_CENTRE:
-            x = (imageSideSize / 2) - (watermarkWidth / 2)
+            x = (imageWidthSize / 2) - (watermarkWidth / 2)
             y = marginY
         case .TOP_RIGHT:
-            x = imageSideSize - watermarkWidth - marginX
+            x = imageWidthSize - watermarkWidth - marginX
             y = marginY
         case .BOTTOM_LEFT:
             x = marginX
-            y = imageSideSize - watermarkHeight - marginY
+            y = imageHeightSize - watermarkHeight - marginY
         case .BOTTOM_CENTRE:
-            x = (imageSideSize / 2) - (watermarkWidth / 2)
-            y = imageSideSize - watermarkHeight - marginY
+            x = (imageWidthSize / 2) - (watermarkWidth / 2)
+            y = imageHeightSize - watermarkHeight - marginY
         case .BOTTOM_RIGHT:
-            x = imageSideSize - watermarkWidth - marginX
-            y = imageSideSize - watermarkHeight - marginY
+            x = imageWidthSize - watermarkWidth - marginX
+            y = imageHeightSize - watermarkHeight - marginY
         }
         return (x,y)
     }
