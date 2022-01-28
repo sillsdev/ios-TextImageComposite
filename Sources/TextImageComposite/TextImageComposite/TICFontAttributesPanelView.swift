@@ -18,6 +18,8 @@ class TICFontAttributesPanelView : TICBasePanelView {
         
         super.layoutSubviews()
         
+        boldButton.isSelected = true
+        boldButton.tintColor = TICConfig.instance.theme.tintColor
         TICConfig.instance.theme.formatControl(fontSizeSlider)
         fontSizeSlider.value = 20
         TICConfig.instance.theme.formatControl(letterSpacingSlider)

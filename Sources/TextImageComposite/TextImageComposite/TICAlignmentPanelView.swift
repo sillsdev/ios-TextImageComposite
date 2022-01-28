@@ -15,7 +15,7 @@ public class TICAlignmentPanelView : TICBasePanelView, SBFontFormatDelegate
     @IBOutlet weak var lineSpacingSlider: UISlider!
     @IBOutlet weak var textWidthSlider: UISlider!
     
-    var lineHeight : Int = 25
+    var lineHeight : Int = 30
     var imageWidth : CGFloat = 320 {
         didSet {
             divWidth = Int(imageWidth * 75 / 100)
@@ -37,7 +37,7 @@ public class TICAlignmentPanelView : TICBasePanelView, SBFontFormatDelegate
         }
         TICConfig.instance.theme.formatControl(textWidthSlider)
         TICConfig.instance.theme.formatControl(lineSpacingSlider)
-        lineSpacingSlider.value = 25
+        lineSpacingSlider.value = 30
         textWidthSlider.maximumValue = Float(imageWidth)
         textWidthSlider.minimumValue = 100
         textWidthSlider.value = Float(imageWidth * 75 / 100)

@@ -661,6 +661,7 @@ extension TICCustomizeViewController : WKNavigationDelegate {
         self.setStyle(.textAlign, Alignment.center.stringValue(), .both )
         self.setStyle(.fontFamily, initialFontFamily, .both)
         self.widthInPixels = self.getBodyWidth()
+        self.setStyle(.fontWeight, "bold", .text)
         if alignmentView != nil {
             alignmentView.imageWidth = widthInPixels
             alignmentView.setDivWidth(newWidth: Int(widthInPixels) * 75 / 100)
