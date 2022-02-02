@@ -412,7 +412,7 @@ public class TICCustomizeViewController : UIViewController
             let watermarkImage = watermark.watermarkImage!
             UIGraphicsBeginImageContextWithOptions(baseImage!.size, false, 0.0)
             baseImage!.draw(in: CGRect(x: 0.0, y: 0.0, width: baseImage!.size.width, height: baseImage!.size.height))
-            watermarkImage.draw(in: CGRect(x: pointCoordinates.x, y: pointCoordinates.y, width: watermark.getWatermarkWidth(Int(baseImage!.size.width)), height: watermark.getWatermarkWidth(Int(baseImage!.size.height))))
+            watermarkImage.draw(in: CGRect(x: pointCoordinates.x, y: pointCoordinates.y, width: watermark.getWatermarkWidth(Int(baseImage!.size.width)), height: watermark.getWatermarkHeight(Int(baseImage!.size.height))))
             let result = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             self.imageView.image = result
