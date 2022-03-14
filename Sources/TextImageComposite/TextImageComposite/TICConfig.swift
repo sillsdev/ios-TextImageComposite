@@ -29,6 +29,7 @@ public class TICConfig
     
     public var text: String             = ""
     public var reference: String        = ""
+    public var link: String             = ""
     public var images: [TICImage]       = []
     public var fonts: [TICFont]         = [TICFont.init(title : "Helvetica", fontFamily: "Helvetica")]
     public var defaultFont: String      = ""

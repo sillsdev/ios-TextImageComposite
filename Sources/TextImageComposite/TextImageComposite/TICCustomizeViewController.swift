@@ -86,6 +86,9 @@ extension TICCustomizeViewController : TICShareDelegate {
                         activityItems = [videoURL]
                     }
                 }
+                if !TICConfig.instance.link.isEmpty {
+                    activityItems += [TICConfig.instance.link]
+                }
                 if !activityItems.isEmpty {
                     let vc = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
                     vc.popoverPresentationController?.barButtonItem = self.shareButton
