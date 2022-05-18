@@ -17,6 +17,7 @@ class TICAppViewController: UIViewController, TICTextViewDelegate  {
     @IBOutlet weak var noReferenceSlider: UISwitch!
     @IBOutlet weak var rtlTest: UISwitch!
     @IBOutlet weak var linkTest: UISwitch!
+    @IBOutlet weak var weirdTextSwitch: UISwitch!
     func fonts() -> [TICFont] {
         
         var list : [TICFont] = []
@@ -79,6 +80,8 @@ class TICAppViewController: UIViewController, TICTextViewDelegate  {
         if rtlTest.isOn {
             TICConfig.instance.text = "وْمْلِّي سْمَعْ الْمَلِكْ هِيرُودُسْ هَادْشِّي، خَافْ هُوَ وْݣَاعْ النَّاسْ اللِّي فْأُورْشَلِيمْ."
             TICConfig.instance.rtl = true
+        } else if weirdTextSwitch.isOn {
+            TICConfig.instance.text = "Chigaja Jesucristonga va attian'choma afe cuintsu Jesúsja tise semasundeccunga condaye. Junde tsoña\'chone condase\'cho tsu. Jesúsja tisema sefacconi\'su shondo\'suma moensi tsaja Juanga jipa attian."
         } else {
             TICConfig.instance.text = "In the beginning, God's created the heavens and the earth."
             //TICConfig.instance.text = "Zacarias yacj ũssawe\'shtyi dyuus yatte \n selpiwa\'j en ãjte\', na\'wẽc yuu: \" & < > ` "
@@ -89,6 +92,8 @@ class TICAppViewController: UIViewController, TICTextViewDelegate  {
         } else {
             if rtlTest.isOn {
                 TICConfig.instance.reference = " إنجيل متّى ٢\u{200f}:٣"
+            } else if weirdTextSwitch.isOn {
+                TICConfig.instance.reference = "Canjaen'cho 1.1"
             } else {
                 TICConfig.instance.reference = "Genesis 1:1"
             }

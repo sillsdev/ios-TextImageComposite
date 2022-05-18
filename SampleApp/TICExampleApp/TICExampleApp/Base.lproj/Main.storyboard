@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -72,22 +72,35 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weird Text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aH8-dL-a26">
+                                <rect key="frame" x="266" y="571" width="81" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ZQ5-d3-NgB">
+                                <rect key="frame" x="355" y="566" width="51" height="31"/>
+                            </switch>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemTealColor"/>
                         <constraints>
                             <constraint firstItem="Ut2-Qf-YTU" firstAttribute="leading" secondItem="pZK-hf-QvY" secondAttribute="trailing" constant="8" symbolic="YES" id="18n-H9-fbs"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="McZ-Fk-FQA" secondAttribute="trailing" constant="10" id="3lO-Tc-2SS"/>
+                            <constraint firstItem="wFq-7b-uNH" firstAttribute="top" secondItem="ZQ5-d3-NgB" secondAttribute="bottom" constant="20" id="42b-6x-LnY"/>
                             <constraint firstItem="SYy-hr-I2C" firstAttribute="top" secondItem="wFq-7b-uNH" secondAttribute="bottom" constant="20" id="4Zw-Fr-Sek"/>
                             <constraint firstItem="pZK-hf-QvY" firstAttribute="centerY" secondItem="Ut2-Qf-YTU" secondAttribute="centerY" id="5Pn-nM-lCP"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="SYy-hr-I2C" secondAttribute="trailing" constant="10" id="80k-aK-9s5"/>
                             <constraint firstItem="ygA-pD-0eg" firstAttribute="centerY" secondItem="wFq-7b-uNH" secondAttribute="centerY" id="9l3-vu-EgS"/>
                             <constraint firstItem="LwP-sK-oqo" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="CZS-6J-vxN"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ZQ5-d3-NgB" secondAttribute="trailing" constant="10" id="Csz-oQ-blF"/>
+                            <constraint firstItem="ZQ5-d3-NgB" firstAttribute="leading" secondItem="aH8-dL-a26" secondAttribute="trailing" constant="8" symbolic="YES" id="CvZ-ZS-1Zh"/>
                             <constraint firstItem="McZ-Fk-FQA" firstAttribute="top" secondItem="Ut2-Qf-YTU" secondAttribute="bottom" constant="20" id="G7Q-0i-UpZ"/>
                             <constraint firstItem="cQq-6R-d2n" firstAttribute="centerY" secondItem="4zp-51-r4Q" secondAttribute="centerY" id="HQ8-UH-uBs"/>
                             <constraint firstItem="k01-kO-Z2k" firstAttribute="centerY" secondItem="SYy-hr-I2C" secondAttribute="centerY" id="IhY-wE-J4q"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="4zp-51-r4Q" secondAttribute="trailing" constant="10" id="SvL-sR-qEJ"/>
                             <constraint firstItem="LwP-sK-oqo" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="XBc-Co-DbV"/>
+                            <constraint firstItem="aH8-dL-a26" firstAttribute="centerY" secondItem="ZQ5-d3-NgB" secondAttribute="centerY" id="Xj2-9q-km6"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="4zp-51-r4Q" secondAttribute="bottom" constant="10" id="ex5-tI-uCo"/>
                             <constraint firstItem="Ut2-Qf-YTU" firstAttribute="top" secondItem="SYy-hr-I2C" secondAttribute="bottom" constant="20" id="ffD-g5-17w"/>
                             <constraint firstItem="4zp-51-r4Q" firstAttribute="leading" secondItem="cQq-6R-d2n" secondAttribute="trailing" constant="8" symbolic="YES" id="nXp-Sy-Q1P"/>
@@ -106,6 +119,7 @@
                         <outlet property="rtlTest" destination="SYy-hr-I2C" id="jIh-us-Sew"/>
                         <outlet property="videoSlider" destination="McZ-Fk-FQA" id="zFq-oA-foH"/>
                         <outlet property="watermarkSlider" destination="4zp-51-r4Q" id="hxn-tb-rSg"/>
+                        <outlet property="weirdTextSwitch" destination="ZQ5-d3-NgB" id="jeG-G2-KKs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
