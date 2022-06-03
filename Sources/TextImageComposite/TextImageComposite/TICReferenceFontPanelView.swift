@@ -28,7 +28,20 @@ class TICReferenceFontPanelView : TICBasePanelView {
         flipButtonSelected(button: italicsButton, attribute: .fontStyle, selectedValue: "italic", unselectedValue: "normal", section: .reference)
     }
     @IBAction func textSizeChanged(_ sender: UISlider) {
-        let pointSize = String(Int(sender.value)) + "pt"
+        changeFontSize(size: fontSizeSlider.value)
+    }
+    func changeFontSize(size: Float) {
+        let pointSize = String(Int(size)) + "pt"
         self.delegate.setStyle(.fontSize, pointSize, .reference)
+    }
+}
+extension TICReferenceFontPanelView: SBFontSizeDelegate {
+    func getFontSize() -> Float {
+        return fontSizeSlider.value
+    }
+    
+    func setFontSize(newSize: Float) {
+        fontSizeSlider.value = newSize
+        changeFontSize(size: newSize)
     }
 }

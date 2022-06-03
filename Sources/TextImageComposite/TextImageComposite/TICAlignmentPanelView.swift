@@ -98,6 +98,7 @@ public class TICAlignmentPanelView : TICBasePanelView, SBFontFormatDelegate
         let maxAdjustment =  maxIntHeight - divHeight
         var adjustment = newMargin > maxAdjustment ? maxAdjustment : newMargin
         adjustment = newMargin < 0 ? 0 : adjustment
+        NSLog("TIC SetMargin Height=\(Int(delegate.getDivHeight())) margin=\(divTopMargin) maxHeight=\(maxIntHeight) adjustment=\(adjustment)")
         divTopMargin = adjustment
         if (divTopMargin > 0) {
             self.delegate.setBodyStyle(.marginTop, String(divTopMargin) + "px")
@@ -111,6 +112,7 @@ public class TICAlignmentPanelView : TICBasePanelView, SBFontFormatDelegate
         }
         let maxAdjustment =  maxIntHeight - divHeight
         let centerAdjustment = maxAdjustment / 2
+        NSLog("TIC SetMarginCenter Height=\(Int(delegate.getDivHeight())) margin=\(divTopMargin) maxHeight=\(maxIntHeight) adjustment=\(centerAdjustment)")
         divTopMargin = centerAdjustment
         if (divTopMargin > 0) {
             self.delegate.setBodyStyle(.marginTop, String(divTopMargin) + "px")

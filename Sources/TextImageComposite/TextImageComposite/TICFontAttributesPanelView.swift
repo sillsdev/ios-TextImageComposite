@@ -55,6 +55,4 @@ extension TICFontAttributesPanelView: SBFontSizeDelegate {
         fontSizeSlider.value = newSize
         changeFontSize(size: newSize)
     }
-    
-    
 }

@@ -265,6 +265,7 @@ public class TICCustomizeViewController : UIViewController
     var selectedToolbarButton: UIButton? = nil
     var fontFormatDelegate: SBFontFormatDelegate!
     var fontSizeDelegate: SBFontSizeDelegate!
+    var referenceFontSizeDelegate: SBFontSizeDelegate?
 
     override public func viewDidLoad()
     {
@@ -362,6 +363,7 @@ public class TICCustomizeViewController : UIViewController
         panels.append(self.fontSizeView)
         if !TICConfig.instance.reference.isEmpty {
             panels.append(self.referenceSizeView)
+            referenceFontSizeDelegate = referenceSizeView
         }
         panels.append(self.shadowView)
         panels.append(self.colorFilterView)
@@ -519,8 +521,13 @@ public class TICCustomizeViewController : UIViewController
     func setInitialTextSize() {
         var divHeight = getDivHeight()
         let maxHeight = widthInPixels
-        while (divHeight > maxHeight) && (fontSizeDelegate.getFontSize() > 5) {
+        while (divHeight > (maxHeight * 0.80)) && (fontSizeDelegate.getFontSize() > 5) {
             fontSizeDelegate.setFontSize(newSize: (fontSizeDelegate.getFontSize() - 1))
+            if referenceFontSizeDelegate != nil {
+                if referenceFontSizeDelegate!.getFontSize() > 5 {
+                    referenceFontSizeDelegate!.setFontSize(newSize: (referenceFontSizeDelegate!.getFontSize() - 1))
+                }
+            }
             divHeight = getDivHeight()
         }
     }
@@ -628,7 +635,11 @@ public class TICCustomizeViewController : UIViewController
 
       return floatWidth
     }
-
+    func getBodyHeight() -> CGFloat {
+        let anyHeight = TICCustomizeViewController.evaluateJavaScript("document.body.clientHeight", webView: webView)
+        let floatHeight = ((anyHeight as? CGFloat) != nil) ? anyHeight as! CGFloat : 320
+        return floatHeight
+    }
     static func setTextAndReference(webView: WKWebView?) {
         var text = TICConfig.instance.text.replacingOccurrences(of: "\n", with: "<br>").replacingOccurrences(of: "\t", with: "")
         text = text.replacingOccurrences(of: "\'", with: "&#39")
@@ -675,6 +686,8 @@ extension TICCustomizeViewController : WKNavigationDelegate {
         self.setStyle(.textAlign, Alignment.center.stringValue(), .both )
         self.setStyle(.fontFamily, initialFontFamily, .both)
         self.widthInPixels = self.getBodyWidth()
+        let heightInPixels = self.getBodyHeight()
+        NSLog("WIDTH: \(widthInPixels) HEIGHT: \(heightInPixels)")
         self.setStyle(.fontWeight, "bold", .text)
         if alignmentView != nil {
             alignmentView.imageWidth = widthInPixels
