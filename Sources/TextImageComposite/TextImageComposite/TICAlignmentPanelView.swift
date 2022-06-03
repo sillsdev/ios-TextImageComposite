@@ -90,7 +90,7 @@ public class TICAlignmentPanelView : TICBasePanelView, SBFontFormatDelegate
         return divTopMargin
     }
     public func setDivTopMargin(newMargin: Int) {
-        var divHeight = Int(delegate.getDivHeight())
+        var divHeight = Int(delegate.getDivHeight()) - divTopMargin
         let maxIntHeight = Int(Float(imageWidth)) // ImageHeight = ImageWidth
         if (divHeight > maxIntHeight) {
             divHeight = maxIntHeight

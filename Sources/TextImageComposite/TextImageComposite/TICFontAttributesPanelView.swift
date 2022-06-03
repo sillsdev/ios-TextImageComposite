@@ -31,9 +31,7 @@ class TICFontAttributesPanelView : TICBasePanelView {
         flipButtonSelected(button: boldButton, attribute: .fontWeight, selectedValue: "bold", unselectedValue: "normal", section: .text)
     }
     @IBAction func fontSizeValueChanged(_ sender: UISlider) {
-        let pointSize = String(Int(sender.value)) + "pt"
-        self.delegate.setStyle(.fontSize, pointSize, .text)
-        self.fontDelegate?.setLineHeightFromFontSize(Int(sender.value))
+        changeFontSize(size: sender.value)
     }
     
     @IBAction func letterSpacingValueChanged(_ sender: UISlider) {
@@ -41,6 +39,22 @@ class TICFontAttributesPanelView : TICBasePanelView {
         let ls = String(letterSpacing) + "px"
         self.delegate.setStyle(.letterSpacing, ls, .both)
     }
-    
+    func changeFontSize(size: Float) {
+        let pointSize = String(Int(size)) + "pt"
+        self.delegate.setStyle(.fontSize, pointSize, .text)
+        self.fontDelegate?.setLineHeightFromFontSize(Int(size))
 
+    }
+}
+extension TICFontAttributesPanelView: SBFontSizeDelegate {
+    func getFontSize() -> Float {
+        return fontSizeSlider.value
+    }
+    
+    func setFontSize(newSize: Float) {
+        fontSizeSlider.value = newSize
+        changeFontSize(size: newSize)
+    }
+    
+    
 }

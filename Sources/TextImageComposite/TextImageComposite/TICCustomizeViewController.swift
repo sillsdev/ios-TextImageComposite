@@ -264,6 +264,7 @@ public class TICCustomizeViewController : UIViewController
     var fontSize: Int = 15
     var selectedToolbarButton: UIButton? = nil
     var fontFormatDelegate: SBFontFormatDelegate!
+    var fontSizeDelegate: SBFontSizeDelegate!
 
     override public func viewDidLoad()
     {
@@ -381,6 +382,7 @@ public class TICCustomizeViewController : UIViewController
         fontSizeView.fontDelegate = alignmentView
         colorDetailsView.colorDelegate = colorView
         fontFormatDelegate = alignmentView
+        fontSizeDelegate = fontSizeView
         
         self.view.addSubview(self.panelContainerView)
     }
@@ -514,6 +516,14 @@ public class TICCustomizeViewController : UIViewController
         }
     }
 
+    func setInitialTextSize() {
+        var divHeight = getDivHeight()
+        let maxHeight = widthInPixels
+        while (divHeight > maxHeight) && (fontSizeDelegate.getFontSize() > 5) {
+            fontSizeDelegate.setFontSize(newSize: (fontSizeDelegate.getFontSize() - 1))
+            divHeight = getDivHeight()
+        }
+    }
     //MARK: - Toolbar
     
     @IBAction func handleToolbarButtonTap(_ sender: UIButton) {
@@ -670,7 +680,7 @@ extension TICCustomizeViewController : WKNavigationDelegate {
             alignmentView.imageWidth = widthInPixels
             alignmentView.setDivWidth(newWidth: Int(widthInPixels) * 75 / 100)
         }
-
+        self.setInitialTextSize()
         self.fontFormatDelegate.setDivTopMarginCenter()
     }
 

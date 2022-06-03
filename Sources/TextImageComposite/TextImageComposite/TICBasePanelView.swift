@@ -37,7 +37,11 @@ public protocol SBFontFormatDelegate
     func getDivWidth() -> Int
     func setDivWidth(newWidth: Int)
 }
-
+public protocol SBFontSizeDelegate
+{
+    func getFontSize() -> Float
+    func setFontSize(newSize: Float)
+}
 public protocol SBColorFormatDelegate
 {
     func customColorWasSelected()
