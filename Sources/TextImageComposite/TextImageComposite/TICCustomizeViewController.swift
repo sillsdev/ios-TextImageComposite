@@ -529,6 +529,7 @@ public class TICCustomizeViewController : UIViewController
                 }
             }
             divHeight = getDivHeight()
+            NSLog("TIC setInitialSize divHeight: \(divHeight)")
         }
     }
     //MARK: - Toolbar
