@@ -521,7 +521,7 @@ public class TICCustomizeViewController : UIViewController
     func setInitialTextSize() {
         var divHeight = getDivHeight()
         let maxHeight = widthInPixels
-        while (divHeight > (maxHeight * 0.80)) && (fontSizeDelegate.getFontSize() > 5) {
+        while (divHeight > (maxHeight * 0.90)) && (fontSizeDelegate.getFontSize() > 5) {
             fontSizeDelegate.setFontSize(newSize: (fontSizeDelegate.getFontSize() - 1))
             if referenceFontSizeDelegate != nil {
                 if referenceFontSizeDelegate!.getFontSize() > 5 {
@@ -529,7 +529,6 @@ public class TICCustomizeViewController : UIViewController
                 }
             }
             divHeight = getDivHeight()
-            NSLog("TIC setInitialSize divHeight: \(divHeight)")
         }
     }
     //MARK: - Toolbar
@@ -687,15 +686,16 @@ extension TICCustomizeViewController : WKNavigationDelegate {
         self.setStyle(.textAlign, Alignment.center.stringValue(), .both )
         self.setStyle(.fontFamily, initialFontFamily, .both)
         self.widthInPixels = self.getBodyWidth()
-        let heightInPixels = self.getBodyHeight()
-        NSLog("WIDTH: \(widthInPixels) HEIGHT: \(heightInPixels)")
         self.setStyle(.fontWeight, "bold", .text)
         if alignmentView != nil {
             alignmentView.imageWidth = widthInPixels
             alignmentView.setDivWidth(newWidth: Int(widthInPixels) * 75 / 100)
         }
-        self.setInitialTextSize()
-        self.fontFormatDelegate.setDivTopMarginCenter()
+        let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: delayTime) {
+            self.setInitialTextSize()
+            self.fontFormatDelegate.setDivTopMarginCenter()
+        }
     }
 
 }
