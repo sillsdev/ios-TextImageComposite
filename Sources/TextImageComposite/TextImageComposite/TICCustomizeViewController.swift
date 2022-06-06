@@ -691,7 +691,7 @@ extension TICCustomizeViewController : WKNavigationDelegate {
             alignmentView.imageWidth = widthInPixels
             alignmentView.setDivWidth(newWidth: Int(widthInPixels) * 75 / 100)
         }
-        let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        let delayTime = DispatchTime.now() + Double(Int64(0.25 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         DispatchQueue.main.asyncAfter(deadline: delayTime) {
             self.setInitialTextSize()
             self.fontFormatDelegate.setDivTopMarginCenter()
