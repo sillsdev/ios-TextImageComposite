@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+public typealias TICShareCompletionHandlerType = (Bool, URL?) -> Void
 public class TextImageComposite
 {
     //used to load the bundle by name
@@ -16,7 +17,7 @@ public class TextImageComposite
 
 public protocol SharingDelegate
 {
-    func createVideo(_ config: TICConfig, _ image: UIImage) -> NSURL?
+    func createVideo(config: TICConfig, image: UIImage, completionHandler: @escaping TICShareCompletionHandlerType) -> Bool
 }
 public protocol TICTextViewDelegate
 {

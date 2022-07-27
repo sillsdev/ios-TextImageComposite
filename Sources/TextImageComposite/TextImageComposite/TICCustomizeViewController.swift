@@ -72,6 +72,17 @@ extension TICCustomizeViewController : TICImageSelectionDelegate {
 }
 
 extension TICCustomizeViewController : TICShareDelegate {
+    fileprivate func shareResult(_ activityItems: inout [Any]) {
+        if !TICConfig.instance.link.isEmpty {
+            activityItems += [TICConfig.instance.link]
+        }
+        if !activityItems.isEmpty {
+            let vc = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+            vc.popoverPresentationController?.barButtonItem = self.shareButton
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
     public func share(type: TICShareOutputType) {
         let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         DispatchQueue.main.asyncAfter(deadline: delayTime) {
@@ -81,18 +92,19 @@ extension TICCustomizeViewController : TICShareDelegate {
                 switch type {
                 case .image:
                     activityItems = [img]
+                    self.shareResult(&activityItems)
                 case .video:
-                    if let videoURL = TICConfig.instance.sharingDelegate!.createVideo(TICConfig.instance, img) {
+                    if  !TICConfig.instance.sharingDelegate!.createVideo(config: TICConfig.instance, image: img, completionHandler: { (success: Bool, url: URL?) in
+                        guard let videoURL = url else { return }
                         activityItems = [videoURL]
+                        let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                        DispatchQueue.main.asyncAfter(deadline: delayTime) {
+                            self.shareResult(&activityItems)
+                        }
+                    })
+                    {
+                        print ("Error saving video")
                     }
-                }
-                if !TICConfig.instance.link.isEmpty {
-                    activityItems += [TICConfig.instance.link]
-                }
-                if !activityItems.isEmpty {
-                    let vc = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-                    vc.popoverPresentationController?.barButtonItem = self.shareButton
-                    self.present(vc, animated: true, completion: nil)
                 }
             }
         }
@@ -108,19 +120,27 @@ extension TICCustomizeViewController : TICShareDelegate {
                 case .image:
                     UIImageWriteToSavedPhotosAlbum(img, self, #selector(self.imageSaved(_:didFinishSavingWithError:contextInfo:)), nil)
                 case .video:
-                    if let videoURL = TICConfig.instance.sharingDelegate!.createVideo(TICConfig.instance, img) {
+                    if  !TICConfig.instance.sharingDelegate!.createVideo(config: TICConfig.instance, image: img, completionHandler: { (success: Bool, url: URL?) in
+                        guard let videoURL = url else { return }
                         PHPhotoLibrary.shared().performChanges({
                             PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: videoURL as URL)
                         }) { saved, error in
-                            if saved {
-                                let alertController = UIAlertController(title: "Your video was successfully saved", message: nil, preferredStyle: .alert)
-                                let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                                alertController.addAction(defaultAction)
-                                self.present(alertController, animated: true, completion: nil)
+                            let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                            DispatchQueue.main.asyncAfter(deadline: delayTime) {
+                                if saved {
+                                    let alertController = UIAlertController(title: "Your video was successfully saved", message: nil, preferredStyle: .alert)
+                                    let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                                    alertController.addAction(defaultAction)
+                                    self.present(alertController, animated: true, completion: nil)
+                                }
                             }
                         }
+                    })
+                    {
+                        print ("Error saving video")
                     }
                 }
+
             }
         }
     }

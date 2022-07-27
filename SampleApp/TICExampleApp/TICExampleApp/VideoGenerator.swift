@@ -11,6 +11,23 @@ import TextImageComposite
 import mobileffmpeg
 
 class VideoGenerator: SharingDelegate {
+    func createVideo(config: TICConfig, image: UIImage, completionHandler: @escaping TICShareCompletionHandlerType) -> Bool {
+        let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: delayTime) {
+            if let data = image.jpegData(compressionQuality: 1.0) {
+                let imageURL = getCreateSupportDirectory("audio", excludeFromBackup: true)!.appendingPathComponent("image.png")
+                try? data.write(to: imageURL)
+                if let videoFilename = self.generateVideo(TICConfig.instance, imageURL.path) {
+                    NSLog("video: \(String(describing: videoFilename))")
+                    completionHandler(true, URL(fileURLWithPath: videoFilename))
+                }
+            }
+            
+            completionHandler(false, nil)
+        }
+        return true
+    }
+    
     func createVideo(_ config: TICConfig, _ image: UIImage) -> NSURL? {
         if let data = image.jpegData(compressionQuality: 1.0) {
             let imageURL = getCreateSupportDirectory("audio", excludeFromBackup: true)!.appendingPathComponent("image.png")
