@@ -28,18 +28,6 @@ class VideoGenerator: SharingDelegate {
         return true
     }
     
-    func createVideo(_ config: TICConfig, _ image: UIImage) -> NSURL? {
-        if let data = image.jpegData(compressionQuality: 1.0) {
-            let imageURL = getCreateSupportDirectory("audio", excludeFromBackup: true)!.appendingPathComponent("image.png")
-            try? data.write(to: imageURL)
-            if let videoFilename = generateVideo(TICConfig.instance, imageURL.path) {
-                NSLog("video: \(String(describing: videoFilename))")
-                return NSURL(fileURLWithPath:videoFilename)
-            }
-        }
-        
-        return nil
-    }
     func generateVideo(_ config: TICConfig, _ imageFilename: String) -> String? {
         let outputFilename = "Genesis-1.1.mp4"
         let videoURL = getCreateSupportDirectory("video", excludeFromBackup:true)!.appendingPathComponent(outputFilename)
