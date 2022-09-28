@@ -12,6 +12,9 @@ class TICReferenceFontPanelView : TICBasePanelView {
     @IBOutlet weak var boldButton: UIButton!
     @IBOutlet weak var italicsButton: UIButton!
     @IBOutlet weak var fontSizeSlider: UISlider!
+    
+    let fontSliderMinimum: Float = 5
+    let fontSliderMaximum: Float = 40
 
     override public func layoutSubviews() {
         
@@ -19,6 +22,8 @@ class TICReferenceFontPanelView : TICBasePanelView {
         
         TICConfig.instance.theme.formatControl(fontSizeSlider)
         fontSizeSlider.value = 15
+        fontSizeSlider.minimumValue = fontSliderMinimum
+        fontSizeSlider.maximumValue = fontSliderMaximum
     }
     
     @IBAction func boldButtonPressed(_ sender: Any) {
@@ -36,6 +41,14 @@ class TICReferenceFontPanelView : TICBasePanelView {
     }
 }
 extension TICReferenceFontPanelView: SBFontSizeDelegate {
+    func getFontSizeMaximum() -> Float {
+        return fontSliderMaximum
+    }
+    
+    func getFontSizeMinimum() -> Float {
+        return fontSliderMinimum
+    }
+    
     func getFontSize() -> Float {
         return fontSizeSlider.value
     }

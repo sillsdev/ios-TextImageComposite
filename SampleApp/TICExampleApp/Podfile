@@ -1,6 +1,11 @@
-platform :ios, '9.3'
+platform :ios, '12.1'
 use_frameworks!
 
 target 'TICExampleApp' do
-  pod 'mobile-ffmpeg-video', '= 4.4.LTS'
+  pod 'mobile-ffmpeg-video', '~> 4.4'
+end
+post_install do |installer|
+    installer.pods_project.build_configurations.each do |config|
+    config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+ end
 end

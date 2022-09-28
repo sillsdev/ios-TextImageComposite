@@ -40,6 +40,8 @@ public protocol SBFontFormatDelegate
 public protocol SBFontSizeDelegate
 {
     func getFontSize() -> Float
+    func getFontSizeMaximum() -> Float
+    func getFontSizeMinimum() -> Float
     func setFontSize(newSize: Float)
 }
 public protocol SBColorFormatDelegate

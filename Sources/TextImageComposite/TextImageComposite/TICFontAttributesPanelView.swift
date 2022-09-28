@@ -14,6 +14,9 @@ class TICFontAttributesPanelView : TICBasePanelView {
     @IBOutlet weak var fontSizeSlider: UISlider!
     @IBOutlet weak var letterSpacingSlider: UISlider!
     
+    let fontSliderMinimum: Float = 5
+    let fontSliderMaximum: Float = 40
+    
     override public func layoutSubviews() {
         
         super.layoutSubviews()
@@ -22,6 +25,8 @@ class TICFontAttributesPanelView : TICBasePanelView {
         boldButton.tintColor = TICConfig.instance.theme.tintColor
         TICConfig.instance.theme.formatControl(fontSizeSlider)
         fontSizeSlider.value = 20
+        fontSizeSlider.minimumValue = fontSliderMinimum
+        fontSizeSlider.maximumValue = fontSliderMaximum
         TICConfig.instance.theme.formatControl(letterSpacingSlider)
     }
     @IBAction func italicsButtonPressed(_ sender: Any) {
@@ -47,6 +52,14 @@ class TICFontAttributesPanelView : TICBasePanelView {
     }
 }
 extension TICFontAttributesPanelView: SBFontSizeDelegate {
+    func getFontSizeMaximum() -> Float {
+        return fontSliderMaximum
+    }
+    
+    func getFontSizeMinimum() -> Float {
+        return fontSliderMinimum
+    }
+    
     func getFontSize() -> Float {
         return fontSizeSlider.value
     }

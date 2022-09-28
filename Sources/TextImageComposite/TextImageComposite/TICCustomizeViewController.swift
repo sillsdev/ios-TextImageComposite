@@ -541,11 +541,13 @@ public class TICCustomizeViewController : UIViewController
     func setInitialTextSize() {
         var divHeight = getDivHeight()
         let maxHeight = widthInPixels
-        while (divHeight > (maxHeight * 0.90)) && (fontSizeDelegate.getFontSize() > 5) {
+        while (divHeight > (maxHeight * 0.90)) && (fontSizeDelegate.getFontSize() > fontSizeDelegate!.getFontSizeMinimum()) {
             fontSizeDelegate.setFontSize(newSize: (fontSizeDelegate.getFontSize() - 1))
             if referenceFontSizeDelegate != nil {
                 if referenceFontSizeDelegate!.getFontSize() > 5 {
                     referenceFontSizeDelegate!.setFontSize(newSize: (referenceFontSizeDelegate!.getFontSize() - 1))
+                } else {
+                    break
                 }
             }
             divHeight = getDivHeight()
