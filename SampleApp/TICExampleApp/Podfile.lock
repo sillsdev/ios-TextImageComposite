@@ -1,16 +1,16 @@
 PODS:
-  - mobile-ffmpeg-video (4.4)
+  - ffmpeg-kit-ios-video (5.1)
 
 DEPENDENCIES:
-  - mobile-ffmpeg-video (~> 4.4)
+  - ffmpeg-kit-ios-video (~> 5.1)
 
 SPEC REPOS:
   trunk:
-    - mobile-ffmpeg-video
+    - ffmpeg-kit-ios-video
 
 SPEC CHECKSUMS:
-  mobile-ffmpeg-video: 106a02633f3771f558b4cadd3e8bbfe6b756c61b
+  ffmpeg-kit-ios-video: dc5ef638e703569675376c7cb56d4a6a08552f02
 
-PODFILE CHECKSUM: 01693a374def2b80a4a1ee70dc251aee2d676ac1
+PODFILE CHECKSUM: 16e9318f7770297374e4c4f4761699ae5de6cb88
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0

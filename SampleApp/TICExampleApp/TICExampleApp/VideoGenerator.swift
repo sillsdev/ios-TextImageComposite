@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 import TextImageComposite
-import mobileffmpeg
+import ffmpegkit
 
 class VideoGenerator: SharingDelegate {
     func createVideo(config: TICConfig, image: UIImage, completionHandler: @escaping TICShareCompletionHandlerType) -> Bool {
@@ -33,9 +33,9 @@ class VideoGenerator: SharingDelegate {
         let videoURL = getCreateSupportDirectory("video", excludeFromBackup:true)!.appendingPathComponent(outputFilename)
         let audioURL = Bundle.main.url(forResource: "Genesis-1.1.mp3", withExtension: "")!
         let cmd = "-y -framerate 2 -loop 1 -i \"\(imageFilename)\" -i \"\(audioURL.path)\" -map_metadata 0 -acodec aac -write_xing 0 -vcodec mpeg4 -preset veryfast -tune stillimage -pix_fmt yuv420p -qscale:v 4 -r 24 -shortest \"\(videoURL.path)\""
-        let result = MobileFFmpeg.execute(cmd)
-        NSLog("result=\(result)")
-        return result == 0 ? videoURL.path : nil
+        let result = FFmpegKit.execute(cmd)
+        NSLog("result=\(result?.getReturnCode())")
+        return result!.getReturnCode().isValueSuccess() == true  ? videoURL.path : nil
     }
     
 }
