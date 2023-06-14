@@ -41,6 +41,7 @@ public protocol SBFontSizeDelegate
 {
     func getFontSize() -> Float
     func getFontSizeMaximum() -> Float
+    func setFontSizeMaximum(maximum: Float)
     func getFontSizeMinimum() -> Float
     func setFontSize(newSize: Float)
 }

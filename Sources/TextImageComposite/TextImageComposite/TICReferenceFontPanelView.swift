@@ -14,7 +14,7 @@ class TICReferenceFontPanelView : TICBasePanelView {
     @IBOutlet weak var fontSizeSlider: UISlider!
     
     let fontSliderMinimum: Float = 5
-    let fontSliderMaximum: Float = 40
+    var fontSliderMaximum: Float = 40
 
     override public func layoutSubviews() {
         
@@ -45,6 +45,10 @@ extension TICReferenceFontPanelView: SBFontSizeDelegate {
         return fontSliderMaximum
     }
     
+    func setFontSizeMaximum(maximum: Float) {
+        fontSliderMaximum = maximum
+        fontSizeSlider.maximumValue = maximum
+    }
     func getFontSizeMinimum() -> Float {
         return fontSliderMinimum
     }

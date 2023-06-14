@@ -717,6 +717,10 @@ extension TICCustomizeViewController : WKNavigationDelegate {
         DispatchQueue.main.asyncAfter(deadline: delayTime) {
             self.setInitialTextSize()
             self.fontFormatDelegate.setDivTopMarginCenter()
+            let fontSizeMaximum = Float(self.widthInPixels/9)
+            self.fontSizeDelegate.setFontSizeMaximum(maximum: fontSizeMaximum)
+            self.referenceFontSizeDelegate?.setFontSizeMaximum(maximum: fontSizeMaximum)
+            
         }
     }
 

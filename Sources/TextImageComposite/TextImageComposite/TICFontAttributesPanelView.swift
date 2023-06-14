@@ -15,12 +15,13 @@ class TICFontAttributesPanelView : TICBasePanelView {
     @IBOutlet weak var letterSpacingSlider: UISlider!
     
     let fontSliderMinimum: Float = 5
-    let fontSliderMaximum: Float = 40
+    var fontSliderMaximum: Float = 40
     
     override public func layoutSubviews() {
         
         super.layoutSubviews()
         
+        NSLog("SETTING")
         boldButton.isSelected = true
         boldButton.tintColor = TICConfig.instance.theme.tintColor
         TICConfig.instance.theme.formatControl(fontSizeSlider)
@@ -54,6 +55,11 @@ class TICFontAttributesPanelView : TICBasePanelView {
 extension TICFontAttributesPanelView: SBFontSizeDelegate {
     func getFontSizeMaximum() -> Float {
         return fontSliderMaximum
+    }
+    
+    func setFontSizeMaximum(maximum: Float) {
+        fontSliderMaximum = maximum
+        fontSizeSlider.maximumValue = maximum
     }
     
     func getFontSizeMinimum() -> Float {
