@@ -102,7 +102,7 @@ class TICAppViewController: UIViewController, TICTextViewDelegate  {
         }
         if watermarkSlider.isOn {
             if TICConfig.instance.watermarkImage == nil {
-                TICConfig.instance.watermarkImage = TICWatermark.init(watermarkImage: UIImage.init(named: "watermark.png")!, alignment: .BOTTOM_RIGHT, marginPercent: 5, widthPercent: 25)
+                TICConfig.instance.watermarkImage = TICWatermark.init(watermarkImage: UIImage.init(named: "watermark.png")!, alignment: TICWatermarkAlignment.BOTTOM_RIGHT, marginPercent: 5, widthPercent: 25)
             }
         } else {
             TICConfig.instance.watermarkImage = nil
@@ -117,11 +117,13 @@ class TICAppViewController: UIViewController, TICTextViewDelegate  {
         if linkTest.isOn {
             TICConfig.instance.link = "https://dwr8g.app.link?ref=C02/MAT.2.6"
         }
+//        TICConfig.instance.originalOrientation = .portrait
+//        TICConfig.instance.originalOrientationMask = .portrait
         TICConfig.instance.textViewDelegate = self
         TICConfig.instance.active = true
         let storyboard = UIStoryboard(name: TICConfig.instance.storyboardName, bundle: TICConfig.instance.bundle)
         let nvc = storyboard.instantiateViewController(withIdentifier: TICConfig.instance.viewControllerName) as! UINavigationController
-        nvc.modalPresentationStyle = .fullScreen
+        nvc.modalPresentationStyle = UIModalPresentationStyle.fullScreen
         present(nvc, animated: true, completion: nil)
     }
 
@@ -151,6 +153,13 @@ class TICAppViewController: UIViewController, TICTextViewDelegate  {
     func getTextViewController() -> EditTextBaseViewController {
         let vc = ExampleAppTextViewController()
         return vc
+    }
+    func lockOrientation(mask: UIInterfaceOrientationMask, orientation: UIInterfaceOrientation? ) {
+        if let unwrappedOrientation = orientation {
+            AppUtility.lockOrientation(mask, andRotateTo: unwrappedOrientation)
+        } else {
+            AppUtility.lockOrientation(mask)
+        }
     }
 }
 

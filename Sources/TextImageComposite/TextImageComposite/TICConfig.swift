@@ -22,6 +22,7 @@ public protocol SharingDelegate
 public protocol TICTextViewDelegate
 {
     func getTextViewController() -> EditTextBaseViewController
+    func lockOrientation(mask: UIInterfaceOrientationMask, orientation: UIInterfaceOrientation? )
 }
 public class TICConfig
 {
@@ -45,6 +46,8 @@ public class TICConfig
     public var watermarkImage: TICWatermark?
     public var sharingDelegate: SharingDelegate?
     public var textViewDelegate: TICTextViewDelegate?
+    public var originalOrientationMask: UIInterfaceOrientationMask = .all
+    public var originalOrientation: UIInterfaceOrientation? = nil
     
     public static var instance: TICConfig {
         if _instance == nil {

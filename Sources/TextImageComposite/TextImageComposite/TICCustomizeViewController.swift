@@ -346,11 +346,35 @@ public class TICCustomizeViewController : UIViewController
             $0.backgroundColor = TICConfig.instance.theme.highlightColor
         }
      }
-    public override func viewDidLayoutSubviews() {
+    
+    override public func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        TICConfig.instance.textViewDelegate?.lockOrientation(mask: .portrait, orientation: .portrait )
+    }
+    override public func viewWillDisappear( _ animated: Bool) {
+        super.viewWillDisappear(animated)
+        TICConfig.instance.textViewDelegate?.lockOrientation(mask: TICConfig.instance.originalOrientationMask, orientation: TICConfig.instance.originalOrientation)
+    }
+    override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         webView.frame = self.webContainerView.bounds
     }
-
+    override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        let delayTime = DispatchTime.now() + Double(Int64(0.25 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: delayTime) {
+            self.widthInPixels = self.getBodyWidth()
+            if self.alignmentView != nil {
+                self.alignmentView.imageWidth = self.widthInPixels
+                self.alignmentView.setDivWidth(newWidth: Int(self.widthInPixels) * 75 / 100)
+            }
+            self.setInitialTextSize()
+            self.fontFormatDelegate.setDivTopMarginCenter()
+            let fontSizeMaximum = Float(self.widthInPixels/9)
+            self.fontSizeDelegate.setFontSizeMaximum(maximum: fontSizeMaximum)
+            self.referenceFontSizeDelegate?.setFontSizeMaximum(maximum: fontSizeMaximum)
+        }
+    }
     func setupEditorPanels()
     {
         var panels: [TICBasePanelView] = []
@@ -720,7 +744,6 @@ extension TICCustomizeViewController : WKNavigationDelegate {
             let fontSizeMaximum = Float(self.widthInPixels/9)
             self.fontSizeDelegate.setFontSizeMaximum(maximum: fontSizeMaximum)
             self.referenceFontSizeDelegate?.setFontSizeMaximum(maximum: fontSizeMaximum)
-            
         }
     }
 

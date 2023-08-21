@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -47,6 +47,7 @@
 		63F15A60255AF01900ED404A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63F15A5E255AF01900ED404A /* LaunchScreen.storyboard */; };
 		63F15A6B255AF01900ED404A /* TICExampleAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F15A6A255AF01900ED404A /* TICExampleAppTests.swift */; };
 		63F15A76255AF01900ED404A /* TICExampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F15A75255AF01900ED404A /* TICExampleAppUITests.swift */; };
+		A4E1ABD02A93A8EA00621616 /* MiscUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E1ABCF2A93A8EA00621616 /* MiscUtils.swift */; };
 		E3BB8E9625C0573100B1AAB0 /* FileUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3BB8E9525C0573100B1AAB0 /* FileUtil.swift */; };
 		E3BB8E9B25C0574C00B1AAB0 /* NSFileManager+DirectoryLocations.m in Sources */ = {isa = PBXBuildFile; fileRef = E3BB8E9925C0574C00B1AAB0 /* NSFileManager+DirectoryLocations.m */; };
 		E3E0702D25BF50AD00347310 /* VideoGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E0702C25BF50AD00347310 /* VideoGenerator.swift */; };
@@ -133,6 +134,7 @@
 		63F15A75255AF01900ED404A /* TICExampleAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TICExampleAppUITests.swift; sourceTree = "<group>"; };
 		63F15A77255AF01900ED404A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E907C9C8F5E959E1E10322F /* Pods_TICExampleApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TICExampleApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A4E1ABCF2A93A8EA00621616 /* MiscUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiscUtils.swift; sourceTree = "<group>"; };
 		C6B309F7A959E8F907F00085 /* Pods-TICExampleApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TICExampleApp.release.xcconfig"; path = "Target Support Files/Pods-TICExampleApp/Pods-TICExampleApp.release.xcconfig"; sourceTree = "<group>"; };
 		E3BB8E9525C0573100B1AAB0 /* FileUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileUtil.swift; sourceTree = "<group>"; };
 		E3BB8E9925C0574C00B1AAB0 /* NSFileManager+DirectoryLocations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+DirectoryLocations.m"; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				63F15A5E255AF01900ED404A /* LaunchScreen.storyboard */,
 				63F15A61255AF01900ED404A /* Info.plist */,
 				6338C14126B322CC00737AE6 /* ExampleAppTextViewController.swift */,
+				A4E1ABCF2A93A8EA00621616 /* MiscUtils.swift */,
 			);
 			path = TICExampleApp;
 			sourceTree = "<group>";
@@ -554,6 +557,7 @@
 				63F15A54255AF01800ED404A /* AppDelegate.swift in Sources */,
 				6338C14226B322CC00737AE6 /* ExampleAppTextViewController.swift in Sources */,
 				E3BB8E9625C0573100B1AAB0 /* FileUtil.swift in Sources */,
+				A4E1ABD02A93A8EA00621616 /* MiscUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
