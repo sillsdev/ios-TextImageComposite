@@ -40,3 +40,17 @@ public func addSkipBackupAttributeToItemAtURL(url: URL) -> Bool
     }
     return success
 }
+public func deleteIfPresent(_ fileURL: URL) {
+    if FileManager.default.fileExists(atPath: fileURL.path) == true {
+        var removeError: NSError?
+        do {
+            try FileManager.default.removeItem(at: fileURL)
+        } catch let error as NSError {
+            removeError = error
+        }
+        if removeError != nil {
+            NSLog("Failed to remove " + fileURL.path + "(Error: " + removeError!.description + ")")
+        }
+    }
+    return
+}
