@@ -19,16 +19,15 @@ public protocol SharingDelegate
 {
     func createVideo(config: TICConfig, image: UIImage, completionHandler: @escaping TICShareCompletionHandlerType) -> Bool
 }
+@MainActor
 public protocol TICTextViewDelegate
 {
     func getTextViewController() -> EditTextBaseViewController
     func lockOrientation(mask: UIInterfaceOrientationMask, orientation: UIInterfaceOrientation? )
 }
-public class TICConfig
+public class TICConfig: @unchecked Sendable
 {
-    
-    static var _instance: TICConfig? = nil
-    
+        
     public var text: String             = ""
     public var reference: String        = ""
     public var link: String             = ""
@@ -49,13 +48,8 @@ public class TICConfig
     public var originalOrientationMask: UIInterfaceOrientationMask = .all
     public var originalOrientation: UIInterfaceOrientation? = nil
     
-    public static var instance: TICConfig {
-        if _instance == nil {
-            _instance = TICConfig()
-        }
-        return _instance!
-    }
-    
+    public static let instance = TICConfig()
+
     public var bundle: Bundle {
         let bundle = Bundle(identifier: "org.sil.TextImageComposite")
         return bundle!
@@ -95,6 +89,7 @@ public struct TICTheme {
     public init() {
         
     }
+    @MainActor
     func formatControl(_ control : UIControl) {
         control.tintColor = self.tintColor
         
@@ -104,7 +99,7 @@ public struct TICTheme {
             slider.minimumTrackTintColor = self.tintColor
         }
     }
-    
+    @MainActor
     func formatToolbarButton(_ button : UIButton) {
         if(button.isSelected) {
             button.backgroundColor = self.backgroundColor
@@ -114,20 +109,22 @@ public struct TICTheme {
             button.tintColor = self.accentColor
         }
     }
-    
+    @MainActor
     func formatLabel(_ label : UILabel) {
         label.textColor = self.accentColor
         label.font = UIFont.systemFont(ofSize: 13)
     }
+    @MainActor
     func formatImage(_ image : UIImageView) {
         image.backgroundColor = backgroundColor
         image.tintColor = tintColor
 
     }
+    @MainActor
     func formatView(_ view :UIView) {
         view.backgroundColor = backgroundColor
     }
-    
+    @MainActor
     func formatNavbar(_ navbar : UINavigationBar) {
         navbar.tintColor = UIColor.white
         navbar.barTintColor = self.contrastColor

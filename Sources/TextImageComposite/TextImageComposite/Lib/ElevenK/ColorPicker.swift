@@ -6,6 +6,7 @@
 //
 
 import UIKit
+@MainActor
 @objc protocol ColorPickerDelegate{
     @objc optional func pickedColor(_ color:UIColor)
 }

@@ -14,6 +14,7 @@ public enum TextSection {
     case both
     case div
 }
+@MainActor
 public protocol TICFormatDelegate {
     func setStyle(_ property : CSSProperty, _ value : String, _ section : TextSection)
     func setBodyStyle(_ property : CSSProperty, _ value : String)
@@ -25,7 +26,7 @@ public protocol TICFormatDelegate {
     func showColorDetails()
     func getDivHeight() -> CGFloat
 }
-
+@MainActor
 public protocol SBFontFormatDelegate
 {
     func setLineHeightFromFontSize(_ size : Int)
@@ -37,6 +38,7 @@ public protocol SBFontFormatDelegate
     func getDivWidth() -> Int
     func setDivWidth(newWidth: Int)
 }
+@MainActor
 public protocol SBFontSizeDelegate
 {
     func getFontSize() -> Float
@@ -45,11 +47,13 @@ public protocol SBFontSizeDelegate
     func getFontSizeMinimum() -> Float
     func setFontSize(newSize: Float)
 }
+@MainActor
 public protocol SBColorFormatDelegate
 {
     func customColorWasSelected()
 }
 
+@MainActor
 public protocol TICImageSelectionDelegate
 {
     func changeSelectedImage()

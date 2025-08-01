@@ -13,6 +13,7 @@ public protocol Bluring {
 }
 
 public extension UIImage {
+    @MainActor
     convenience init(view: UIView) {
         
         //have to use the drawHierarchy method for the Blur to work

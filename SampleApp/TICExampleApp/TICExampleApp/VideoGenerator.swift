@@ -9,24 +9,36 @@ import Foundation
 import UIKit
 import TextImageComposite
 import ffmpegkit
-import AVFoundation
+@preconcurrency import AVFoundation
 
-class VideoGenerator: SharingDelegate {
+class VideoGenerator: SharingDelegate, @unchecked Sendable  {
+    class CompletionBoxTIC: @unchecked Sendable {
+        let call: TICShareCompletionHandlerType
+        init(_ call: @escaping TICShareCompletionHandlerType) {
+            self.call = call
+        }
+    }
+    final class AVAssetExportSessionBox: @unchecked Sendable {
+        let session: AVAssetExportSession
+        init(_ pool: AVAssetExportSession) { self.session = pool }
+    }
     func createVideo(config: TICConfig, image: UIImage, completionHandler: @escaping TICShareCompletionHandlerType) -> Bool {
+        let completionBox = CompletionBoxTIC(completionHandler)
         let delayTime = DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         DispatchQueue.main.asyncAfter(deadline: delayTime) {
             if let data = image.jpegData(compressionQuality: 1.0) {
                 let imageURL = getCreateSupportDirectory("audio", excludeFromBackup: true)!.appendingPathComponent("image.png")
                 try? data.write(to: imageURL)
-                self.generateVideo(TICConfig.instance, imageURL, completionHandler: completionHandler)
+                self.generateVideo(TICConfig.instance, imageURL, completionHandler: completionBox.call)
             } else {
-                completionHandler(false, nil)
+                completionBox.call(false, nil)
             }
         }
         return true
     }
     
     func generateVideo(_ config: TICConfig, _ imageURL: URL, completionHandler: @escaping TICShareCompletionHandlerType) {
+        let completionBox = CompletionBoxTIC(completionHandler)
         let imageFilename = imageURL.path
         let outputFilename = "Genesis-1-1.mp4"
         let finalVideoURL = getCreateSupportDirectory("video", excludeFromBackup:true)!.appendingPathComponent(outputFilename)
@@ -36,60 +48,98 @@ class VideoGenerator: SharingDelegate {
         let duration = getAudioDuration(url: audioURL)
         deleteIfPresent(finalVideoURL)
         deleteIfPresent(videoOnlyURL)
-        self.createVideoFromImage(imageURL: imageURL, duration: duration, outputURL: videoOnlyURL) {result in
-            switch result {
-            case .success(let videoURL):
-                self.mergeAudioWithVideo(videoURL: videoURL, audioURL: audioURL, outputURL: finalVideoURL) {finalResult in
-                    switch finalResult{
-                    case .success(let finalURL):
-                        NSLog("Successful creation of: \(finalURL.path)")
-                        completionHandler(true, finalURL);
-                    case .failure(let error):
-                        NSLog("Error merging video and audio: \(error)")
-                        completionHandler(false, nil);
+        Task {
+            do {
+                let videoURL = try await createVideoFromImage(imageURL: imageURL, duration: duration, outputURL: videoOnlyURL)
+                do {
+                    let finalURL = try await self.mergeAudioWithVideo(videoURL: videoURL, audioURL: audioURL, outputURL: finalVideoURL)
+                    NSLog("Successful creation of: \(finalURL.path)")
+                    await MainActor.run {
+                        completionBox.call(true, finalURL);
+                    }
+                } catch {
+                    await MainActor.run {
+                        completionBox.call(false, nil)
                     }
                 }
-            case .failure(let error):
+            }
+            catch {
                 NSLog("Unsuccessful creation of video from image: \(error)")
-                completionHandler(false, nil);
+                await MainActor.run {
+                    completionBox.call(false, nil);
+                }
             }
         }
-        return
     }
-    func mergeAudioWithVideo(videoURL: URL, audioURL: URL, outputURL: URL, completion: @escaping (Result<URL, Error>) -> Void) {
+    func mergeAudioWithVideo(videoURL: URL, audioURL: URL, outputURL: URL) async throws -> URL {
         let composition = AVMutableComposition()
-
+        
         // Add video track
         let videoAsset = AVAsset(url: videoURL)
-        let videoTrack = videoAsset.tracks(withMediaType: .video).first!
-        let videoCompositionTrack = composition.addMutableTrack(withMediaType: .video, preferredTrackID: kCMPersistentTrackID_Invalid)!
-        try! videoCompositionTrack.insertTimeRange(CMTimeRange(start: .zero, duration: videoAsset.duration), of: videoTrack, at: .zero)
-
+        guard let videoTrack = videoAsset.tracks(withMediaType: .video).first else {
+            throw NSError(domain: "mergeAudioWithVideo", code: 1, userInfo: [NSLocalizedDescriptionKey: "No video track found"])
+        }
+        
+        let videoCompositionTrack = composition.addMutableTrack(
+            withMediaType: .video,
+            preferredTrackID: kCMPersistentTrackID_Invalid
+        )!
+        
+        try videoCompositionTrack.insertTimeRange(
+            CMTimeRange(start: .zero, duration: videoAsset.duration),
+            of: videoTrack,
+            at: .zero
+        )
+        
         // Add audio track
         let audioAsset = AVAsset(url: audioURL)
         if let audioTrack = audioAsset.tracks(withMediaType: .audio).first {
-            let audioCompositionTrack = composition.addMutableTrack(withMediaType: .audio, preferredTrackID: kCMPersistentTrackID_Invalid)!
-            try! audioCompositionTrack.insertTimeRange(CMTimeRange(start: .zero, duration: videoAsset.duration), of: audioTrack, at: .zero)
+            let audioCompositionTrack = composition.addMutableTrack(
+                withMediaType: .audio,
+                preferredTrackID: kCMPersistentTrackID_Invalid
+            )!
+            
+            try audioCompositionTrack.insertTimeRange(
+                CMTimeRange(start: .zero, duration: videoAsset.duration),
+                of: audioTrack,
+                at: .zero
+            )
         }
 
-        // Export final video
-        let exporter = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetHighestQuality)!
-        exporter.outputURL = outputURL
-        exporter.outputFileType = .mp4
+        // Prepare exporter
+        guard let exportSession = AVAssetExportSession(
+            asset: composition,
+            presetName: AVAssetExportPresetHighestQuality
+        ) else {
+            throw NSError(domain: "mergeAudioWithVideo", code: 2, userInfo: [NSLocalizedDescriptionKey: "Could not create AVAssetExportSession"])
+        }
 
-        exporter.exportAsynchronously { [weak exporter] in
-            guard let exporter = exporter else { return }
-            if let error = exporter.error {
-                completion(.failure(error))
-            } else {
-                completion(.success(outputURL))
+        let exportSessionBox = AVAssetExportSessionBox(exportSession)
+        exportSessionBox.session.outputURL = outputURL
+        exportSessionBox.session.outputFileType = .mp4
+
+        // Await export completion
+        return try await withCheckedThrowingContinuation { continuation in
+            exportSession.exportAsynchronously {
+                switch exportSessionBox.session.status {
+                case .completed:
+                    continuation.resume(returning: outputURL)
+                case .failed, .cancelled:
+                    let error = exportSessionBox.session.error ?? NSError(
+                        domain: "mergeAudioWithVideo",
+                        code: 3,
+                        userInfo: [NSLocalizedDescriptionKey: "Export failed without specific error"]
+                    )
+                    continuation.resume(throwing: error)
+                default:
+                    break // Should not happen, but don't resume in .waiting or .exporting
+                }
             }
         }
     }
-    func createVideoFromImage(imageURL: URL, duration: CMTime, outputURL: URL, completion: @escaping (Result<URL, Error>) -> Void) {
+    func createVideoFromImage(imageURL: URL, duration: CMTime, outputURL: URL) async throws -> URL {
         guard let image = UIImage(contentsOfFile: imageURL.path), let cgImage = image.cgImage else {
-            completion(.failure(NSError(domain: "InvalidImage", code: -1, userInfo: nil)))
-            return
+            throw NSError(domain: "InvalidImage", code: -1, userInfo: nil)
         }
 
         // Get original image size
@@ -97,7 +147,7 @@ class VideoGenerator: SharingDelegate {
         let height = cgImage.height
         let size = CGSize(width: width, height: height)
 
-        let writer = try! AVAssetWriter(outputURL: outputURL, fileType: .mp4)
+        let writer = try AVAssetWriter(outputURL: outputURL, fileType: .mp4)
         let videoSettings: [String: Any] = [
             AVVideoCodecKey: AVVideoCodecType.h264,
             AVVideoWidthKey: size.width,
@@ -115,25 +165,39 @@ class VideoGenerator: SharingDelegate {
         writer.startWriting()
         writer.startSession(atSourceTime: .zero)
 
-        let pixelBufferPool = pixelBufferAdaptor.pixelBufferPool!
         let frameDuration = CMTime(value: 1, timescale: 30)  // 30 FPS
+        let frameCount = Int(duration.seconds * 30)
+        let createPixelBuffer = self.createPixelBuffer
 
-        DispatchQueue.global().async {
-            let image = UIImage(contentsOfFile: imageURL.path)!.cgImage!
-            let buffer = self.createPixelBuffer(from: image, pixelBufferPool: pixelBufferPool, size: size)!
+        return try await withCheckedThrowingContinuation { continuation in
+            DispatchQueue.global().async {
+                guard let cgImage = UIImage(contentsOfFile: imageURL.path)?.cgImage,
+                      let pixelBufferPool = pixelBufferAdaptor.pixelBufferPool,
+                      let buffer = createPixelBuffer(cgImage, pixelBufferPool, size)
+                else {
+                    continuation.resume(throwing: NSError(domain: "PixelBufferCreationFailed", code: -2, userInfo: nil))
+                    return
+                }
 
-            for frame in 0..<Int(duration.seconds * 30) {
-                while !writerInput.isReadyForMoreMediaData { usleep(10_000) }
-                pixelBufferAdaptor.append(buffer, withPresentationTime: CMTimeMultiply(frameDuration, multiplier: Int32(frame)))
-            }
+                for frame in 0..<frameCount {
+                    while !writerInput.isReadyForMoreMediaData {
+                        usleep(10_000)
+                    }
+                    let presentationTime = CMTimeMultiply(frameDuration, multiplier: Int32(frame))
+                    pixelBufferAdaptor.append(buffer, withPresentationTime: presentationTime)
+                }
 
-            writerInput.markAsFinished()
-            writer.finishWriting {
-                completion(.success(outputURL))
+                writerInput.markAsFinished()
+                writer.finishWriting {
+                    if writer.status == .completed {
+                        continuation.resume(returning: outputURL)
+                    } else {
+                        continuation.resume(throwing: writer.error ?? NSError(domain: "UnknownWriterError", code: -3, userInfo: nil))
+                    }
+                }
             }
         }
     }
-
     // Helper function to create a pixel buffer from an image
     func createPixelBuffer(from image: CGImage, pixelBufferPool: CVPixelBufferPool, size: CGSize) -> CVPixelBuffer? {
         var pixelBuffer: CVPixelBuffer?
@@ -169,21 +233,14 @@ class VideoGenerator: SharingDelegate {
         try? jpegData.write(to: newURL)
         return newURL
     }
-    func convertMP3ToM4A(inputURL: URL, outputURL: URL, completion: @escaping (Bool, Error?) -> Void) {
-        let asset = AVURLAsset(url: inputURL)
-        
-        // Create Asset Reader
-        guard let assetReader = try? AVAssetReader(asset: asset) else {
-            completion(false, NSError(domain: "MP3Converter", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to create AVAssetReader"]))
-            return
+    func convertMP3ToM4A(inputURL: URL, outputURL: URL) async throws {
+        let asset = AVAsset(url: inputURL)
+
+        guard let assetReader = try? AVAssetReader(asset: asset),
+              let assetTrack = asset.tracks(withMediaType: .audio).first else {
+            throw NSError(domain: "convertMP3ToM4A", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to read input asset"])
         }
-        
-        // Get audio track
-        guard let audioTrack = asset.tracks(withMediaType: .audio).first else {
-            completion(false, NSError(domain: "MP3Converter", code: -2, userInfo: [NSLocalizedDescriptionKey: "No audio track found"]))
-            return
-        }
-        
+
         let outputSettings: [String: Any] = [
             AVFormatIDKey: kAudioFormatLinearPCM, // Change to kAudioFormatMPEG4AAC for AAC/M4A
             AVSampleRateKey: 44100,
@@ -192,48 +249,52 @@ class VideoGenerator: SharingDelegate {
             AVLinearPCMIsBigEndianKey: false,
             AVLinearPCMIsFloatKey: false
         ]
-        
-        // Create Asset Reader Output
-        let assetReaderOutput = AVAssetReaderTrackOutput(track: audioTrack, outputSettings: outputSettings)
+
+        let assetReaderOutput = AVAssetReaderTrackOutput(track: assetTrack, outputSettings: outputSettings)
         assetReader.add(assetReaderOutput)
-        
+
         // Create Asset Writer
         guard let assetWriter = try? AVAssetWriter(outputURL: outputURL, fileType: .m4a) else {
-            completion(false, NSError(domain: "MP3Converter", code: -3, userInfo: [NSLocalizedDescriptionKey: "Failed to create AVAssetWriter"]))
-            return
+            throw NSError(domain: "MP3Converter", code: -3, userInfo: [NSLocalizedDescriptionKey: "Failed to create AVAssetWriter"])
         }
-        
-        let inputSettings: [String: Any] = [
+        let audioSettings: [String: Any] = [
             AVFormatIDKey: kAudioFormatMPEG4AAC,
             AVSampleRateKey: 44100,
             AVNumberOfChannelsKey: 2,
             AVEncoderBitRateKey: 128000
         ]
-        
-        let assetWriterInput = AVAssetWriterInput(mediaType: .audio, outputSettings: inputSettings)
+
+        let assetWriterInput = AVAssetWriterInput(mediaType: .audio, outputSettings: audioSettings)
         assetWriterInput.expectsMediaDataInRealTime = false
-        
-        // Add input to writer
         assetWriter.add(assetWriterInput)
-        
-        // Start Reading & Writing
-        assetReader.startReading()
-        assetWriter.startWriting()
+
+        let processingQueue = DispatchQueue(label: "AudioConversionQueue")
+
+        guard assetReader.startReading(), assetWriter.startWriting() else {
+            throw NSError(domain: "Conversion", code: 2, userInfo: [NSLocalizedDescriptionKey: "Failed to start reading/writing"])
+        }
+
         assetWriter.startSession(atSourceTime: .zero)
-        
-        let processingQueue = DispatchQueue(label: "audioProcessingQueue")
-        
-        assetWriterInput.requestMediaDataWhenReady(on: processingQueue) {
-            while assetWriterInput.isReadyForMoreMediaData {
-                if let sampleBuffer = assetReaderOutput.copyNextSampleBuffer() {
-                    assetWriterInput.append(sampleBuffer)
-                } else {
-                    assetWriterInput.markAsFinished()
-                    assetWriter.finishWriting {
-                        assetReader.cancelReading()
-                        completion(true, nil)
+
+        try await withCheckedThrowingContinuation { continuation in
+            assetWriterInput.requestMediaDataWhenReady(on: processingQueue) {
+                while assetWriterInput.isReadyForMoreMediaData {
+                    if let sampleBuffer = assetReaderOutput.copyNextSampleBuffer() {
+                        assetWriterInput.append(sampleBuffer)
+                    } else {
+                        assetWriterInput.markAsFinished()
+
+                        assetWriter.finishWriting {
+                            if assetWriter.status == .completed {
+                                continuation.resume()
+                            } else {
+                                assetReader.cancelReading()
+                                continuation.resume(throwing: assetWriter.error ?? NSError(domain: "Conversion", code: 3, userInfo: [NSLocalizedDescriptionKey: "Unknown writing error"]))
+                            }
+                        }
+
+                        break
                     }
-                    break
                 }
             }
         }

@@ -5,7 +5,7 @@
       location = "group:TICExampleApp.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Pods/../../../TextImageComposite.xcodeproj">
+      location = "group:../../TextImageComposite.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

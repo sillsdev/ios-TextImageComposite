@@ -25,12 +25,7 @@ class TICColorFilterPanelView : TICBasePanelView {
     }
     @IBAction func contrastSliderValueChanged(_ sender: UISlider) {
         // To make the base value (1) the middle when contrast range goes from 0 to 3
-        var value = sender.value
-/*        if value > 1 {
-            value = 1 + ((value - 1) * 2)
-        } else if value < 1 {
-            value = 1 - ((1 - value) / 4)
-        } */
+        let value = sender.value
         delegate.setImageContrast(value)
     }
     @IBAction func saturationSliderValueChanged(_ sender: UISlider) {

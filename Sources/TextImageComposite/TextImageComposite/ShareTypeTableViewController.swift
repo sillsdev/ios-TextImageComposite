@@ -10,6 +10,7 @@ public enum TICShareOutputType {
     case image
     case video
 }
+@MainActor
 public protocol TICShareDelegate {
     func share(type: TICShareOutputType)
     func save(type: TICShareOutputType)
