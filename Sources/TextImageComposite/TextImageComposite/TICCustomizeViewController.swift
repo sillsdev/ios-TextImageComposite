@@ -417,14 +417,14 @@ public class TICCustomizeViewController : UIViewController
             $0.constrainToFillSuperview()
             $0.delegate = self
         }
+        addChild(fontViewController)
         self.panelContainerView.addSubview(fontViewController.view)
         fontViewController.view.constrainToFillSuperview()
-        addChild(fontViewController)
         fontViewController.didMove(toParent: self)
 
+        addChild(imageSelectController)
         self.panelContainerView.addSubview(imageSelectController.view)
         imageSelectController.view.constrainToFillSuperview()
-        addChild(imageSelectController)
         imageSelectController.didMove(toParent: self)
 
         fontViewController.delegate = self
@@ -597,12 +597,11 @@ public class TICCustomizeViewController : UIViewController
     }
     
     @IBAction func handleImageSelectTap(_ sender: Any) {
-        self.panelContainerView.addSubview(self.imageSelectController.view)
+        self.panelContainerView.bringSubviewToFront(self.imageSelectController.view)
     }
     
     @IBAction func handleFontButtonTap(_ sender: UIButton) {
-        //self.panelContainerView.addSubview(self.fontView)
-        self.panelContainerView.addSubview(self.fontViewController.view)
+        self.panelContainerView.bringSubviewToFront(self.fontViewController.view)
     }
     
     @IBAction func handleFontSizeButtonTap(_ sender: UIButton) {
