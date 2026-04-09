@@ -419,10 +419,14 @@ public class TICCustomizeViewController : UIViewController
         }
         self.panelContainerView.addSubview(fontViewController.view)
         fontViewController.view.constrainToFillSuperview()
-        
+        addChild(fontViewController)
+        fontViewController.didMove(toParent: self)
+
         self.panelContainerView.addSubview(imageSelectController.view)
         imageSelectController.view.constrainToFillSuperview()
-        
+        addChild(imageSelectController)
+        imageSelectController.didMove(toParent: self)
+
         fontViewController.delegate = self
         fontViewController.setAvailableFonts(fonts: TICConfig.instance.fonts)
         fontSizeView.fontDelegate = alignmentView
@@ -597,45 +601,44 @@ public class TICCustomizeViewController : UIViewController
     }
     
     @IBAction func handleFontButtonTap(_ sender: UIButton) {
-        
         //self.panelContainerView.addSubview(self.fontView)
         self.panelContainerView.addSubview(self.fontViewController.view)
     }
     
     @IBAction func handleFontSizeButtonTap(_ sender: UIButton) {
         
-        self.panelContainerView.addSubview(self.fontSizeView)
+        self.panelContainerView.bringSubviewToFront(self.fontSizeView)
         centerButton(button: sender)
     }
     @IBAction func handleColorButtonTap(_ sender: UIButton) {
         
-        self.panelContainerView.addSubview(self.colorView)
+        self.panelContainerView.bringSubviewToFront(self.colorView)
         centerButton(button: sender)
     }
     
     @IBAction func handleAlignmentButtonTap(_ sender: UIButton) {
         
-        self.panelContainerView.addSubview(self.alignmentView)
+        self.panelContainerView.bringSubviewToFront(self.alignmentView)
         centerButton(button: sender)
 
     }
     
     @IBAction func handleExtrasButtonTap(_ sender: UIButton) {
         
-        self.panelContainerView.addSubview(self.extrasView)
+        self.panelContainerView.bringSubviewToFront(self.extrasView)
         centerButton(button: sender)
     }
     
     @IBAction func handleReferenceFontButtonTap(_ sender: UIButton) {
-        self.panelContainerView.addSubview(self.referenceSizeView)
+        self.panelContainerView.bringSubviewToFront(self.referenceSizeView)
     }
     
     @IBAction func colorFilterButtonTap(_ sender: UIButton) {
-        self.panelContainerView.addSubview(self.colorFilterView)
+        self.panelContainerView.bringSubviewToFront(self.colorFilterView)
         centerButton(button: sender)
     }
     @IBAction func handleTextShadowTap(_ sender: UIButton) {
-        self.panelContainerView.addSubview(self.shadowView)
+        self.panelContainerView.bringSubviewToFront(self.shadowView)
         centerButton(button: sender)
 
     }
