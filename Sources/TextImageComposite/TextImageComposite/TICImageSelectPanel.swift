@@ -7,6 +7,7 @@
 
 import UIKit
 import MobileCoreServices
+import UniformTypeIdentifiers
 
 class TICImageSelectPanel: UIViewController {
 
@@ -68,7 +69,8 @@ extension TICImageSelectPanel : UICollectionViewDelegate {
                 picker.allowsEditing = true
                 picker.modalPresentationStyle = .popover
                 picker.sourceType = .photoLibrary
-                picker.mediaTypes = [kUTTypeImage as String]
+                let mediaTypes: [String] = [UTType.image.identifier as String]
+                picker.mediaTypes = mediaTypes
                 
                 let presentationController = picker.popoverPresentationController
                 presentationController?.barButtonItem = selectImageDelegate?.getAnchorButton()

@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+@MainActor
 public class CachedImageView : UIImageView
 {
     
@@ -23,19 +24,29 @@ public class CachedImageView : UIImageView
                 guard let url = imageURL else {
                     return
                 }
-                URLSession.shared.dataTask(with: url) { (data, response, error) -> Void in
-                    if error != nil {
-                        self.image = nil
-                        print("\(String(describing: error))")
-                        return
+                URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+                    guard let self = self else { return }
+                    
+                    Task {
+                        if let error = error {
+                            await MainActor.run {
+                                self.image = nil
+                            }
+                            print("Error: \(error)")
+                            return
+                        }
+
+                        if let data = data, let img = UIImage(data: data) {
+                            await TICConfig.instance.imageCache.setObject(img, forKey: NSString(string: self.imageURL?.absoluteString ?? ""))
+                            await MainActor.run {
+                                self.image = img
+                            }
+                        } else {
+                            await MainActor.run {
+                                self.image = nil
+                            }
+                        }
                     }
-                    DispatchQueue.main.async(execute: {
-                        [weak self] in
-                        let img = UIImage(data: data!)
-                        TICConfig.instance.imageCache.setObject(img!, forKey: NSString(string: (self?.imageURL?.absoluteString)! ) )
-                        
-                        self?.image = img
-                    })
                 }.resume()
             }
         }

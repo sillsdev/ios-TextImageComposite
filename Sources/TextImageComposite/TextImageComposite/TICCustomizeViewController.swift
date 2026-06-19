@@ -63,12 +63,10 @@ extension TICCustomizeViewController : TICImageSelectionDelegate {
     public func getAnchorButton() -> UIBarButtonItem {
         return saveButton
     }
-    
     public func changeSelectedImage() {
         setupImage()
         getFinalImageView()
     }
-    
 }
 
 extension TICCustomizeViewController : TICShareDelegate {
@@ -201,27 +199,15 @@ extension TICCustomizeViewController : TICFormatDelegate {
         getFinalImageView()
     }
     func getFinalImageView() {
-        if #available(iOS 10.0, *) {
-            let outputImage = beginImage.applyingFilter("CIColorControls",
-                                                    parameters: [
-                                                        kCIInputBrightnessKey: brightnessValue,
-                                                        kCIInputSaturationKey: saturationValue,
-                                                        kCIInputContrastKey: contrastValue
-                                                    ])
-                .applyingGaussianBlur(sigma: Double(blurValue))
-                .cropped(to: beginImage.extent)
-            imageView.image = UIImage(ciImage: outputImage)
-        } else {
-            let outputImage = beginImage.applyingFilter("CIColorControls",
-                                                    parameters: [
-                                                        kCIInputBrightnessKey: brightnessValue,
-                                                        kCIInputSaturationKey: saturationValue,
-                                                        kCIInputContrastKey: contrastValue
-                                                    ])
-            imageView.image = UIImage(ciImage: outputImage)
-            self.imageView.addBlur(CGFloat(blurValue/10))
-        }
-        
+        let outputImage = beginImage.applyingFilter("CIColorControls",
+                                                parameters: [
+                                                    kCIInputBrightnessKey: brightnessValue,
+                                                    kCIInputSaturationKey: saturationValue,
+                                                    kCIInputContrastKey: contrastValue
+                                                ])
+            .applyingGaussianBlur(sigma: Double(blurValue))
+            .cropped(to: beginImage.extent)
+        imageView.image = UIImage(ciImage: outputImage)
     }
 }
 extension TICCustomizeViewController: UIGestureRecognizerDelegate {
@@ -305,7 +291,7 @@ public class TICCustomizeViewController : UIViewController
         let webConfiguration = WKWebViewConfiguration()
         webConfiguration.userContentController = contentController
         // Fix Fullscreen mode for video and autoplay
-        webConfiguration.preferences.javaScriptEnabled = true
+        webConfiguration.defaultWebpagePreferences.allowsContentJavaScript = true
         webConfiguration.allowsInlineMediaPlayback = true
         webView = WKWebView(frame: self.webContainerView.bounds, configuration: webConfiguration)
         webView.navigationDelegate = self

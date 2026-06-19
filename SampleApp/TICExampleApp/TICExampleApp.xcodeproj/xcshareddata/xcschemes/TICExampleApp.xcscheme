@@ -48,6 +48,17 @@
                ReferencedContainer = "container:TICExampleApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A485591B2E0065990087F7F6"
+               BuildableName = "TextOnImageTests.xctest"
+               BlueprintName = "TextOnImageTests"
+               ReferencedContainer = "container:TICExampleApp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
