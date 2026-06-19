@@ -68,59 +68,43 @@ class TICAppViewController: UIViewController, TICTextViewDelegate  {
 
     }
 
-    @IBAction func promptPressed(_ sender: Any) {
-        if !firstTime {
-            firstTime = true
-            TICConfig.instance.images = images()
-            TICConfig.instance.fonts = fonts()
-            TICConfig.instance.defaultFont = "Verdana"
-            TICConfig.instance.locale = TICLocalization.us_en()
-            TICConfig.instance.theme = TICTheme.defaultTheme()
-        }
-        if rtlTest.isOn {
-            TICConfig.instance.text = "وْمْلِّي سْمَعْ الْمَلِكْ هِيرُودُسْ هَادْشِّي، خَافْ هُوَ وْݣَاعْ النَّاسْ اللِّي فْأُورْشَلِيمْ."
-            TICConfig.instance.rtl = true
-        } else if weirdTextSwitch.isOn {
-            TICConfig.instance.text = "Chigaja Jesucristonga va attian'choma afe cuintsu Jesúsja tise semasundeccunga condaye. Junde tsoña\'chone condase\'cho tsu. Jesúsja tisema sefacconi\'su shondo\'suma moensi tsaja Juanga jipa attian."
-        } else {
-            TICConfig.instance.text = "In the beginning, God's created the heavens and the earth."
-            //TICConfig.instance.text = "Zacarias yacj ũssawe\'shtyi dyuus yatte \n selpiwa\'j en ãjte\', na\'wẽc yuu: \" & < > ` "
-            //TICConfig.instance.text = "Andy namicu Teófilo, indya\'s cjiyu\'jna fi\'jatstju cue\'sh ensu na\'wẽ yuuc tyã\'sna. Tyã\'sa\' tyã\'wẽ yũuya\' tacjetsíyna, Cristo yacj u\'jusawe\'sha\' ma\'wẽrrajne\'ta ew uy tyã\'wẽytyi tyãawe\'sha\' cue\'shtyi pta\'sh, atsa\' tyã\'sa\' maava tyã\'wẽyta ew pta\'shna fi\'jrra nviit wẽe. Tyãa pa\'ga andyva ma\'wẽrrajne\' yũu tyã\'sa\' wala ew jypa\'yacy paapẽjyrra indyna pta\'shna fi\'jatstju, cyaj isa yuj pta\'shi\'ne\'ta sũjũne\'nga."
-            //TICConfig.instance.text = "After six days, Jesus took with him Peter, James, and John his brother, and brought them up into a high mountain by themselves.  He was changed before them. His face shone like the sun, and his garments became as white as the light. \nPeter answered, and said to Jesus, “Lord, it is good for us to be here. If you want, let’s make three tents here: one for you, one for Moses, and one for Elijah.” \nWhile he was still speaking, behold, a bright cloud overshadowed them. Behold, a voice came out of the cloud, saying, “This is my beloved Son, in whom I am well pleased. Listen to him.” \nAs they were coming down from the mountain, Jesus commanded them, saying, “Don’t tell anyone what you saw, until the Son of Man has risen from the dead. And even longer and longer.  This is a test of the emergency broadcasting system."
-        }
-         if noReferenceSlider.isOn {
-            TICConfig.instance.reference = ""
-        } else {
-            if rtlTest.isOn {
-                TICConfig.instance.reference = " إنجيل متّى ٢\u{200f}:٣"
-            } else if weirdTextSwitch.isOn {
-                TICConfig.instance.reference = "Canjaen'cho 1.1"
-            } else {
-                TICConfig.instance.reference = "Genesis 1:1"
-            }
+    @IBAction func headlessPressed(_ sender: Any) {
+        setupConfig()
 
+        // 1. Create the "vod" subfolder inside applicationSupportDirectory.
+        guard let vodDir = getCreateSupportDirectory("vod", excludeFromBackup: true) else {
+            NSLog("headlessPressed: failed to create vod directory")
+            return
         }
-        if watermarkSlider.isOn {
-            if TICConfig.instance.watermarkImage == nil {
-                TICConfig.instance.watermarkImage = TICWatermark.init(watermarkImage: UIImage.init(named: "watermark.png")!, alignment: TICWatermarkAlignment.BOTTOM_RIGHT, marginPercent: 5, widthPercent: 25)
+
+        // 2. Build the output URL and delete any pre-existing file.
+        let outputURL = vodDir.appendingPathComponent("vod.png")
+        deleteIfPresent(outputURL)
+
+        // 3. Generate the composite image and display it on success.
+        TICHeadlessCompositor.generateImage(outputURL: outputURL) { [weak self] success, error in
+            guard let self = self else { return }
+            if success, let image = UIImage(contentsOfFile: outputURL.path) {
+                let previewVC = ImagePreviewViewController()
+                previewVC.image = image
+                let nav = UINavigationController(rootViewController: previewVC)
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true)
+            } else {
+                let msg = error?.localizedDescription ?? "Unknown error"
+                NSLog("headlessPressed: image generation failed – \(msg)")
+                let alert = UIAlertController(title: "Generation Failed",
+                                              message: msg,
+                                              preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true)
             }
-        } else {
-            TICConfig.instance.watermarkImage = nil
         }
-        if videoSlider.isOn {
-            if (TICConfig.instance.sharingDelegate == nil) {
-                TICConfig.instance.sharingDelegate = VideoGenerator()
-            }
-        } else {
-            TICConfig.instance.sharingDelegate = nil
-        }
-        if linkTest.isOn {
-            TICConfig.instance.link = "https://dwr8g.app.link?ref=C02/MAT.2.6"
-        }
-//        TICConfig.instance.originalOrientation = .portrait
-//        TICConfig.instance.originalOrientationMask = .portrait
-        TICConfig.instance.textViewDelegate = self
-        TICConfig.instance.active = true
+    }
+
+    
+    @IBAction func promptPressed(_ sender: Any) {
+        setupConfig()
         let storyboard = UIStoryboard(name: TICConfig.instance.storyboardName, bundle: TICConfig.instance.bundle)
         let nvc = storyboard.instantiateViewController(withIdentifier: TICConfig.instance.viewControllerName) as! UINavigationController
         nvc.modalPresentationStyle = UIModalPresentationStyle.fullScreen
@@ -149,6 +133,60 @@ class TICAppViewController: UIViewController, TICTextViewDelegate  {
         return UIInterfaceOrientation.portrait
     }
     
+    fileprivate func setupConfig() {
+        if !firstTime {
+            firstTime = true
+            TICConfig.instance.images = images()
+            TICConfig.instance.fonts = fonts()
+            TICConfig.instance.defaultFont = "Verdana"
+            TICConfig.instance.locale = TICLocalization.us_en()
+            TICConfig.instance.theme = TICTheme.defaultTheme()
+        }
+        if rtlTest.isOn {
+            TICConfig.instance.text = "وْمْلِّي سْمَعْ الْمَلِكْ هِيرُودُسْ هَادْشِّي، خَافْ هُوَ وْݣَاعْ النَّاسْ اللِّي فْأُورْشَلِيمْ."
+            TICConfig.instance.rtl = true
+        } else if weirdTextSwitch.isOn {
+            TICConfig.instance.text = "Chigaja Jesucristonga va attian'choma afe cuintsu Jesúsja tise semasundeccunga condaye. Junde tsoña\'chone condase\'cho tsu. Jesúsja tisema sefacconi\'su shondo\'suma moensi tsaja Juanga jipa attian."
+        } else {
+            TICConfig.instance.text = "In the beginning, God's created the heavens and the earth."
+            //TICConfig.instance.text = "Zacarias yacj ũssawe\'shtyi dyuus yatte \n selpiwa\'j en ãjte\', na\'wẽc yuu: \" & < > ` "
+            //TICConfig.instance.text = "Andy namicu Teófilo, indya\'s cjiyu\'jna fi\'jatstju cue\'sh ensu na\'wẽ yuuc tyã\'sna. Tyã\'sa\' tyã\'wẽ yũuya\' tacjetsíyna, Cristo yacj u\'jusawe\'sha\' ma\'wẽrrajne\'ta ew uy tyã\'wẽytyi tyãawe\'sha\' cue\'shtyi pta\'sh, atsa\' tyã\'sa\' maava tyã\'wẽyta ew pta\'shna fi\'jrra nviit wẽe. Tyãa pa\'ga andyva ma\'wẽrrajne\' yũu tyã\'sa\' wala ew jypa\'yacy paapẽjyrra indyna pta\'shna fi\'jatstju, cyaj isa yuj pta\'shi\'ne\'ta sũjũne\'nga."
+            //TICConfig.instance.text = "After six days, Jesus took with him Peter, James, and John his brother, and brought them up into a high mountain by themselves.  He was changed before them. His face shone like the sun, and his garments became as white as the light. \nPeter answered, and said to Jesus, “Lord, it is good for us to be here. If you want, let’s make three tents here: one for you, one for Moses, and one for Elijah.” \nWhile he was still speaking, behold, a bright cloud overshadowed them. Behold, a voice came out of the cloud, saying, “This is my beloved Son, in whom I am well pleased. Listen to him.” \nAs they were coming down from the mountain, Jesus commanded them, saying, “Don’t tell anyone what you saw, until the Son of Man has risen from the dead. And even longer and longer.  This is a test of the emergency broadcasting system."
+        }
+        if noReferenceSlider.isOn {
+            TICConfig.instance.reference = ""
+        } else {
+            if rtlTest.isOn {
+                TICConfig.instance.reference = " إنجيل متّى ٢\u{200f}:٣"
+            } else if weirdTextSwitch.isOn {
+                TICConfig.instance.reference = "Canjaen'cho 1.1"
+            } else {
+                TICConfig.instance.reference = "Genesis 1:1"
+            }
+            
+        }
+        if watermarkSlider.isOn {
+            if TICConfig.instance.watermarkImage == nil {
+                TICConfig.instance.watermarkImage = TICWatermark.init(watermarkImage: UIImage.init(named: "watermark.png")!, alignment: TICWatermarkAlignment.BOTTOM_RIGHT, marginPercent: 5, widthPercent: 25)
+            }
+        } else {
+            TICConfig.instance.watermarkImage = nil
+        }
+        if videoSlider.isOn {
+            if (TICConfig.instance.sharingDelegate == nil) {
+                TICConfig.instance.sharingDelegate = VideoGenerator()
+            }
+        } else {
+            TICConfig.instance.sharingDelegate = nil
+        }
+        if linkTest.isOn {
+            TICConfig.instance.link = "https://dwr8g.app.link?ref=C02/MAT.2.6"
+        }
+        //        TICConfig.instance.originalOrientation = .portrait
+        //        TICConfig.instance.originalOrientationMask = .portrait
+        TICConfig.instance.textViewDelegate = self
+        TICConfig.instance.active = true
+    }
     // MARK:- TICTextViewDelegate
     func getTextViewController() -> EditTextBaseViewController {
         let vc = ExampleAppTextViewController()

@@ -48,6 +48,7 @@
 		63AA5995256DB8AA00A8D5BB /* TICColorFilterPanelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63AA5994256DB8AA00A8D5BB /* TICColorFilterPanelView.xib */; };
 		63AA5999256DBB6900A8D5BB /* TICColorFilterPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AA5998256DBB6900A8D5BB /* TICColorFilterPanelView.swift */; };
 		63F1595A255AECA200ED404A /* TextImageComposite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63F15950255AECA200ED404A /* TextImageComposite.framework */; };
+		A47186CC2FE592DD00E27C25 /* TICHeadlessCompositor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47186CB2FE592DD00E27C25 /* TICHeadlessCompositor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +105,7 @@
 		63AA5998256DBB6900A8D5BB /* TICColorFilterPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TICColorFilterPanelView.swift; sourceTree = "<group>"; };
 		63F15950255AECA200ED404A /* TextImageComposite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TextImageComposite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63F15959255AECA200ED404A /* TextImageCompositeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TextImageCompositeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A47186CB2FE592DD00E27C25 /* TICHeadlessCompositor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TICHeadlessCompositor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 				634E788425C36AFD00DBB849 /* ShareTypeTableViewController.swift */,
 				634E788825C36B1A00DBB849 /* ShareTypeTableViewCell.swift */,
 				6343C6DC255C3CB700177A45 /* TICConfig.swift */,
+				A47186CB2FE592DD00E27C25 /* TICHeadlessCompositor.swift */,
 				634E787325C0756C00DBB849 /* TICImageSelectPanel */,
 				634E786E25C0745D00DBB849 /* TICFontPanel */,
 				634E786B25C073E400DBB849 /* XIBPanelViews */,
@@ -406,6 +409,7 @@
 				634E788525C36AFD00DBB849 /* ShareTypeTableViewController.swift in Sources */,
 				63AA595D2568004A00A8D5BB /* TICReferenceFontPanelView.swift in Sources */,
 				6338C13E26B2D5C700737AE6 /* EditTextBaseViewController.swift in Sources */,
+				A47186CC2FE592DD00E27C25 /* TICHeadlessCompositor.swift in Sources */,
 				6343C6FA255C3CB700177A45 /* TICColorPanelView.swift in Sources */,
 				63A7978C2576DD5700232B21 /* TICFontPanelViewController.swift in Sources */,
 				6343C6FF255C3CB700177A45 /* BrightnessSlider.swift in Sources */,
