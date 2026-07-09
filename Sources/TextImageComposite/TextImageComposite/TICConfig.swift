@@ -129,11 +129,37 @@ public struct TICTheme {
     }
     
     func formatNavbar(_ navbar : UINavigationBar) {
-        navbar.tintColor = UIColor.white
+        let tintColor = UIColor.white
+        let appearance = getNavAppearance(navBar: navbar, tintColor: tintColor)
+        navbar.standardAppearance = appearance
+        navbar.scrollEdgeAppearance = appearance
+        navbar.isTranslucent = false
+        navbar.tintColor = tintColor
         navbar.barTintColor = self.contrastColor
-        navbar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:self.accentColor as Any]
     }
-    
+    func getNavAppearance(navBar: UINavigationBar, tintColor: UIColor) -> UINavigationBarAppearance {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = self.contrastColor
+        let buttonAttrs: [NSAttributedString.Key: Any] = [.foregroundColor: tintColor]
+        appearance.buttonAppearance.normal.titleTextAttributes = buttonAttrs
+        appearance.doneButtonAppearance.normal.titleTextAttributes = buttonAttrs
+        if let attributes = navBar.largeTitleTextAttributes {
+            appearance.largeTitleTextAttributes = attributes
+        }
+
+        if let attributes = navBar.titleTextAttributes {
+            appearance.titleTextAttributes = attributes
+        } else {
+            appearance.titleTextAttributes = setNavBarAttributes(navBar: navBar)
+        }
+        return appearance
+    }
+    func setNavBarAttributes(navBar: UINavigationBar) -> [NSAttributedString.Key : Any] {
+        let textAttributes = [NSAttributedString.Key.foregroundColor:self.accentColor as Any]
+        navBar.titleTextAttributes = textAttributes
+        return textAttributes
+    }
     static public func defaultTheme() -> TICTheme {
         var theme = TICTheme()
         theme.backgroundColor = UIColor.colorWithHex("EEEEEE") //

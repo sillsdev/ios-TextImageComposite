@@ -294,10 +294,6 @@ public class TICCustomizeViewController : UIViewController
         
         self.cancelBarButton.title = TICConfig.instance.locale.cancel
         
-        //using empty string to remove default `Back` text on NavigationBar back item
-        self.navigationItem.title = " "//TICConfig.instance.locale.chooseImage
-        self.cancelBarButton.title = TICConfig.instance.locale.cancel
-        
         TICConfig.instance.theme.formatNavbar((self.navigationController?.navigationBar)!)
 
         view.backgroundColor = TICConfig.instance.theme.viewBackgroundColor
@@ -305,7 +301,7 @@ public class TICCustomizeViewController : UIViewController
         let webConfiguration = WKWebViewConfiguration()
         webConfiguration.userContentController = contentController
         // Fix Fullscreen mode for video and autoplay
-        webConfiguration.preferences.javaScriptEnabled = true
+        webConfiguration.defaultWebpagePreferences.allowsContentJavaScript = true
         webConfiguration.allowsInlineMediaPlayback = true
         webView = WKWebView(frame: self.webContainerView.bounds, configuration: webConfiguration)
         webView.navigationDelegate = self
@@ -330,8 +326,6 @@ public class TICCustomizeViewController : UIViewController
 
         setupImage()
         
-        //using empty string to remove default `Back` text on NavigationBar back item
-        self.navigationItem.title = " "//TICConfig.instance.locale.chooseImage
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         
@@ -720,7 +714,6 @@ public class TICCustomizeViewController : UIViewController
         }
         return retVal
     }
-
 }
 
 extension TICCustomizeViewController : WKNavigationDelegate {
