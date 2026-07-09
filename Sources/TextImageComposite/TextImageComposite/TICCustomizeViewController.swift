@@ -293,9 +293,14 @@ public class TICCustomizeViewController : UIViewController
         TICConfig.instance.active = true
         
         self.cancelBarButton.title = TICConfig.instance.locale.cancel
-        
+        if #available(iOS 26.0, *) {
+            self.cancelBarButton.hidesSharedBackground = true
+            self.shareButton.hidesSharedBackground = true
+            self.saveButton.hidesSharedBackground = true
+        }
+        shareButton.tintColor = TICConfig.instance.theme.navTitleColor
+        saveButton.tintColor = TICConfig.instance.theme.navTitleColor
         TICConfig.instance.theme.formatNavbar((self.navigationController?.navigationBar)!)
-
         view.backgroundColor = TICConfig.instance.theme.viewBackgroundColor
         let contentController = createContentController()
         let webConfiguration = WKWebViewConfiguration()

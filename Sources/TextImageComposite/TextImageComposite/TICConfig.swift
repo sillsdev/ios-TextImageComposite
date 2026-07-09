@@ -81,8 +81,9 @@ public struct TICTheme {
     var buttonBackgroundColor: UIColor!
     var viewBackgroundColor: UIColor!
     var textColor: UIColor!
+    var navTitleColor: UIColor!
     
-    public init(backgroundColor: UIColor, contrastColor: UIColor, accentColor: UIColor, tintColor: UIColor, highlightColor: UIColor, buttonBackgroundColor: UIColor, viewBackgroundColor: UIColor, textColor: UIColor) {
+    public init(backgroundColor: UIColor, contrastColor: UIColor, accentColor: UIColor, tintColor: UIColor, highlightColor: UIColor, buttonBackgroundColor: UIColor, viewBackgroundColor: UIColor, textColor: UIColor, navTitleColor: UIColor) {
         self.backgroundColor = backgroundColor
         self.contrastColor = contrastColor
         self.accentColor = accentColor
@@ -91,6 +92,7 @@ public struct TICTheme {
         self.buttonBackgroundColor = buttonBackgroundColor
         self.viewBackgroundColor = viewBackgroundColor
         self.textColor = textColor
+        self.navTitleColor = navTitleColor
     }
     public init() {
         
@@ -129,7 +131,7 @@ public struct TICTheme {
     }
     
     func formatNavbar(_ navbar : UINavigationBar) {
-        let tintColor = UIColor.white
+        let tintColor = self.navTitleColor ?? UIColor.white
         let appearance = getNavAppearance(navBar: navbar, tintColor: tintColor)
         navbar.standardAppearance = appearance
         navbar.scrollEdgeAppearance = appearance
@@ -170,6 +172,7 @@ public struct TICTheme {
         theme.buttonBackgroundColor = UIColor.init(red: 0.820, green: 0.820, blue: 0.839, alpha: 1) // systemGray4
         theme.viewBackgroundColor = UIColor.init(red: 0.933, green: 0.933, blue: 0.933, alpha: 1) //
         theme.textColor = UIColor.black
+        theme.navTitleColor = UIColor.white
         return theme
     }
     
