@@ -24,14 +24,8 @@ import UIKit
 ///     .urls(for: .documentDirectory, in: .userDomainMask)[0]
 ///     .appendingPathComponent("output.jpg")
 ///
-/// // 3. Generate
-/// TICHeadlessCompositor.generateImage(
-///     text: "In the beginning…",
-///     reference: "Genesis 1:1",
-///     outputURL: outputURL
-/// ) { success, error in
-///     if success { print("Saved to \(outputURL)") }
-/// }
+/// // 3. Generate (must be called on the main thread)
+/// try TICHeadlessCompositor.generateImage(outputURL: outputURL)
 /// ```
 public class TICHeadlessCompositor {
 
@@ -69,35 +63,22 @@ public class TICHeadlessCompositor {
 
     /// Generates a composite image and writes it to `outputURL`.
     ///
+    /// Must be called on the **main thread** (UIKit drawing requirement).
+    ///
     /// - Parameters:
     ///   - outputURL:   Destination file URL.  The output format is inferred from
     ///                  the path extension (`.png` → PNG, everything else → JPEG).
     ///   - format:      Override the output format.  When `nil` the format is
     ///                  inferred from `outputURL`'s path extension.
-    ///   - completion:  Called on the **main thread** with `(true, nil)` on
-    ///                  success or `(false, error)` on failure.
+    /// - Throws: `CompositorError` on failure.
+    @MainActor
     public static func generateImage(
         outputURL: URL,
-        format: OutputFormat? = nil,
-        completion: @escaping (_ success: Bool, _ error: Error?) -> Void
-    ) {
-        // All UIKit drawing must happen on the main thread.
-        let work = {
-            do {
-                let image = try render()
-                let resolvedFormat = format ?? OutputFormat.inferred(from: outputURL)
-                try write(image: image, to: outputURL, format: resolvedFormat)
-                completion(true, nil)
-            } catch {
-                completion(false, error)
-            }
-        }
-
-        if Thread.isMainThread {
-            work()
-        } else {
-            DispatchQueue.main.async { work() }
-        }
+        format: OutputFormat? = nil
+    ) throws {
+        let image = try render()
+        let resolvedFormat = format ?? OutputFormat.inferred(from: outputURL)
+        try write(image: image, to: outputURL, format: resolvedFormat)
     }
 
     /// Synchronous variant – **must** be called on the main thread.

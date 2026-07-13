@@ -82,23 +82,23 @@ class TICAppViewController: UIViewController, TICTextViewDelegate  {
         deleteIfPresent(outputURL)
 
         // 3. Generate the composite image and display it on success.
-        TICHeadlessCompositor.generateImage(outputURL: outputURL) { [weak self] success, error in
-            guard let self = self else { return }
-            if success, let image = UIImage(contentsOfFile: outputURL.path) {
+        do {
+            try TICHeadlessCompositor.generateImage(outputURL: outputURL)
+            if let image = UIImage(contentsOfFile: outputURL.path) {
                 let previewVC = ImagePreviewViewController()
                 previewVC.image = image
                 let nav = UINavigationController(rootViewController: previewVC)
                 nav.modalPresentationStyle = .fullScreen
-                self.present(nav, animated: true)
-            } else {
-                let msg = error?.localizedDescription ?? "Unknown error"
-                NSLog("headlessPressed: image generation failed – \(msg)")
-                let alert = UIAlertController(title: "Generation Failed",
-                                              message: msg,
-                                              preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-                self.present(alert, animated: true)
+                present(nav, animated: true)
             }
+        } catch {
+            let msg = error.localizedDescription
+            NSLog("headlessPressed: image generation failed – \(msg)")
+            let alert = UIAlertController(title: "Generation Failed",
+                                          message: msg,
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
         }
     }
 
