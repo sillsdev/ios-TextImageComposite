@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,20 +17,20 @@
                         <viewControllerLayoutGuide type="bottom" id="fqp-T0-Btz"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="iXe-rq-a0w">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="494"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HZz-uK-rkW" userLabel="Composite View">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                                <rect key="frame" x="5.5" y="0.0" width="309" height="309"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gabriel-garcia-marengo-kOqBCFsGTs8-unsplash-1080.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="voH-g1-nBx" userLabel="Image View" customClass="BlurredImageView" customModule="TextImageComposite" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="309" height="309"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
                                         </accessibility>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BQs-Sd-x6w">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="309" height="309"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" notEnabled="YES"/>
@@ -55,10 +55,10 @@
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bhy-Xl-dgD" userLabel="Panel Container View" customClass="TICBasePanelView" customModule="TextImageComposite" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="320" width="320" height="160"/>
+                                <rect key="frame" x="0.0" y="309" width="320" height="141"/>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y6a-Om-7JW">
-                                <rect key="frame" x="0.0" y="480" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="450" width="320" height="44"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="134-tY-mey" userLabel="Toolbar View">
                                         <rect key="frame" x="0.0" y="0.0" width="908" height="44"/>
@@ -307,6 +307,11 @@
                                     <action selector="handleShareButtonTap:" destination="IDA-r8-eeI" id="j2j-gj-dUH"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem image="ic_rotate" id="KmX-In-aiB">
+                                <connections>
+                                    <action selector="handleRotateButtonTap:" destination="IDA-r8-eeI" id="yIt-yH-ciR"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
@@ -318,6 +323,7 @@
                         <outlet property="imageView" destination="voH-g1-nBx" id="sjb-3e-ZSB"/>
                         <outlet property="panelContainerView" destination="Bhy-Xl-dgD" id="tyq-9M-q1J"/>
                         <outlet property="referenceFormatButton" destination="CtI-E6-0K1" id="Zib-NM-IdT"/>
+                        <outlet property="rotateButton" destination="KmX-In-aiB" id="1pe-Xu-0ZI"/>
                         <outlet property="saveButton" destination="mu1-t8-Xoi" id="5Jv-Dz-Pwp"/>
                         <outlet property="shareButton" destination="pDN-Si-USe" id="h4k-tt-I9t"/>
                         <outlet property="toolbarDividersView" destination="wv9-oc-lqv" id="BF0-78-ayE"/>
@@ -349,7 +355,7 @@
                 <navigationController storyboardIdentifier="TICNavController" automaticallyAdjustsScrollViewInsets="NO" id="s1h-sF-rBb" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="0kR-3X-sOw">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -371,20 +377,20 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ShareTypeCell" id="6Jq-2K-Rny" customClass="ShareTypeTableViewCell" customModule="TextImageComposite" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44.5" width="200" height="43.5"/>
+                                <rect key="frame" x="0.0" y="50" width="200" height="51.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6Jq-2K-Rny" id="cZT-dU-t7v">
-                                    <rect key="frame" x="0.0" y="0.0" width="200" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="200" height="51.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fCs-X7-gLZ">
-                                            <rect key="frame" x="57" y="11" width="127" height="21.5"/>
+                                            <rect key="frame" x="57" y="15" width="127" height="21.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_image" translatesAutoresizingMaskIntoConstraints="NO" id="C7b-MV-Lke">
-                                            <rect key="frame" x="20" y="7.5" width="29" height="29"/>
+                                            <rect key="frame" x="20" y="11.5" width="29" height="29"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="C7b-MV-Lke" secondAttribute="height" multiplier="1:1" id="sa6-Jr-wFj"/>
                                             </constraints>
@@ -429,16 +435,17 @@
         <image name="ic_font_choice" width="29" height="29"/>
         <image name="ic_image" width="29" height="29"/>
         <image name="ic_reference" width="29" height="29"/>
+        <image name="ic_rotate" width="24" height="24"/>
         <image name="ic_share" width="29" height="29"/>
         <image name="ic_text_shadow" width="29" height="29"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

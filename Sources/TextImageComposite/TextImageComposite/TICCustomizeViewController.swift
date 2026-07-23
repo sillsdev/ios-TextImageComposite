@@ -270,6 +270,7 @@ public class TICCustomizeViewController : UIViewController
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
+    @IBOutlet weak var rotateButton: UIBarButtonItem!
     
     @IBAction func double(_ sender:UITapGestureRecognizer) {
         NSLog("Double tap")
@@ -297,9 +298,11 @@ public class TICCustomizeViewController : UIViewController
             self.cancelBarButton.hidesSharedBackground = true
             self.shareButton.hidesSharedBackground = true
             self.saveButton.hidesSharedBackground = true
+            self.rotateButton.hidesSharedBackground = true
         }
         shareButton.tintColor = TICConfig.instance.theme.navTitleColor
         saveButton.tintColor = TICConfig.instance.theme.navTitleColor
+        rotateButton.tintColor = TICConfig.instance.theme.navTitleColor
         TICConfig.instance.theme.formatNavbar((self.navigationController?.navigationBar)!)
         view.backgroundColor = TICConfig.instance.theme.viewBackgroundColor
         let contentController = createContentController()
@@ -538,6 +541,14 @@ public class TICCustomizeViewController : UIViewController
         }
     }
     
+    @IBAction func handleRotateButtonTap(_ sender: Any) {
+        if selectedToolbarButton == imageSelect {
+            NSLog("Rotate image")
+            if let rotatedImage = imageView.image?.rotatedLeft90() {
+                imageView.image = rotatedImage
+            }
+        }
+    }
     func showShareTypeOptions(barButton: UIBarButtonItem, shareOperation: Bool) {
         if let popoverContent = self.storyboard?.instantiateViewController(withIdentifier: "ShareTypeVC") as? ShareTypeTableViewController {
             popoverContent.shareOperation = shareOperation
@@ -584,6 +595,13 @@ public class TICCustomizeViewController : UIViewController
     
     @IBAction func handleToolbarButtonTap(_ sender: UIButton) {
         
+        if #available(iOS 16.0, *) {
+            if sender == imageSelect {
+                rotateButton.isHidden = false
+            } else {
+                rotateButton.isHidden = true
+            }
+        }
         if let btn = selectedToolbarButton {
             btn.isSelected = false
             TICConfig.instance.theme.formatToolbarButton(btn)
