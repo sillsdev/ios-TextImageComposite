@@ -201,27 +201,15 @@ extension TICCustomizeViewController : TICFormatDelegate {
         getFinalImageView()
     }
     func getFinalImageView() {
-        if #available(iOS 10.0, *) {
-            let outputImage = beginImage.applyingFilter("CIColorControls",
-                                                    parameters: [
-                                                        kCIInputBrightnessKey: brightnessValue,
-                                                        kCIInputSaturationKey: saturationValue,
-                                                        kCIInputContrastKey: contrastValue
-                                                    ])
-                .applyingGaussianBlur(sigma: Double(blurValue))
-                .cropped(to: beginImage.extent)
-            imageView.image = UIImage(ciImage: outputImage)
-        } else {
-            let outputImage = beginImage.applyingFilter("CIColorControls",
-                                                    parameters: [
-                                                        kCIInputBrightnessKey: brightnessValue,
-                                                        kCIInputSaturationKey: saturationValue,
-                                                        kCIInputContrastKey: contrastValue
-                                                    ])
-            imageView.image = UIImage(ciImage: outputImage)
-            self.imageView.addBlur(CGFloat(blurValue/10))
-        }
-        
+        let outputImage = beginImage.applyingFilter("CIColorControls",
+                                                parameters: [
+                                                    kCIInputBrightnessKey: brightnessValue,
+                                                    kCIInputSaturationKey: saturationValue,
+                                                    kCIInputContrastKey: contrastValue
+                                                ])
+            .applyingGaussianBlur(sigma: Double(blurValue))
+            .cropped(to: beginImage.extent)
+        imageView.image = UIImage(ciImage: outputImage)
     }
 }
 extension TICCustomizeViewController: UIGestureRecognizerDelegate {
@@ -287,57 +275,26 @@ public class TICCustomizeViewController : UIViewController
     var fontFormatDelegate: SBFontFormatDelegate!
     var fontSizeDelegate: SBFontSizeDelegate!
     var referenceFontSizeDelegate: SBFontSizeDelegate?
-
+    
     override public func viewDidLoad()
     {
         super.viewDidLoad()
         TICConfig.instance.active = true
-        
-        self.cancelBarButton.title = TICConfig.instance.locale.cancel
-        if #available(iOS 26.0, *) {
-            self.cancelBarButton.hidesSharedBackground = true
-            self.shareButton.hidesSharedBackground = true
-            self.saveButton.hidesSharedBackground = true
-            self.rotateButton.hidesSharedBackground = true
-        }
-        shareButton.tintColor = TICConfig.instance.theme.navTitleColor
-        saveButton.tintColor = TICConfig.instance.theme.navTitleColor
-        rotateButton.tintColor = TICConfig.instance.theme.navTitleColor
-        TICConfig.instance.theme.formatNavbar((self.navigationController?.navigationBar)!)
-        view.backgroundColor = TICConfig.instance.theme.viewBackgroundColor
-        let contentController = createContentController()
-        let webConfiguration = WKWebViewConfiguration()
-        webConfiguration.userContentController = contentController
-        // Fix Fullscreen mode for video and autoplay
-        webConfiguration.defaultWebpagePreferences.allowsContentJavaScript = true
-        webConfiguration.allowsInlineMediaPlayback = true
-        webView = WKWebView(frame: self.webContainerView.bounds, configuration: webConfiguration)
-        webView.navigationDelegate = self
-        webView.contentMode = .scaleAspectFill
-        webView.backgroundColor = .clear
-        webView.scrollView.backgroundColor = .clear
-        webView.isOpaque = false
-        webView.isUserInteractionEnabled = false
-        webContainerView.addSubview(webView)
-        
-        let doubleTapSelector : Selector = #selector(TICCustomizeViewController .double(_:))
-        doubleTap = UITapGestureRecognizer(target: self, action: doubleTapSelector)
-        doubleTap!.numberOfTapsRequired = 2
-        doubleTap!.numberOfTouchesRequired = 1
-        doubleTap!.delegate = self
-        compositeView.addGestureRecognizer(doubleTap!)
+        self.setupWebView()
+
+        self.setupUI()
         
         TICConfig.instance.selectedURL = TICConfig.instance.images[0].imageURL
         TICConfig.instance.selectedImage = nil
 
         filter = CIFilter(name: "CIColorControls")
 
-        setupImage()
+        self.setupImage()
         
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         
-        loadHTML()
+        self.loadHTML()
         
         //widthInPixels = imageView.frame.width * UIScreen.main.scale
         self.setupEditorPanels()
@@ -377,6 +334,7 @@ public class TICCustomizeViewController : UIViewController
             self.referenceFontSizeDelegate?.setFontSizeMaximum(maximum: fontSizeMaximum)
         }
     }
+    // MARK: - Setup Methods
     func setupEditorPanels()
     {
         var panels: [TICBasePanelView] = []
@@ -481,6 +439,43 @@ public class TICCustomizeViewController : UIViewController
         filter.setValue(beginImage, forKey: kCIInputImageKey)
 
     }
+    fileprivate func setupUI() {
+        self.cancelBarButton.title = TICConfig.instance.locale.cancel
+        if #available(iOS 26.0, *) {
+            self.cancelBarButton.hidesSharedBackground = true
+            self.shareButton.hidesSharedBackground = true
+            self.saveButton.hidesSharedBackground = true
+            self.rotateButton.hidesSharedBackground = true
+        }
+        shareButton.tintColor = TICConfig.instance.theme.navTitleColor
+        saveButton.tintColor = TICConfig.instance.theme.navTitleColor
+        rotateButton.tintColor = TICConfig.instance.theme.navTitleColor
+        TICConfig.instance.theme.formatNavbar((self.navigationController?.navigationBar)!)
+        view.backgroundColor = TICConfig.instance.theme.viewBackgroundColor
+        
+        let doubleTapSelector : Selector = #selector(TICCustomizeViewController .double(_:))
+        doubleTap = UITapGestureRecognizer(target: self, action: doubleTapSelector)
+        doubleTap!.numberOfTapsRequired = 2
+        doubleTap!.numberOfTouchesRequired = 1
+        doubleTap!.delegate = self
+        compositeView.addGestureRecognizer(doubleTap!)
+    }
+    fileprivate func setupWebView() {
+        let contentController = createContentController()
+        let webConfiguration = WKWebViewConfiguration()
+        webConfiguration.userContentController = contentController
+        // Fix Fullscreen mode for video and autoplay
+        webConfiguration.defaultWebpagePreferences.allowsContentJavaScript = true
+        webConfiguration.allowsInlineMediaPlayback = true
+        webView = WKWebView(frame: self.webContainerView.bounds, configuration: webConfiguration)
+        webView.navigationDelegate = self
+        webView.contentMode = .scaleAspectFill
+        webView.backgroundColor = .clear
+        webView.scrollView.backgroundColor = .clear
+        webView.isOpaque = false
+        webView.isUserInteractionEnabled = false
+        webContainerView.addSubview(webView)
+    }
     func loadHTML() {
         if let filepath = TICConfig.instance.bundle.path(forResource: "composite", ofType: "html") {
             do {
@@ -496,7 +491,7 @@ public class TICCustomizeViewController : UIViewController
                 let html = contents.replacingOccurrences(of: "//FONTS", with: fontString)
                 let assetsUrl = TICConfig.instance.bundle.resourceURL!
                 if TICConfig.instance.containerApp {
-                    loadHTMLForContainer(html: html, webView: webView, localUrl: assetsUrl)
+                    loadHTMLForContainer(html: html, localUrl: assetsUrl)
                 } else {
                     webView.loadHTMLString(html, baseURL: assetsUrl)
                 }
@@ -505,7 +500,7 @@ public class TICCustomizeViewController : UIViewController
             }
         }
     }
-    func loadHTMLForContainer(html: String, webView: WKWebView, localUrl: URL) {
+    func loadHTMLForContainer(html: String, localUrl: URL) {
         do {
             let jqueryUrl = TICConfig.instance.fontBaseURL!.appendingPathComponent("jquery-3.2.1.min.js")
             if !FileManager.default.fileExists(atPath: jqueryUrl.path) {
@@ -728,11 +723,7 @@ public class TICCustomizeViewController : UIViewController
             let now = Date()
             if (now > failureDate) {
                 finished = true
-                if #available(iOS 10.0, *) {
-                    os_log("TIC: evaluateJavaScript Didn't complete prior to failure time")
-                } else {
-                    NSLog("TIC: evaluateJavaScript Didn't complete prior to failure time")
-                }
+                os_log("TIC: evaluateJavaScript Didn't complete prior to failure time")
             }
         }
         return retVal

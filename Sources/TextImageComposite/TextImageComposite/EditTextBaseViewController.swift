@@ -65,82 +65,44 @@ open class EditTextBaseViewController: UIViewController {
                                                          attribute: .bottom,
                                                          multiplier: 1,
                                                          constant: 0)
-        if #available(iOS 11, *) {
-            let guide = view.safeAreaLayoutGuide
-            dividerTrailingConstraint = NSLayoutConstraint(item: guide,
-                                                           attribute: .trailing,
-                                                           relatedBy: .equal,
-                                                           toItem: dividerLine,
-                                                           attribute: .trailing,
-                                                           multiplier: 1,
-                                                           constant: 0)
-            dividerLeadingConstraint = NSLayoutConstraint(item: dividerLine,
-                                                           attribute: .leading,
-                                                           relatedBy: .equal,
-                                                           toItem: guide,
-                                                           attribute: .leading,
-                                                           multiplier: 1,
-                                                           constant: 0)
-            textTrailingConstraint = NSLayoutConstraint(item: guide,
-                                                           attribute: .trailing,
-                                                           relatedBy: .equal,
-                                                           toItem: textView!,
-                                                           attribute: .trailing,
-                                                           multiplier: 1,
-                                                           constant: 20)
-            textLeadingConstraint = NSLayoutConstraint(item: textView!,
-                                                            attribute: .leading,
-                                                            relatedBy: .equal,
-                                                            toItem: guide,
-                                                            attribute: .leading,
-                                                            multiplier: 1,
-                                                            constant: 20)
-            textTopConstraint = NSLayoutConstraint(item: textView!,
-                                                        attribute: .top,
+
+        let guide = view.safeAreaLayoutGuide
+        dividerTrailingConstraint = NSLayoutConstraint(item: guide,
+                                                       attribute: .trailing,
+                                                       relatedBy: .equal,
+                                                       toItem: dividerLine,
+                                                       attribute: .trailing,
+                                                       multiplier: 1,
+                                                       constant: 0)
+        dividerLeadingConstraint = NSLayoutConstraint(item: dividerLine,
+                                                       attribute: .leading,
+                                                       relatedBy: .equal,
+                                                       toItem: guide,
+                                                       attribute: .leading,
+                                                       multiplier: 1,
+                                                       constant: 0)
+        textTrailingConstraint = NSLayoutConstraint(item: guide,
+                                                       attribute: .trailing,
+                                                       relatedBy: .equal,
+                                                       toItem: textView!,
+                                                       attribute: .trailing,
+                                                       multiplier: 1,
+                                                       constant: 20)
+        textLeadingConstraint = NSLayoutConstraint(item: textView!,
+                                                        attribute: .leading,
                                                         relatedBy: .equal,
                                                         toItem: guide,
-                                                        attribute: .top,
+                                                        attribute: .leading,
                                                         multiplier: 1,
-                                                        constant: 0)
-        } else {
-            let standardSpacing: CGFloat = 8.0
-            dividerTrailingConstraint = NSLayoutConstraint(item: view!,
-                                                           attribute: .trailing,
-                                                           relatedBy: .equal,
-                                                           toItem: dividerLine,
-                                                           attribute: .trailing,
-                                                           multiplier: 1,
-                                                           constant: standardSpacing)
-            dividerLeadingConstraint = NSLayoutConstraint(item: dividerLine,
-                                                           attribute: .leading,
-                                                           relatedBy: .equal,
-                                                           toItem: view!,
-                                                           attribute: .leading,
-                                                           multiplier: 1,
-                                                           constant: standardSpacing)
-            textTrailingConstraint = NSLayoutConstraint(item: view!,
-                                                           attribute: .trailing,
-                                                           relatedBy: .equal,
-                                                           toItem: textView,
-                                                           attribute: .trailing,
-                                                           multiplier: 1,
-                                                           constant: standardSpacing + 20)
-            textLeadingConstraint = NSLayoutConstraint(item: textView!,
-                                                           attribute: .leading,
-                                                           relatedBy: .equal,
-                                                           toItem: view!,
-                                                           attribute: .leading,
-                                                           multiplier: 1,
-                                                           constant: standardSpacing + 20)
-            textTopConstraint = NSLayoutConstraint(item: textView!,
-                                                        attribute: .top,
-                                                        relatedBy: .equal,
-                                                        toItem: view!,
-                                                        attribute: .top,
-                                                        multiplier: 1,
-                                                        constant: standardSpacing)
+                                                        constant: 20)
+        textTopConstraint = NSLayoutConstraint(item: textView!,
+                                                    attribute: .top,
+                                                    relatedBy: .equal,
+                                                    toItem: guide,
+                                                    attribute: .top,
+                                                    multiplier: 1,
+                                                    constant: 0)
 
-        }
         view.addConstraints([dividerTextConstraint,
                              dividerTrailingConstraint!,
                              dividerLeadingConstraint!,
@@ -163,9 +125,7 @@ open class EditTextBaseViewController: UIViewController {
         textView!.clipsToBounds = true
         textView!.sizeToFit()
         textView!.isScrollEnabled = false
-        if #available(iOS 11, *) {
-            textView!.contentInsetAdjustmentBehavior = .automatic
-        }
+        textView!.contentInsetAdjustmentBehavior = .automatic
         self.view.addSubview(textView!)
         textView!.translatesAutoresizingMaskIntoConstraints = false
     }
