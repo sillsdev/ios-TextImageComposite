@@ -178,6 +178,20 @@ extension TICCustomizeViewController : TICFormatDelegate {
         let floatHeight = ((allHeight as? CGFloat) != nil ? allHeight as! CGFloat : 320)
         return floatHeight
     }
+    public func setWordStyle(_ property : CSSProperty, _ value : String) {
+        if property == .color {
+            currentWordColor = value
+        }
+        guard lastTappedWordIndex >= 0 else { return }
+        let js = "colorWordAtIndex(\(lastTappedWordIndex), '\(currentWordColor)');"
+        self.webView.evaluateJavaScript(js, completionHandler: nil)
+    }
+    public func setLastTappedWordCase(toUpper: Bool) {
+        guard lastTappedWordIndex >= 0 else { return }
+        let caseType = toUpper ? "upper" : "lower"
+        let js = "setWordCase(\(lastTappedWordIndex), '\(caseType)');"
+        self.webView.evaluateJavaScript(js, completionHandler: nil)
+    }
     public func showColorDetails() {
         self.panelContainerView.addSubview(self.colorDetailsView)
     }
@@ -228,12 +242,14 @@ public class TICCustomizeViewController : UIViewController
     @IBOutlet weak var referenceFormatButton: UIButton!
     @IBOutlet weak var toolbarScrollView: UIScrollView!
     @IBOutlet weak var cancelBarButton: UIBarButtonItem!
+    @IBOutlet weak var wordColorPanelButton: UIButton!
     var webView: WKWebView!
     
     var fontSizeView: TICFontAttributesPanelView!
     var referenceSizeView: TICReferenceFontPanelView!
     var colorView: TICColorPanelView!
     var colorDetailsView: TICColorPickerPanelView!
+    var wordColorView: TICWordColorPanelView!
     var extrasView: TICExtrasPanelView!
     var alignmentView: TICAlignmentPanelView!
     var shadowView: TICTextShadowPanelView!
@@ -251,6 +267,10 @@ public class TICCustomizeViewController : UIViewController
     var lastX: Int = 0
     var lastY: Int = 0
     var doubleTap: UITapGestureRecognizer?
+    var wordTapGesture: UITapGestureRecognizer?
+    var wordColorPanelActive = false
+    var currentWordColor: String = "white"
+    var lastTappedWordIndex: Int = -1
 
     @IBOutlet weak var panelContainerView: UIView!
     
@@ -267,6 +287,17 @@ public class TICCustomizeViewController : UIViewController
             TICConfig.instance.textViewDelegate?.getTextViewController() {
             editTextVC.webView = webView
             self.navigationController?.pushViewController(editTextVC, animated: true)
+        }
+    }
+    @objc func handleWordTap(_ sender: UITapGestureRecognizer) {
+        guard wordColorPanelActive else { return }
+        let point = sender.location(in: webView)
+        let js = "colorWordAtPoint(\(point.x), \(point.y), '\(currentWordColor)');"
+        webView.evaluateJavaScript(js) { result, error in
+            if let index = result as? Int, index >= 0 {
+                self.lastTappedWordIndex = index
+                NSLog("TIC: Colored word index \(index) with \(self.currentWordColor)")
+            }
         }
     }
     var compositeImage: UIImage?
@@ -342,6 +373,7 @@ public class TICCustomizeViewController : UIViewController
         self.alignmentView = TICAlignmentPanelView(frame: f)
         self.extrasView = TICExtrasPanelView(frame: f)
         self.colorView = TICColorPanelView(frame: f)
+        self.wordColorView = TICWordColorPanelView(frame: f)
         self.colorDetailsView = TICColorPickerPanelView(frame: f)
         self.fontSizeView = TICFontAttributesPanelView(frame: f)
         if (TICConfig.instance.reference.isEmpty) {
@@ -364,6 +396,7 @@ public class TICCustomizeViewController : UIViewController
         panels.append(self.extrasView)
         panels.append(self.colorView)
         panels.append(self.colorDetailsView)
+        panels.append(self.wordColorView)
         panels.append(self.fontSizeView)
         if !TICConfig.instance.reference.isEmpty {
             panels.append(self.referenceSizeView)
@@ -474,6 +507,7 @@ public class TICCustomizeViewController : UIViewController
         webView.scrollView.backgroundColor = .clear
         webView.isOpaque = false
         webView.isUserInteractionEnabled = false
+        if #available(iOS 16.4, *) { webView?.isInspectable = true; }
         webContainerView.addSubview(webView)
     }
     func loadHTML() {
@@ -602,6 +636,11 @@ public class TICCustomizeViewController : UIViewController
             TICConfig.instance.theme.formatToolbarButton(btn)
         }
         
+        // Deactivate word coloring when switching panels
+        if sender != wordColorPanelButton {
+            wordColorPanelActive = false
+        }
+        
         sender.isSelected = true
         TICConfig.instance.theme.formatToolbarButton(sender)
         
@@ -623,17 +662,33 @@ public class TICCustomizeViewController : UIViewController
     }
     @IBAction func handleColorButtonTap(_ sender: UIButton) {
         
+        self.colorDetailsView.setDelegate(self.colorView)
         self.panelContainerView.bringSubviewToFront(self.colorView)
         centerButton(button: sender)
     }
-    
     @IBAction func handleAlignmentButtonTap(_ sender: UIButton) {
         
         self.panelContainerView.bringSubviewToFront(self.alignmentView)
         centerButton(button: sender)
 
     }
-    
+    @IBAction func handleWordColorButtonTap(_ sender: Any) {
+        if let button = sender as? UIButton {
+            self.colorDetailsView.setDelegate(self.wordColorView)
+            self.panelContainerView.bringSubviewToFront(self.wordColorView)
+            centerButton(button: button)
+            self.webView.evaluateJavaScript("wrapWordsInSpans();", completionHandler: nil)
+            wordColorPanelActive = true
+            // Add a tap gesture on compositeView to detect word taps
+            if wordTapGesture == nil {
+                wordTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleWordTap(_:)))
+                wordTapGesture!.numberOfTapsRequired = 1
+                wordTapGesture!.delegate = self
+                compositeView.addGestureRecognizer(wordTapGesture!)
+            }
+
+        }
+    }
     @IBAction func handleExtrasButtonTap(_ sender: UIButton) {
         
         self.panelContainerView.bringSubviewToFront(self.extrasView)
@@ -686,7 +741,6 @@ public class TICCustomizeViewController : UIViewController
     }
     func createContentController() -> WKUserContentController {
         let contentController = WKUserContentController()
-//        contentController.add(self, name: "addVersePosition")
         return contentController
     }
     func getBodyWidth() -> CGFloat {
@@ -705,7 +759,7 @@ public class TICCustomizeViewController : UIViewController
         text = text.replacingOccurrences(of: "\'", with: "&#39")
         var reference = TICConfig.instance.reference.replacingOccurrences(of: "\n", with: "<br>").replacingOccurrences(of: "\t", with: "")
         reference = reference.replacingOccurrences(of: "\'", with: "&#39")
-        let js = "reset('\(text)', '\(reference)')"
+        let js = "reset('\(text)', '\(reference)'); wordsWrapped = false;"
         webView?.evaluateJavaScript(js, completionHandler: nil)
     }
     static func evaluateJavaScript(_ script: String, webView: WKWebView?) -> AnyObject {
