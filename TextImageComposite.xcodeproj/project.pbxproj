@@ -49,6 +49,9 @@
 		63AA5999256DBB6900A8D5BB /* TICColorFilterPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AA5998256DBB6900A8D5BB /* TICColorFilterPanelView.swift */; };
 		63F1595A255AECA200ED404A /* TextImageComposite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63F15950255AECA200ED404A /* TextImageComposite.framework */; };
 		A47186CC2FE592DD00E27C25 /* TICHeadlessCompositor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47186CB2FE592DD00E27C25 /* TICHeadlessCompositor.swift */; };
+		A4CD112F3013E415003F5173 /* TICWordColorPanelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A4CD112E3013E415003F5173 /* TICWordColorPanelView.xib */; };
+		A4CD11313017A8EE003F5173 /* TICWordColorPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CD11303017A8DA003F5173 /* TICWordColorPanelView.swift */; };
+		A4CD11333017AA84003F5173 /* TICColorPickerPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4CD11323017AA79003F5173 /* TICColorPickerPanelView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +109,9 @@
 		63F15950255AECA200ED404A /* TextImageComposite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TextImageComposite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63F15959255AECA200ED404A /* TextImageCompositeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TextImageCompositeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A47186CB2FE592DD00E27C25 /* TICHeadlessCompositor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TICHeadlessCompositor.swift; sourceTree = "<group>"; };
+		A4CD112E3013E415003F5173 /* TICWordColorPanelView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TICWordColorPanelView.xib; sourceTree = "<group>"; };
+		A4CD11303017A8DA003F5173 /* TICWordColorPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TICWordColorPanelView.swift; sourceTree = "<group>"; };
+		A4CD11323017AA79003F5173 /* TICColorPickerPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TICColorPickerPanelView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +176,7 @@
 				6343C6B3255C3CB700177A45 /* TICExtrasPanelView.xib */,
 				6343C6AD255C3CB700177A45 /* TICColorPickerPanelView.xib */,
 				63AA59582567FF9300A8D5BB /* TICReferenceFontPanelView.xib */,
+				A4CD112E3013E415003F5173 /* TICWordColorPanelView.xib */,
 			);
 			path = XIB;
 			sourceTree = "<group>";
@@ -229,10 +236,12 @@
 				6386EDCF2565A124003E4506 /* TICFontAttributesPanelView.swift */,
 				6343C6CD255C3CB700177A45 /* TICAlignmentPanelView.swift */,
 				6343C6CE255C3CB700177A45 /* TICColorPanelView.swift */,
+				A4CD11303017A8DA003F5173 /* TICWordColorPanelView.swift */,
 				63AA597E2568727000A8D5BB /* TICTextShadowPanelView.swift */,
 				63AA5998256DBB6900A8D5BB /* TICColorFilterPanelView.swift */,
 				6343C6D8255C3CB700177A45 /* TICExtrasPanelView.swift */,
 				63AA595C2568004A00A8D5BB /* TICReferenceFontPanelView.swift */,
+				A4CD11323017AA79003F5173 /* TICColorPickerPanelView.swift */,
 			);
 			name = XIBPanelViews;
 			sourceTree = "<group>";
@@ -366,6 +375,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4CD112F3013E415003F5173 /* TICWordColorPanelView.xib in Resources */,
 				637E087A255D829B0065E3E9 /* Images.xcassets in Resources */,
 				6343C6E0255C3CB700177A45 /* TICColorPanelView.xib in Resources */,
 				63A797882576DC6600232B21 /* TICFontPanel.storyboard in Resources */,
@@ -419,9 +429,11 @@
 				6343C702255C3CB700177A45 /* TICExtrasPanelView.swift in Sources */,
 				6343C6F9255C3CB700177A45 /* TICAlignmentPanelView.swift in Sources */,
 				634E787925C0BC2D00DBB849 /* TICImageSelectPanel.swift in Sources */,
+				A4CD11333017AA84003F5173 /* TICColorPickerPanelView.swift in Sources */,
 				6386EDD02565A124003E4506 /* TICFontAttributesPanelView.swift in Sources */,
 				6343C6FB255C3CB700177A45 /* TICBasePanelView.swift in Sources */,
 				6343C701255C3CB700177A45 /* UIView+Layout.swift in Sources */,
+				A4CD11313017A8EE003F5173 /* TICWordColorPanelView.swift in Sources */,
 				6343C6FD255C3CB700177A45 /* UIColor+Hex.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

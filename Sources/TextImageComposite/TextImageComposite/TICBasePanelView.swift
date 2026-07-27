@@ -17,6 +17,8 @@ public enum TextSection {
 public protocol TICFormatDelegate {
     func setStyle(_ property : CSSProperty, _ value : String, _ section : TextSection)
     func setBodyStyle(_ property : CSSProperty, _ value : String)
+    func setWordStyle(_ property : CSSProperty, _ value : String)
+    func setLastTappedWordCase(toUpper: Bool)
     
     func setImageBlur(_ value: Float)
     func setImageBrightness(_ value: Float)

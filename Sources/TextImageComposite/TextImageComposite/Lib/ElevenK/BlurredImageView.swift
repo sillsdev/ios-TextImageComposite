@@ -33,11 +33,7 @@ public class BlurredImageView: CachedImageView {
     func addBlur(_ alpha: CGFloat = 0.5) {
         // create effect
         if(effect == nil) {
-            if #available(iOS 13.0, *) {
-                effect = UIBlurEffect(style: .prominent)
-            } else {
-                effect = UIBlurEffect(style: .light)
-            }
+            effect = UIBlurEffect(style: .prominent)
             effectView = UIVisualEffectView(effect: effect)
 
             // set boundry and alpha

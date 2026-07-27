@@ -178,6 +178,20 @@ extension TICCustomizeViewController : TICFormatDelegate {
         let floatHeight = ((allHeight as? CGFloat) != nil ? allHeight as! CGFloat : 320)
         return floatHeight
     }
+    public func setWordStyle(_ property : CSSProperty, _ value : String) {
+        if property == .color {
+            currentWordColor = value
+        }
+        guard lastTappedWordIndex >= 0 else { return }
+        let js = "colorWordAtIndex(\(lastTappedWordIndex), '\(currentWordColor)');"
+        self.webView.evaluateJavaScript(js, completionHandler: nil)
+    }
+    public func setLastTappedWordCase(toUpper: Bool) {
+        guard lastTappedWordIndex >= 0 else { return }
+        let caseType = toUpper ? "upper" : "lower"
+        let js = "setWordCase(\(lastTappedWordIndex), '\(caseType)');"
+        self.webView.evaluateJavaScript(js, completionHandler: nil)
+    }
     public func showColorDetails() {
         self.panelContainerView.addSubview(self.colorDetailsView)
     }
@@ -201,27 +215,15 @@ extension TICCustomizeViewController : TICFormatDelegate {
         getFinalImageView()
     }
     func getFinalImageView() {
-        if #available(iOS 10.0, *) {
-            let outputImage = beginImage.applyingFilter("CIColorControls",
-                                                    parameters: [
-                                                        kCIInputBrightnessKey: brightnessValue,
-                                                        kCIInputSaturationKey: saturationValue,
-                                                        kCIInputContrastKey: contrastValue
-                                                    ])
-                .applyingGaussianBlur(sigma: Double(blurValue))
-                .cropped(to: beginImage.extent)
-            imageView.image = UIImage(ciImage: outputImage)
-        } else {
-            let outputImage = beginImage.applyingFilter("CIColorControls",
-                                                    parameters: [
-                                                        kCIInputBrightnessKey: brightnessValue,
-                                                        kCIInputSaturationKey: saturationValue,
-                                                        kCIInputContrastKey: contrastValue
-                                                    ])
-            imageView.image = UIImage(ciImage: outputImage)
-            self.imageView.addBlur(CGFloat(blurValue/10))
-        }
-        
+        let outputImage = beginImage.applyingFilter("CIColorControls",
+                                                parameters: [
+                                                    kCIInputBrightnessKey: brightnessValue,
+                                                    kCIInputSaturationKey: saturationValue,
+                                                    kCIInputContrastKey: contrastValue
+                                                ])
+            .applyingGaussianBlur(sigma: Double(blurValue))
+            .cropped(to: beginImage.extent)
+        imageView.image = UIImage(ciImage: outputImage)
     }
 }
 extension TICCustomizeViewController: UIGestureRecognizerDelegate {
@@ -240,12 +242,14 @@ public class TICCustomizeViewController : UIViewController
     @IBOutlet weak var referenceFormatButton: UIButton!
     @IBOutlet weak var toolbarScrollView: UIScrollView!
     @IBOutlet weak var cancelBarButton: UIBarButtonItem!
+    @IBOutlet weak var wordColorPanelButton: UIButton!
     var webView: WKWebView!
     
     var fontSizeView: TICFontAttributesPanelView!
     var referenceSizeView: TICReferenceFontPanelView!
     var colorView: TICColorPanelView!
     var colorDetailsView: TICColorPickerPanelView!
+    var wordColorView: TICWordColorPanelView!
     var extrasView: TICExtrasPanelView!
     var alignmentView: TICAlignmentPanelView!
     var shadowView: TICTextShadowPanelView!
@@ -263,6 +267,10 @@ public class TICCustomizeViewController : UIViewController
     var lastX: Int = 0
     var lastY: Int = 0
     var doubleTap: UITapGestureRecognizer?
+    var wordTapGesture: UITapGestureRecognizer?
+    var wordColorPanelActive = false
+    var currentWordColor: String = "white"
+    var lastTappedWordIndex: Int = -1
 
     @IBOutlet weak var panelContainerView: UIView!
     
@@ -281,63 +289,43 @@ public class TICCustomizeViewController : UIViewController
             self.navigationController?.pushViewController(editTextVC, animated: true)
         }
     }
+    @objc func handleWordTap(_ sender: UITapGestureRecognizer) {
+        guard wordColorPanelActive else { return }
+        let point = sender.location(in: webView)
+        let js = "colorWordAtPoint(\(point.x), \(point.y), '\(currentWordColor)');"
+        webView.evaluateJavaScript(js) { result, error in
+            if let index = result as? Int, index >= 0 {
+                self.lastTappedWordIndex = index
+                NSLog("TIC: Colored word index \(index) with \(self.currentWordColor)")
+            }
+        }
+    }
     var compositeImage: UIImage?
     var fontSize: Int = 15
     var selectedToolbarButton: UIButton? = nil
     var fontFormatDelegate: SBFontFormatDelegate!
     var fontSizeDelegate: SBFontSizeDelegate!
     var referenceFontSizeDelegate: SBFontSizeDelegate?
-
+    
     override public func viewDidLoad()
     {
         super.viewDidLoad()
         TICConfig.instance.active = true
-        
-        self.cancelBarButton.title = TICConfig.instance.locale.cancel
-        if #available(iOS 26.0, *) {
-            self.cancelBarButton.hidesSharedBackground = true
-            self.shareButton.hidesSharedBackground = true
-            self.saveButton.hidesSharedBackground = true
-            self.rotateButton.hidesSharedBackground = true
-        }
-        shareButton.tintColor = TICConfig.instance.theme.navTitleColor
-        saveButton.tintColor = TICConfig.instance.theme.navTitleColor
-        rotateButton.tintColor = TICConfig.instance.theme.navTitleColor
-        TICConfig.instance.theme.formatNavbar((self.navigationController?.navigationBar)!)
-        view.backgroundColor = TICConfig.instance.theme.viewBackgroundColor
-        let contentController = createContentController()
-        let webConfiguration = WKWebViewConfiguration()
-        webConfiguration.userContentController = contentController
-        // Fix Fullscreen mode for video and autoplay
-        webConfiguration.defaultWebpagePreferences.allowsContentJavaScript = true
-        webConfiguration.allowsInlineMediaPlayback = true
-        webView = WKWebView(frame: self.webContainerView.bounds, configuration: webConfiguration)
-        webView.navigationDelegate = self
-        webView.contentMode = .scaleAspectFill
-        webView.backgroundColor = .clear
-        webView.scrollView.backgroundColor = .clear
-        webView.isOpaque = false
-        webView.isUserInteractionEnabled = false
-        webContainerView.addSubview(webView)
-        
-        let doubleTapSelector : Selector = #selector(TICCustomizeViewController .double(_:))
-        doubleTap = UITapGestureRecognizer(target: self, action: doubleTapSelector)
-        doubleTap!.numberOfTapsRequired = 2
-        doubleTap!.numberOfTouchesRequired = 1
-        doubleTap!.delegate = self
-        compositeView.addGestureRecognizer(doubleTap!)
+        self.setupWebView()
+
+        self.setupUI()
         
         TICConfig.instance.selectedURL = TICConfig.instance.images[0].imageURL
         TICConfig.instance.selectedImage = nil
 
         filter = CIFilter(name: "CIColorControls")
 
-        setupImage()
+        self.setupImage()
         
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         
-        loadHTML()
+        self.loadHTML()
         
         //widthInPixels = imageView.frame.width * UIScreen.main.scale
         self.setupEditorPanels()
@@ -377,6 +365,7 @@ public class TICCustomizeViewController : UIViewController
             self.referenceFontSizeDelegate?.setFontSizeMaximum(maximum: fontSizeMaximum)
         }
     }
+    // MARK: - Setup Methods
     func setupEditorPanels()
     {
         var panels: [TICBasePanelView] = []
@@ -384,6 +373,7 @@ public class TICCustomizeViewController : UIViewController
         self.alignmentView = TICAlignmentPanelView(frame: f)
         self.extrasView = TICExtrasPanelView(frame: f)
         self.colorView = TICColorPanelView(frame: f)
+        self.wordColorView = TICWordColorPanelView(frame: f)
         self.colorDetailsView = TICColorPickerPanelView(frame: f)
         self.fontSizeView = TICFontAttributesPanelView(frame: f)
         if (TICConfig.instance.reference.isEmpty) {
@@ -406,6 +396,7 @@ public class TICCustomizeViewController : UIViewController
         panels.append(self.extrasView)
         panels.append(self.colorView)
         panels.append(self.colorDetailsView)
+        panels.append(self.wordColorView)
         panels.append(self.fontSizeView)
         if !TICConfig.instance.reference.isEmpty {
             panels.append(self.referenceSizeView)
@@ -481,6 +472,44 @@ public class TICCustomizeViewController : UIViewController
         filter.setValue(beginImage, forKey: kCIInputImageKey)
 
     }
+    fileprivate func setupUI() {
+        self.cancelBarButton.title = TICConfig.instance.locale.cancel
+        if #available(iOS 26.0, *) {
+            self.cancelBarButton.hidesSharedBackground = true
+            self.shareButton.hidesSharedBackground = true
+            self.saveButton.hidesSharedBackground = true
+            self.rotateButton.hidesSharedBackground = true
+        }
+        shareButton.tintColor = TICConfig.instance.theme.navTitleColor
+        saveButton.tintColor = TICConfig.instance.theme.navTitleColor
+        rotateButton.tintColor = TICConfig.instance.theme.navTitleColor
+        TICConfig.instance.theme.formatNavbar((self.navigationController?.navigationBar)!)
+        view.backgroundColor = TICConfig.instance.theme.viewBackgroundColor
+        
+        let doubleTapSelector : Selector = #selector(TICCustomizeViewController .double(_:))
+        doubleTap = UITapGestureRecognizer(target: self, action: doubleTapSelector)
+        doubleTap!.numberOfTapsRequired = 2
+        doubleTap!.numberOfTouchesRequired = 1
+        doubleTap!.delegate = self
+        compositeView.addGestureRecognizer(doubleTap!)
+    }
+    fileprivate func setupWebView() {
+        let contentController = createContentController()
+        let webConfiguration = WKWebViewConfiguration()
+        webConfiguration.userContentController = contentController
+        // Fix Fullscreen mode for video and autoplay
+        webConfiguration.defaultWebpagePreferences.allowsContentJavaScript = true
+        webConfiguration.allowsInlineMediaPlayback = true
+        webView = WKWebView(frame: self.webContainerView.bounds, configuration: webConfiguration)
+        webView.navigationDelegate = self
+        webView.contentMode = .scaleAspectFill
+        webView.backgroundColor = .clear
+        webView.scrollView.backgroundColor = .clear
+        webView.isOpaque = false
+        webView.isUserInteractionEnabled = false
+        if #available(iOS 16.4, *) { webView?.isInspectable = true; }
+        webContainerView.addSubview(webView)
+    }
     func loadHTML() {
         if let filepath = TICConfig.instance.bundle.path(forResource: "composite", ofType: "html") {
             do {
@@ -496,7 +525,7 @@ public class TICCustomizeViewController : UIViewController
                 let html = contents.replacingOccurrences(of: "//FONTS", with: fontString)
                 let assetsUrl = TICConfig.instance.bundle.resourceURL!
                 if TICConfig.instance.containerApp {
-                    loadHTMLForContainer(html: html, webView: webView, localUrl: assetsUrl)
+                    loadHTMLForContainer(html: html, localUrl: assetsUrl)
                 } else {
                     webView.loadHTMLString(html, baseURL: assetsUrl)
                 }
@@ -505,7 +534,7 @@ public class TICCustomizeViewController : UIViewController
             }
         }
     }
-    func loadHTMLForContainer(html: String, webView: WKWebView, localUrl: URL) {
+    func loadHTMLForContainer(html: String, localUrl: URL) {
         do {
             let jqueryUrl = TICConfig.instance.fontBaseURL!.appendingPathComponent("jquery-3.2.1.min.js")
             if !FileManager.default.fileExists(atPath: jqueryUrl.path) {
@@ -607,6 +636,11 @@ public class TICCustomizeViewController : UIViewController
             TICConfig.instance.theme.formatToolbarButton(btn)
         }
         
+        // Deactivate word coloring when switching panels
+        if sender != wordColorPanelButton {
+            wordColorPanelActive = false
+        }
+        
         sender.isSelected = true
         TICConfig.instance.theme.formatToolbarButton(sender)
         
@@ -628,17 +662,33 @@ public class TICCustomizeViewController : UIViewController
     }
     @IBAction func handleColorButtonTap(_ sender: UIButton) {
         
+        self.colorDetailsView.setDelegate(self.colorView)
         self.panelContainerView.bringSubviewToFront(self.colorView)
         centerButton(button: sender)
     }
-    
     @IBAction func handleAlignmentButtonTap(_ sender: UIButton) {
         
         self.panelContainerView.bringSubviewToFront(self.alignmentView)
         centerButton(button: sender)
 
     }
-    
+    @IBAction func handleWordColorButtonTap(_ sender: Any) {
+        if let button = sender as? UIButton {
+            self.colorDetailsView.setDelegate(self.wordColorView)
+            self.panelContainerView.bringSubviewToFront(self.wordColorView)
+            centerButton(button: button)
+            self.webView.evaluateJavaScript("wrapWordsInSpans();", completionHandler: nil)
+            wordColorPanelActive = true
+            // Add a tap gesture on compositeView to detect word taps
+            if wordTapGesture == nil {
+                wordTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleWordTap(_:)))
+                wordTapGesture!.numberOfTapsRequired = 1
+                wordTapGesture!.delegate = self
+                compositeView.addGestureRecognizer(wordTapGesture!)
+            }
+
+        }
+    }
     @IBAction func handleExtrasButtonTap(_ sender: UIButton) {
         
         self.panelContainerView.bringSubviewToFront(self.extrasView)
@@ -691,7 +741,6 @@ public class TICCustomizeViewController : UIViewController
     }
     func createContentController() -> WKUserContentController {
         let contentController = WKUserContentController()
-//        contentController.add(self, name: "addVersePosition")
         return contentController
     }
     func getBodyWidth() -> CGFloat {
@@ -710,7 +759,7 @@ public class TICCustomizeViewController : UIViewController
         text = text.replacingOccurrences(of: "\'", with: "&#39")
         var reference = TICConfig.instance.reference.replacingOccurrences(of: "\n", with: "<br>").replacingOccurrences(of: "\t", with: "")
         reference = reference.replacingOccurrences(of: "\'", with: "&#39")
-        let js = "reset('\(text)', '\(reference)')"
+        let js = "reset('\(text)', '\(reference)'); wordsWrapped = false;"
         webView?.evaluateJavaScript(js, completionHandler: nil)
     }
     static func evaluateJavaScript(_ script: String, webView: WKWebView?) -> AnyObject {
@@ -728,11 +777,7 @@ public class TICCustomizeViewController : UIViewController
             let now = Date()
             if (now > failureDate) {
                 finished = true
-                if #available(iOS 10.0, *) {
-                    os_log("TIC: evaluateJavaScript Didn't complete prior to failure time")
-                } else {
-                    NSLog("TIC: evaluateJavaScript Didn't complete prior to failure time")
-                }
+                os_log("TIC: evaluateJavaScript Didn't complete prior to failure time")
             }
         }
         return retVal

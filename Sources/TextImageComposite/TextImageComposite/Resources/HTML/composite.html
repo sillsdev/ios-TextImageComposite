@@ -31,6 +31,9 @@
         #scripture {
             margin-bottom: 20px;
         }
+        .word {
+            cursor: pointer;
+        }
     </style>
     
     <script src="jquery-3.2.1.min.js"></script>
@@ -43,12 +46,26 @@
 
         function setStyleText(property, value)
         {
-            $('.editort').css(property, value);
+            if (property === 'color' && document.querySelectorAll('#text .word').length > 0) {
+                // Apply color only to words that haven't been individually colored
+                document.querySelectorAll('#text .word:not(.word-colored)').forEach(function(el) {
+                    el.style.setProperty('color', value);
+                });
+            } else {
+                $('.editort').css(property, value);
+            }
         }
     
         function setStyleReference(property, value)
         {
-            $('.editorr').css(property, value);
+            if (property === 'color' && document.querySelectorAll('#reference .word').length > 0) {
+                // Apply color only to words that haven't been individually colored
+                document.querySelectorAll('#reference .word:not(.word-colored)').forEach(function(el) {
+                    el.style.setProperty('color', value);
+                });
+            } else {
+                $('.editorr').css(property, value);
+            }
         }
     
         function setStyleDiv(property, value)
@@ -59,6 +76,84 @@
         {
             $('body').css(property, value);
         }
+
+        var wordIndex = 0;
+
+        var wordsWrapped = false;
+
+        function wrapWordsInSpans()
+        {
+            if (wordsWrapped) return;
+            wordsWrapped = true;
+            wordIndex = 0;
+            wrapElement(document.getElementById('text'));
+            wrapElement(document.getElementById('reference'));
+        }
+
+        function wrapElement(element)
+        {
+            var childNodes = Array.prototype.slice.call(element.childNodes);
+            childNodes.forEach(function(node) {
+                if (node.nodeType === 3) {
+                    // Text node - split into words
+                    var text = node.textContent;
+                    if (text.trim().length === 0) return;
+                    var fragment = document.createDocumentFragment();
+                    // Split on whitespace but keep whitespace as separators
+                    var parts = text.split(/(\s+)/);
+                    parts.forEach(function(part) {
+                        if (part.match(/^\s+$/)) {
+                            fragment.appendChild(document.createTextNode(part));
+                        } else if (part.length > 0) {
+                            var span = document.createElement('span');
+                            span.className = 'word';
+                            span.setAttribute('data-word-index', wordIndex);
+                            span.textContent = part;
+                            wordIndex++;
+                            fragment.appendChild(span);
+                        }
+                    });
+                    element.replaceChild(fragment, node);
+                } else if (node.nodeType === 1 && !node.classList.contains('word')) {
+                    // Element node (like <br>) - recurse into it if it has children
+                    if (node.tagName !== 'BR') {
+                        wrapElement(node);
+                    }
+                }
+            });
+        }
+
+        function colorWordAtPoint(x, y, color)
+        {
+            var el = document.elementFromPoint(x, y);
+            if (el && el.classList.contains('word')) {
+                el.style.setProperty('color', color);
+                el.classList.add('word-colored');
+                return parseInt(el.getAttribute('data-word-index'));
+            }
+            return -1;
+        }
+
+        function colorWordAtIndex(index, color) {
+            var el = document.querySelector('.word[data-word-index="' + index + '"]');
+            if (el && el.classList.contains('word')) {
+                el.style.setProperty('color', color);
+                el.classList.add('word-colored');
+            }
+        }
+        
+        function setWordCase(index, toCase)
+        {
+            var el = document.querySelector('.word[data-word-index="' + index + '"]');
+            if (el) {
+                if (toCase === 'upper') {
+                    el.textContent = el.textContent.toUpperCase();
+                } else if (toCase === 'lower') {
+                    el.textContent = el.textContent.toLowerCase();
+                }
+            }
+        }
+
         $(function()
         {
           
