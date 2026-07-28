@@ -18,6 +18,8 @@ class TICAppViewController: UIViewController, TICTextViewDelegate  {
     @IBOutlet weak var rtlTest: UISwitch!
     @IBOutlet weak var linkTest: UISwitch!
     @IBOutlet weak var weirdTextSwitch: UISwitch!
+    @IBOutlet weak var textAreaSwitch: UISwitch!
+    
     func fonts() -> [TICFont] {
         
         var list : [TICFont] = []
@@ -37,30 +39,31 @@ class TICAppViewController: UIViewController, TICTextViewDelegate  {
         return list
     }
     func images() -> [TICImage] {
-        let textureImageUrls : [TICImage] = [TICImage.init(imageName: "texture_1.jpg"),
-                                                           TICImage.init(imageName: "texture_2.jpg"),
-                                                           TICImage.init(imageName: "texture_3.jpg"),
-                                                           TICImage.init(imageName: "texture_4.jpg"),
-                                                           TICImage.init(imageName: "texture_5.jpg"),
-                                                           TICImage.init(imageName: "texture_6.jpg"),
-                                                           TICImage.init(imageName: "texture_7.jpg"),]
+        let textArea = TICTextArea(left: 0.10, top: 0.10, width: 0.80, height: 0.40)
+        let textureImageUrls : [TICImage] = [TICImage.init(imageName: "texture_1.jpg", textArea: textArea),
+                                           TICImage.init(imageName: "texture_2.jpg"),
+                                           TICImage.init(imageName: "texture_3.jpg", textArea: textArea),
+                                           TICImage.init(imageName: "texture_4.jpg"),
+                                           TICImage.init(imageName: "texture_5.jpg"),
+                                           TICImage.init(imageName: "texture_6.jpg"),
+                                           TICImage.init(imageName: "texture_7.jpg"),]
         
         let natureImageUrls : [TICImage] = [TICImage.init(imageName: "ray-hennessy-HlJ7U9WHRR8-unsplash-1080.jpg"),
-                                                          TICImage.init(imageName: "cross-66700_1920-pixabay-1080.jpg"),
-                                                          TICImage.init(imageName: "aaron-burden-6jYoil2GhVk-unsplash-1080.jpg"),
-                                                          TICImage.init(imageName: "aaron-burden-BxmJUeJrlp4-unsplash-1080.jpg"),
-                                                          TICImage.init(imageName: "bady-qb-MDgRcuGYu58-unsplash-1080.jpg"),
-                                                          TICImage.init(imageName: "damian-patkowski-T-LfvX-7IVg-unsplash-1080.jpg"),
-                                                          TICImage.init(imageName: "desert-790640_1920-pixabay-1080.jpg"),
-                                                          TICImage.init(imageName: "ryan-schroeder-Gg7uKdHFb_c-unsplash-1080.jpg"),
-                                                          TICImage.init(imageName: "wheat-3241114_1920-pixabay-1080.jpg"),
-                                                          TICImage.init(imageName: "sam-ueGaQiHV86o-unsplash-1080.jpg"),
-                                                          TICImage.init(imageName: "chris-gallimore-f9fJ6nxndoo-unsplash-1080.jpg"),
-                                                          TICImage.init(imageName: "desert-1731660-pexels-1080.jpg"),
-                                                          TICImage.init(imageName: "gabriel-garcia-marengo-kOqBCFsGTs8-unsplash-1080.jpg"),
-                                                          TICImage.init(imageName: "jeremy-bishop-QHZn3-0bbEM-unsplash-1080.jpg")]
-        
-        return natureImageUrls
+                                          TICImage.init(imageName: "cross-66700_1920-pixabay-1080.jpg"),
+                                          TICImage.init(imageName: "aaron-burden-6jYoil2GhVk-unsplash-1080.jpg"),
+                                          TICImage.init(imageName: "aaron-burden-BxmJUeJrlp4-unsplash-1080.jpg"),
+                                          TICImage.init(imageName: "bady-qb-MDgRcuGYu58-unsplash-1080.jpg"),
+                                          TICImage.init(imageName: "damian-patkowski-T-LfvX-7IVg-unsplash-1080.jpg"),
+                                          TICImage.init(imageName: "desert-790640_1920-pixabay-1080.jpg"),
+                                          TICImage.init(imageName: "ryan-schroeder-Gg7uKdHFb_c-unsplash-1080.jpg"),
+                                          TICImage.init(imageName: "wheat-3241114_1920-pixabay-1080.jpg"),
+                                          TICImage.init(imageName: "sam-ueGaQiHV86o-unsplash-1080.jpg"),
+                                          TICImage.init(imageName: "chris-gallimore-f9fJ6nxndoo-unsplash-1080.jpg"),
+                                          TICImage.init(imageName: "desert-1731660-pexels-1080.jpg"),
+                                          TICImage.init(imageName: "gabriel-garcia-marengo-kOqBCFsGTs8-unsplash-1080.jpg"),
+                                          TICImage.init(imageName: "jeremy-bishop-QHZn3-0bbEM-unsplash-1080.jpg")]
+        let textAreaSwitchOn = textAreaSwitch.isOn
+        return textAreaSwitchOn ? textureImageUrls : natureImageUrls
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,9 +137,9 @@ class TICAppViewController: UIViewController, TICTextViewDelegate  {
     }
     
     fileprivate func setupConfig() {
+        TICConfig.instance.images = images()
         if !firstTime {
             firstTime = true
-            TICConfig.instance.images = images()
             TICConfig.instance.fonts = fonts()
             TICConfig.instance.defaultFont = "Verdana"
             TICConfig.instance.locale = TICLocalization.us_en()

@@ -315,8 +315,8 @@ public class TICCustomizeViewController : UIViewController
 
         self.setupUI()
         
-        TICConfig.instance.selectedURL = TICConfig.instance.images[0].imageURL
         TICConfig.instance.selectedImage = nil
+        TICConfig.instance.selectedTICImage = TICConfig.instance.images[0]
 
         filter = CIFilter(name: "CIColorControls")
 
@@ -449,8 +449,8 @@ public class TICCustomizeViewController : UIViewController
     
     func setupImage() {
         var baseImage: UIImage?
-        if TICConfig.instance.selectedURL != nil {
-            baseImage = UIImage(contentsOfFile: TICConfig.instance.selectedURL!.path)
+        if let selectedTICImage = TICConfig.instance.selectedTICImage {
+            baseImage = UIImage(contentsOfFile: selectedTICImage.imageURL.path)
         } else {
             baseImage = TICConfig.instance.selectedImage
         }

@@ -45,7 +45,7 @@ extension TICImageSelectPanel: UIImagePickerControllerDelegate {
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[.editedImage] as? UIImage {
-            TICConfig.instance.selectedURL = nil
+            TICConfig.instance.selectedTICImage = nil
             TICConfig.instance.selectedImage = image
             selectImageDelegate?.changeSelectedImage()
         }
@@ -81,8 +81,8 @@ extension TICImageSelectPanel : UICollectionViewDelegate {
                 self.present(picker, animated: true, completion: nil)
             }
         } else {
-            TICConfig.instance.selectedURL = TICConfig.instance.images[indexPath.item - 1].imageURL
             TICConfig.instance.selectedImage = nil
+            TICConfig.instance.selectedTICImage = TICConfig.instance.images[indexPath.item - 1]
             selectImageDelegate?.changeSelectedImage()
         }
     }

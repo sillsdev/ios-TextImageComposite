@@ -42,7 +42,7 @@ public class TICConfig
     public var fontBaseURL: URL?
     
     public var selectedImage : UIImage?
-    public var selectedURL : URL?
+    public var selectedTICImage: TICImage?
     public var watermarkImage: TICWatermark?
     public var sharingDelegate: SharingDelegate?
     public var textViewDelegate: TICTextViewDelegate?
@@ -260,17 +260,33 @@ public struct TICLocalization
         return locale
     }
 }
-
+public struct TICTextArea
+{
+    var left: Float
+    var top: Float
+    var width: Float
+    var height: Float
+    
+    public init(left: Float, top: Float, width: Float, height: Float) {
+        self.left = left
+        self.top = top
+        self.width = width
+        self.height = height
+    }
+}
 public struct TICImage
 {
     var imageURL : URL
+    var textArea : TICTextArea?
     
-    public init(imageURL : URL) {
+    public init(imageURL : URL, textArea: TICTextArea? = nil) {
         self.imageURL = imageURL
+        self.textArea = textArea
     }
     
-    public init(imageName : String) {
+    public init(imageName : String, textArea: TICTextArea? = nil) {
         self.imageURL = Bundle.main.url(forResource: imageName, withExtension: "")!
+        self.textArea = textArea
     }
 }
 
