@@ -25,6 +25,7 @@ public class TICAlignmentPanelView : TICBasePanelView, SBFontFormatDelegate
             }
         }
     }
+    var imageHeight : CGFloat = 320
     var divWidth : Int = 320
     var divLeftMargin : Int = 0
     var divTopMargin : Int = 0
@@ -91,7 +92,7 @@ public class TICAlignmentPanelView : TICBasePanelView, SBFontFormatDelegate
     }
     public func setDivTopMargin(newMargin: Int) {
         var divHeight = Int(delegate.getDivHeight()) - divTopMargin
-        let maxIntHeight = Int(Float(imageWidth)) // ImageHeight = ImageWidth
+        let maxIntHeight = Int(imageHeight)
         var maxAdjustment =  maxIntHeight - divHeight
         if (divHeight > maxIntHeight) {
             divHeight = maxIntHeight
@@ -106,7 +107,7 @@ public class TICAlignmentPanelView : TICBasePanelView, SBFontFormatDelegate
     }
     public func setDivTopMarginCenter() {
         var divHeight = Int(delegate.getDivHeight())
-        let maxIntHeight = Int(Float(imageWidth)) // ImageHeight = ImageWidth
+        let maxIntHeight = Int(imageHeight)
         if (divHeight > maxIntHeight) {
             divHeight = maxIntHeight
         }

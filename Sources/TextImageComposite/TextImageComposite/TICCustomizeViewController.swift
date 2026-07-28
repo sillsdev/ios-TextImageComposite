@@ -67,6 +67,17 @@ extension TICCustomizeViewController : TICImageSelectionDelegate {
     public func changeSelectedImage() {
         setupImage()
         getFinalImageView()
+        
+        // Update layout for the new webView dimensions
+        self.widthInPixels = self.getBodyWidth()
+        if alignmentView != nil {
+            alignmentView.setDivWidth(newWidth: Int(widthInPixels) * 75 / 100)
+        }
+        let delayTime = DispatchTime.now() + Double(Int64(0.25 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: delayTime) {
+            self.setInitialTextSize()
+            self.fontFormatDelegate.setDivTopMarginCenter()
+        }
     }
     
 }
@@ -347,7 +358,7 @@ public class TICCustomizeViewController : UIViewController
     }
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        webView.frame = self.webContainerView.bounds
+        updateWebViewFrame()
     }
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -356,6 +367,7 @@ public class TICCustomizeViewController : UIViewController
             self.widthInPixels = self.getBodyWidth()
             if self.alignmentView != nil {
                 self.alignmentView.imageWidth = self.widthInPixels
+                self.alignmentView.imageHeight = self.webView.frame.height
                 self.alignmentView.setDivWidth(newWidth: Int(self.widthInPixels) * 75 / 100)
             }
             self.setInitialTextSize()
@@ -391,6 +403,7 @@ public class TICCustomizeViewController : UIViewController
         imageSelectController.selectImageDelegate = self
         
         alignmentView.imageWidth = widthInPixels
+        alignmentView.imageHeight = webView.frame.height
         
         panels.append(self.alignmentView)
         panels.append(self.extrasView)
@@ -471,6 +484,28 @@ public class TICCustomizeViewController : UIViewController
         beginImage = CIImage(image: self.imageView.image!)
         filter.setValue(beginImage, forKey: kCIInputImageKey)
 
+        updateWebViewFrame()
+    }
+    
+    func updateWebViewFrame() {
+        guard webView != nil else { return }
+        let containerBounds = self.webContainerView.bounds
+        
+        if let selectedTICImage = TICConfig.instance.selectedTICImage,
+           let textArea = selectedTICImage.textArea {
+            let x = CGFloat(textArea.left) * containerBounds.width
+            let y = CGFloat(textArea.top) * containerBounds.height
+            let w = CGFloat(textArea.width) * containerBounds.width
+            let h = CGFloat(textArea.height) * containerBounds.height
+            webView.frame = CGRect(x: x, y: y, width: w, height: h)
+        } else {
+            webView.frame = containerBounds
+        }
+        
+        if alignmentView != nil {
+            alignmentView.imageWidth = webView.frame.width
+            alignmentView.imageHeight = webView.frame.height
+        }
     }
     fileprivate func setupUI() {
         self.cancelBarButton.title = TICConfig.instance.locale.cancel
@@ -607,7 +642,7 @@ public class TICCustomizeViewController : UIViewController
 
     func setInitialTextSize() {
         var divHeight = getDivHeight()
-        let maxHeight = widthInPixels
+        let maxHeight = getBodyHeight()
         while (divHeight > (maxHeight * 0.90)) && (fontSizeDelegate.getFontSize() > fontSizeDelegate!.getFontSizeMinimum()) {
             fontSizeDelegate.setFontSize(newSize: (fontSizeDelegate.getFontSize() - 1))
             if referenceFontSizeDelegate != nil {
@@ -798,6 +833,7 @@ extension TICCustomizeViewController : WKNavigationDelegate {
         self.setStyle(.fontWeight, "bold", .text)
         if alignmentView != nil {
             alignmentView.imageWidth = widthInPixels
+            alignmentView.imageHeight = webView.frame.height
             alignmentView.setDivWidth(newWidth: Int(widthInPixels) * 75 / 100)
         }
         let delayTime = DispatchTime.now() + Double(Int64(0.25 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
