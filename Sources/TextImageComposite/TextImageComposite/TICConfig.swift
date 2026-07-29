@@ -268,10 +268,15 @@ public struct TICTextArea
     var height: Float
     
     public init(left: Float, top: Float, width: Float, height: Float) {
-        self.left = left
-        self.top = top
-        self.width = width
-        self.height = height
+        // Clamp left and top to 0...1, defaulting to 0 if out of range
+        self.left = (left >= 0 && left <= 1) ? left : 0
+        self.top = (top >= 0 && top <= 1) ? top : 0
+        
+        // Clamp width and height to 0...1, defaulting to (1 - left/top) if out of range
+        let totalWidth = self.left + width
+        let totalHeight = self.top + height
+        self.width = (totalWidth >= 0 && totalWidth <= 1) ? width : (1 - self.left)
+        self.height = (totalHeight >= 0 && totalHeight <= 1) ? height : (1 - self.top)
     }
 }
 public struct TICImage

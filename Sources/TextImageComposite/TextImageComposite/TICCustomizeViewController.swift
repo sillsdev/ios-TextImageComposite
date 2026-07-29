@@ -73,6 +73,7 @@ extension TICCustomizeViewController : TICImageSelectionDelegate {
         if alignmentView != nil {
             alignmentView.imageWidth = widthInPixels
             alignmentView.setDivWidth(newWidth: Int(widthInPixels) * 75 / 100)
+            alignmentView.setDivLeftMargin(newMargin: 0)
         }
         let delayTime = DispatchTime.now() + Double(Int64(0.25 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         DispatchQueue.main.asyncAfter(deadline: delayTime) {
@@ -333,7 +334,11 @@ public class TICCustomizeViewController : UIViewController
         self.setupUI()
         
         TICConfig.instance.selectedImage = nil
-        TICConfig.instance.selectedTICImage = TICConfig.instance.images[0]
+        TICConfig.instance.selectedTICImage = TICConfig.instance.images.first
+        
+        if TICConfig.instance.selectedTICImage == nil {
+            TICConfig.instance.selectedImage = makeBlackImage()
+        }
 
         filter = CIFilter(name: "CIColorControls")
 
@@ -674,6 +679,20 @@ public class TICCustomizeViewController : UIViewController
                 }
             }
             divHeight = getDivHeight()
+        }
+    }
+    func makeBlackImage() -> UIImage {
+        let size = CGSize(width: 1080, height: 1080)
+
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1.0   // 1 point = 1 pixel
+        format.opaque = true // No alpha channel
+
+        let renderer = UIGraphicsImageRenderer(size: size, format: format)
+
+        return renderer.image { context in
+            UIColor.black.setFill()
+            context.fill(CGRect(origin: .zero, size: size))
         }
     }
     //MARK: - Toolbar

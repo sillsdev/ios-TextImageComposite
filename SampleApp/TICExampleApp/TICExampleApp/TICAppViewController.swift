@@ -19,6 +19,7 @@ class TICAppViewController: UIViewController, TICTextViewDelegate  {
     @IBOutlet weak var linkTest: UISwitch!
     @IBOutlet weak var weirdTextSwitch: UISwitch!
     @IBOutlet weak var textAreaSwitch: UISwitch!
+    @IBOutlet weak var noImagesSwitch: UISwitch!
     
     func fonts() -> [TICFont] {
         
@@ -62,8 +63,12 @@ class TICAppViewController: UIViewController, TICTextViewDelegate  {
                                           TICImage.init(imageName: "desert-1731660-pexels-1080.jpg"),
                                           TICImage.init(imageName: "gabriel-garcia-marengo-kOqBCFsGTs8-unsplash-1080.jpg"),
                                           TICImage.init(imageName: "jeremy-bishop-QHZn3-0bbEM-unsplash-1080.jpg")]
-        let textAreaSwitchOn = textAreaSwitch.isOn
-        return textAreaSwitchOn ? textureImageUrls : natureImageUrls
+        if noImagesSwitch.isOn {
+            return []
+        } else {
+            let textAreaSwitchOn = textAreaSwitch.isOn
+            return textAreaSwitchOn ? textureImageUrls : natureImageUrls
+        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
