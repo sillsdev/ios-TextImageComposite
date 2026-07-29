@@ -67,6 +67,24 @@ extension TICCustomizeViewController : TICImageSelectionDelegate {
     public func changeSelectedImage() {
         setupImage()
         getFinalImageView()
+        
+        // Reset text layout for the new image
+        self.widthInPixels = self.getBodyWidth()
+        if alignmentView != nil {
+            alignmentView.imageWidth = widthInPixels
+            alignmentView.setDivWidth(newWidth: Int(widthInPixels) * 75 / 100)
+            alignmentView.setDivLeftMargin(newMargin: 0)
+        }
+        let delayTime = DispatchTime.now() + Double(Int64(0.25 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: delayTime) {
+            if let selectedTICImage = TICConfig.instance.selectedTICImage,
+               selectedTICImage.textArea != nil {
+                self.applyInitialTextArea()
+            } else {
+                self.setInitialTextSize()
+                self.fontFormatDelegate.setDivTopMarginCenter()
+            }
+        }
     }
     
 }
@@ -315,8 +333,12 @@ public class TICCustomizeViewController : UIViewController
 
         self.setupUI()
         
-        TICConfig.instance.selectedURL = TICConfig.instance.images[0].imageURL
         TICConfig.instance.selectedImage = nil
+        TICConfig.instance.selectedTICImage = TICConfig.instance.images.first
+        
+        if TICConfig.instance.selectedTICImage == nil {
+            TICConfig.instance.selectedImage = makeBlackImage()
+        }
 
         filter = CIFilter(name: "CIColorControls")
 
@@ -449,8 +471,8 @@ public class TICCustomizeViewController : UIViewController
     
     func setupImage() {
         var baseImage: UIImage?
-        if TICConfig.instance.selectedURL != nil {
-            baseImage = UIImage(contentsOfFile: TICConfig.instance.selectedURL!.path)
+        if let selectedTICImage = TICConfig.instance.selectedTICImage {
+            baseImage = UIImage(contentsOfFile: selectedTICImage.imageURL.path)
         } else {
             baseImage = TICConfig.instance.selectedImage
         }
@@ -470,7 +492,46 @@ public class TICCustomizeViewController : UIViewController
         
         beginImage = CIImage(image: self.imageView.image!)
         filter.setValue(beginImage, forKey: kCIInputImageKey)
-
+    }
+    
+    func applyInitialTextArea() {
+        guard let selectedTICImage = TICConfig.instance.selectedTICImage,
+              let textArea = selectedTICImage.textArea else {
+            return
+        }
+        
+        let containerWidth = self.widthInPixels
+        // The composite view is square, so height == width
+        let containerHeight = containerWidth
+        
+        // Set the div width to match the textArea width percentage
+        let divWidth = Int(CGFloat(textArea.width) * containerWidth)
+        alignmentView.setDivWidth(newWidth: divWidth)
+        
+        // Set the left margin so the div is positioned at the textArea's left offset
+        let textAreaLeftPx = Int(CGFloat(textArea.left) * containerWidth)
+        let centeredLeftMargin = (Int(containerWidth) - divWidth) / 2
+        let leftMarginAdjustment = textAreaLeftPx - centeredLeftMargin
+        alignmentView.setDivLeftMargin(newMargin: leftMarginAdjustment)
+        
+        // Set the top margin to the textArea's top offset
+        let topMarginPx = Int(CGFloat(textArea.top) * containerHeight)
+        fontFormatDelegate.setDivTopMargin(newMargin: topMarginPx)
+        
+        // Shrink font until text fits within the textArea height
+        let maxHeight = CGFloat(textArea.height) * containerHeight
+        var divHeight = getDivHeight()
+        while (divHeight > (maxHeight * 0.90)) && (fontSizeDelegate.getFontSize() > fontSizeDelegate!.getFontSizeMinimum()) {
+            fontSizeDelegate.setFontSize(newSize: (fontSizeDelegate.getFontSize() - 1))
+            if referenceFontSizeDelegate != nil {
+                if referenceFontSizeDelegate!.getFontSize() > 5 {
+                    referenceFontSizeDelegate!.setFontSize(newSize: (referenceFontSizeDelegate!.getFontSize() - 1))
+                } else {
+                    break
+                }
+            }
+            divHeight = getDivHeight()
+        }
     }
     fileprivate func setupUI() {
         self.cancelBarButton.title = TICConfig.instance.locale.cancel
@@ -618,6 +679,20 @@ public class TICCustomizeViewController : UIViewController
                 }
             }
             divHeight = getDivHeight()
+        }
+    }
+    func makeBlackImage() -> UIImage {
+        let size = CGSize(width: 1080, height: 1080)
+
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1.0   // 1 point = 1 pixel
+        format.opaque = true // No alpha channel
+
+        let renderer = UIGraphicsImageRenderer(size: size, format: format)
+
+        return renderer.image { context in
+            UIColor.black.setFill()
+            context.fill(CGRect(origin: .zero, size: size))
         }
     }
     //MARK: - Toolbar
@@ -802,8 +877,13 @@ extension TICCustomizeViewController : WKNavigationDelegate {
         }
         let delayTime = DispatchTime.now() + Double(Int64(0.25 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         DispatchQueue.main.asyncAfter(deadline: delayTime) {
-            self.setInitialTextSize()
-            self.fontFormatDelegate.setDivTopMarginCenter()
+            if let selectedTICImage = TICConfig.instance.selectedTICImage,
+               selectedTICImage.textArea != nil {
+                self.applyInitialTextArea()
+            } else {
+                self.setInitialTextSize()
+                self.fontFormatDelegate.setDivTopMarginCenter()
+            }
             let fontSizeMaximum = Float(self.widthInPixels/9)
             self.fontSizeDelegate.setFontSizeMaximum(maximum: fontSizeMaximum)
             self.referenceFontSizeDelegate?.setFontSizeMaximum(maximum: fontSizeMaximum)
