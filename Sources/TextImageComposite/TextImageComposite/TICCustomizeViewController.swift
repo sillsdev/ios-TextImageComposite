@@ -68,15 +68,21 @@ extension TICCustomizeViewController : TICImageSelectionDelegate {
         setupImage()
         getFinalImageView()
         
-        // Update layout for the new webView dimensions
+        // Reset text layout for the new image
         self.widthInPixels = self.getBodyWidth()
         if alignmentView != nil {
+            alignmentView.imageWidth = widthInPixels
             alignmentView.setDivWidth(newWidth: Int(widthInPixels) * 75 / 100)
         }
         let delayTime = DispatchTime.now() + Double(Int64(0.25 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         DispatchQueue.main.asyncAfter(deadline: delayTime) {
-            self.setInitialTextSize()
-            self.fontFormatDelegate.setDivTopMarginCenter()
+            if let selectedTICImage = TICConfig.instance.selectedTICImage,
+               selectedTICImage.textArea != nil {
+                self.applyInitialTextArea()
+            } else {
+                self.setInitialTextSize()
+                self.fontFormatDelegate.setDivTopMarginCenter()
+            }
         }
     }
     
@@ -358,7 +364,7 @@ public class TICCustomizeViewController : UIViewController
     }
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        updateWebViewFrame()
+        webView.frame = self.webContainerView.bounds
     }
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -367,7 +373,6 @@ public class TICCustomizeViewController : UIViewController
             self.widthInPixels = self.getBodyWidth()
             if self.alignmentView != nil {
                 self.alignmentView.imageWidth = self.widthInPixels
-                self.alignmentView.imageHeight = self.webView.frame.height
                 self.alignmentView.setDivWidth(newWidth: Int(self.widthInPixels) * 75 / 100)
             }
             self.setInitialTextSize()
@@ -403,7 +408,6 @@ public class TICCustomizeViewController : UIViewController
         imageSelectController.selectImageDelegate = self
         
         alignmentView.imageWidth = widthInPixels
-        alignmentView.imageHeight = webView.frame.height
         
         panels.append(self.alignmentView)
         panels.append(self.extrasView)
@@ -483,28 +487,45 @@ public class TICCustomizeViewController : UIViewController
         
         beginImage = CIImage(image: self.imageView.image!)
         filter.setValue(beginImage, forKey: kCIInputImageKey)
-
-        updateWebViewFrame()
     }
     
-    func updateWebViewFrame() {
-        guard webView != nil else { return }
-        let containerBounds = self.webContainerView.bounds
-        
-        if let selectedTICImage = TICConfig.instance.selectedTICImage,
-           let textArea = selectedTICImage.textArea {
-            let x = CGFloat(textArea.left) * containerBounds.width
-            let y = CGFloat(textArea.top) * containerBounds.height
-            let w = CGFloat(textArea.width) * containerBounds.width
-            let h = CGFloat(textArea.height) * containerBounds.height
-            webView.frame = CGRect(x: x, y: y, width: w, height: h)
-        } else {
-            webView.frame = containerBounds
+    func applyInitialTextArea() {
+        guard let selectedTICImage = TICConfig.instance.selectedTICImage,
+              let textArea = selectedTICImage.textArea else {
+            return
         }
         
-        if alignmentView != nil {
-            alignmentView.imageWidth = webView.frame.width
-            alignmentView.imageHeight = webView.frame.height
+        let containerWidth = self.widthInPixels
+        // The composite view is square, so height == width
+        let containerHeight = containerWidth
+        
+        // Set the div width to match the textArea width percentage
+        let divWidth = Int(CGFloat(textArea.width) * containerWidth)
+        alignmentView.setDivWidth(newWidth: divWidth)
+        
+        // Set the left margin so the div is positioned at the textArea's left offset
+        let textAreaLeftPx = Int(CGFloat(textArea.left) * containerWidth)
+        let centeredLeftMargin = (Int(containerWidth) - divWidth) / 2
+        let leftMarginAdjustment = textAreaLeftPx - centeredLeftMargin
+        alignmentView.setDivLeftMargin(newMargin: leftMarginAdjustment)
+        
+        // Set the top margin to the textArea's top offset
+        let topMarginPx = Int(CGFloat(textArea.top) * containerHeight)
+        fontFormatDelegate.setDivTopMargin(newMargin: topMarginPx)
+        
+        // Shrink font until text fits within the textArea height
+        let maxHeight = CGFloat(textArea.height) * containerHeight
+        var divHeight = getDivHeight()
+        while (divHeight > (maxHeight * 0.90)) && (fontSizeDelegate.getFontSize() > fontSizeDelegate!.getFontSizeMinimum()) {
+            fontSizeDelegate.setFontSize(newSize: (fontSizeDelegate.getFontSize() - 1))
+            if referenceFontSizeDelegate != nil {
+                if referenceFontSizeDelegate!.getFontSize() > 5 {
+                    referenceFontSizeDelegate!.setFontSize(newSize: (referenceFontSizeDelegate!.getFontSize() - 1))
+                } else {
+                    break
+                }
+            }
+            divHeight = getDivHeight()
         }
     }
     fileprivate func setupUI() {
@@ -642,7 +663,7 @@ public class TICCustomizeViewController : UIViewController
 
     func setInitialTextSize() {
         var divHeight = getDivHeight()
-        let maxHeight = getBodyHeight()
+        let maxHeight = widthInPixels
         while (divHeight > (maxHeight * 0.90)) && (fontSizeDelegate.getFontSize() > fontSizeDelegate!.getFontSizeMinimum()) {
             fontSizeDelegate.setFontSize(newSize: (fontSizeDelegate.getFontSize() - 1))
             if referenceFontSizeDelegate != nil {
@@ -833,13 +854,17 @@ extension TICCustomizeViewController : WKNavigationDelegate {
         self.setStyle(.fontWeight, "bold", .text)
         if alignmentView != nil {
             alignmentView.imageWidth = widthInPixels
-            alignmentView.imageHeight = webView.frame.height
             alignmentView.setDivWidth(newWidth: Int(widthInPixels) * 75 / 100)
         }
         let delayTime = DispatchTime.now() + Double(Int64(0.25 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
         DispatchQueue.main.asyncAfter(deadline: delayTime) {
-            self.setInitialTextSize()
-            self.fontFormatDelegate.setDivTopMarginCenter()
+            if let selectedTICImage = TICConfig.instance.selectedTICImage,
+               selectedTICImage.textArea != nil {
+                self.applyInitialTextArea()
+            } else {
+                self.setInitialTextSize()
+                self.fontFormatDelegate.setDivTopMarginCenter()
+            }
             let fontSizeMaximum = Float(self.widthInPixels/9)
             self.fontSizeDelegate.setFontSizeMaximum(maximum: fontSizeMaximum)
             self.referenceFontSizeDelegate?.setFontSizeMaximum(maximum: fontSizeMaximum)
